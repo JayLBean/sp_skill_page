@@ -1,0 +1,13 @@
+{
+  "name": "sp-skill-page",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Storefront Forge — client-facing showcase + pricing calculator (GitHub Pages).",
+  "type": "module",
+  "scripts": {
+    "gen-pricing": "node scripts/gen-pricing.mjs"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

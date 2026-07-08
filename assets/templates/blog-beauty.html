@@ -1,0 +1,267 @@
+<!-- @dsCard group="Content" name="Blog / Journal — Beauty" subtitle="Announcement · Journal hero · Featured article · Category filter · Article grid · Newsletter · Pagination" viewport="1280x2900" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — Blog / Journal (Beauty)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  :root{
+    --primary:#1f6f54; --on-primary:#ffffff;
+    --secondary:#e8b4b8; --on-secondary:#111111;
+    --bg:#ffffff; --surface:#f7f5f2; --surface-2:#efeae3;
+    --text:#1a1a1a; --text-muted:#5c5c5c; --border:#e2e2e2;
+    --radius:14px; --maxw:1200px;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#14110f; --surface:#1d1a17; --surface-2:#252019; --text:#f2ede7; --text-muted:#a9a199; --border:#332e29; --on-secondary:#111; }
+  }
+  :root[data-theme="dark"]{ --bg:#14110f; --surface:#1d1a17; --surface-2:#252019; --text:#f2ede7; --text-muted:#a9a199; --border:#332e29; }
+  :root[data-theme="light"]{ --bg:#ffffff; --surface:#f7f5f2; --surface-2:#efeae3; --text:#1a1a1a; --text-muted:#5c5c5c; --border:#e2e2e2; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0}
+  .btn{display:inline-block;padding:14px 28px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .15s ease;cursor:pointer}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text)}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+
+  /* announcement */
+  .announce{background:var(--primary);color:var(--on-primary);text-align:center;font-size:13px;letter-spacing:.04em;padding:9px 16px}
+  /* header */
+  header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.02em}
+  .nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--text-muted)}
+  .nav .icons{display:flex;gap:18px;font-size:14px}
+  @media(max-width:760px){.nav ul{display:none}}
+
+  /* journal hero */
+  .jhero{position:relative;text-align:center;background:
+    radial-gradient(90% 120% at 50% -10%,color-mix(in srgb,var(--secondary) 40%,transparent) 0%,transparent 55%),
+    linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%)}
+  .jhero .inner{padding:78px 0 64px;max-width:54ch;margin:0 auto}
+  .jhero h1{font-size:clamp(36px,5.4vw,62px);line-height:1.04;margin-top:16px}
+  .jhero p{color:var(--text-muted);font-size:19px;margin:22px auto 0;max-width:46ch}
+
+  /* shared placeholder gradients */
+  .g-a{background:radial-gradient(120% 120% at 70% 20%,var(--secondary) 0%,transparent 55%),linear-gradient(160deg,var(--surface-2),var(--primary))}
+  .g-b{background:linear-gradient(150deg,var(--surface-2),var(--secondary))}
+  .g-c{background:linear-gradient(150deg,var(--surface-2),var(--primary))}
+  .g-d{background:linear-gradient(140deg,var(--surface),var(--surface-2))}
+  .g-e{background:radial-gradient(110% 110% at 30% 25%,var(--secondary) 0%,transparent 52%),linear-gradient(160deg,var(--primary),var(--surface-2))}
+
+  /* section shell */
+  section.blk{padding:64px 0}
+  .head{text-align:center;max-width:60ch;margin:0 auto 36px}
+  .head h2{font-size:clamp(26px,3.4vw,40px)}
+  .head p{color:var(--text-muted);margin-top:12px}
+
+  /* tag */
+  .tag{display:inline-block;align-self:flex-start;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--primary)}
+
+  /* featured article */
+  .feat{display:grid;grid-template-columns:1.05fr .95fr;gap:0;align-items:stretch;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .feat .img{min-height:320px}
+  .feat .body{padding:44px}
+  .feat h2{font-size:clamp(26px,3.2vw,38px);line-height:1.12;margin:14px 0 0}
+  .feat p{color:var(--text-muted);font-size:16px;margin:16px 0 0;max-width:48ch}
+  .feat .meta{color:var(--text-muted);font-size:13px;margin:22px 0 26px}
+  @media(max-width:900px){.feat{grid-template-columns:1fr}.feat .img{min-height:220px}.feat .body{padding:32px}}
+
+  /* category filter row */
+  .filters{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0 auto 40px}
+  .pill{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;transition:border-color .15s ease}
+  .pill:hover{border-color:var(--primary)}
+  .pill[aria-pressed="true"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+
+  /* article grid */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.grid{grid-template-columns:1fr}}
+  .acard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .18s ease}
+  .acard:hover{transform:translateY(-3px)}
+  .acard .img{aspect-ratio:3/2}
+  .acard .body{padding:22px;display:flex;flex-direction:column;flex:1}
+  .acard h3{font-family:var(--serif);font-size:20px;line-height:1.25;margin:10px 0 0}
+  .acard h3 a:hover{color:var(--primary)}
+  .acard .excerpt{color:var(--text-muted);font-size:14px;margin:10px 0 0}
+  .acard .rmeta{color:var(--text-muted);font-size:12px;margin-top:16px}
+
+  /* newsletter */
+  .news{background:var(--primary);color:var(--on-primary);border-radius:var(--radius);padding:56px 32px;text-align:center}
+  .news h2{color:var(--on-primary)}
+  .news p{opacity:.9;margin-top:10px}
+  .news form{display:flex;gap:10px;max-width:420px;margin:22px auto 0}
+  .news input{flex:1;padding:14px 16px;border-radius:999px;border:0;font-size:15px}
+  .news .btn{background:var(--bg);color:var(--text)}
+  @media(max-width:520px){.news form{flex-direction:column}}
+
+  /* pagination */
+  .pager{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;padding:8px 0}
+  .pg{min-width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;padding:0 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);cursor:pointer;transition:border-color .15s ease}
+  .pg:hover{border-color:var(--primary)}
+  .pg[aria-current="page"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+  .pg.disabled{opacity:.45;pointer-events:none}
+  .pg.dots{border:0;cursor:default;min-width:auto;padding:0 4px}
+
+  /* footer */
+  footer{border-top:1px solid var(--border);margin-top:8px}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px;padding:56px 0}
+  .fcols h3{font-family:var(--sans);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:700;margin:0 0 14px}
+  .fcols a{display:block;font-size:14px;color:var(--text-muted);padding:5px 0}
+  .fbot{border-top:1px solid var(--border);padding:20px 0;font-size:13px;color:var(--text-muted);text-align:center}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <div class="announce">Free carbon-neutral shipping over $50 · 30-day happiness guarantee</div>
+
+  <!-- Dawn: header -->
+  <header>
+    <nav class="nav wrap">
+      <ul><li>Shop</li><li>Bestsellers</li><li>Ingredients</li><li>About</li></ul>
+      <div class="brand">Lumina</div>
+      <div class="icons"><span>Search</span><span>Cart (0)</span></div>
+    </nav>
+  </header>
+
+  <!-- JOURNAL HERO — Dawn: main-blog (banner) / rich-text -->
+  <section class="jhero">
+    <div class="inner wrap">
+      <span class="eyebrow">The Lumina Journal</span>
+      <h1>Skin science, minus the marketing.</h1>
+      <p>Honest guides to ingredients, routines, and the research behind every formula — written by the chemists who make them.</p>
+    </div>
+  </section>
+
+  <!-- FEATURED ARTICLE — Dawn: featured-blog / main-article -->
+  <section class="blk">
+    <div class="wrap">
+      <article class="feat">
+        <div class="img g-a" role="img" aria-label="Amber vitamin C serum bottle on a marble surface"></div>
+        <div class="body">
+          <span class="tag">Skin Science</span>
+          <h2>The truth about vitamin C: why dose and stability beat percentage</h2>
+          <p>A 20% serum that has oxidized into orange soup does less than a fresh, well-formulated 15%. Here's what the research actually says about getting results.</p>
+          <div class="meta">By Dr. Nadia Vance · Jul 2, 2026 · 8 min read</div>
+          <a class="btn btn-ghost" href="#">Read the full story</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ARTICLE INDEX — Dawn: main-blog (article grid) -->
+  <section class="blk" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">The archive</span><h2>Latest from the lab</h2></div>
+
+      <!-- CATEGORY FILTER — Dawn: main-blog (tag filter) -->
+      <div class="filters" role="group" aria-label="Filter articles by category">
+        <button class="pill" aria-pressed="true">All</button>
+        <button class="pill" aria-pressed="false">Skin Science</button>
+        <button class="pill" aria-pressed="false">Ingredients</button>
+        <button class="pill" aria-pressed="false">Routines</button>
+        <button class="pill" aria-pressed="false">Sustainability</button>
+        <button class="pill" aria-pressed="false">Behind the Lab</button>
+      </div>
+
+      <div class="grid">
+        <article class="acard">
+          <div class="img g-c" role="img" aria-label="Serum droppers layered over a moisturizer jar"></div>
+          <div class="body">
+            <span class="tag">Routines</span>
+            <h3><a href="#">How to layer actives without wrecking your barrier</a></h3>
+            <p class="excerpt">The order you apply things matters more than how many you own. A simple framework for stacking acids, vitamin C, and retinal.</p>
+            <div class="rmeta">6 min read · Jun 28, 2026</div>
+          </div>
+        </article>
+        <article class="acard">
+          <div class="img g-b" role="img" aria-label="Frosted bottle of niacinamide serum"></div>
+          <div class="body">
+            <span class="tag">Ingredients</span>
+            <h3><a href="#">Niacinamide, decoded: what 5% actually does</a></h3>
+            <p class="excerpt">It's on every label, but few brands print the dose. We break down what niacinamide is proven to do — and where the hype outruns the data.</p>
+            <div class="rmeta">5 min read · Jun 21, 2026</div>
+          </div>
+        </article>
+        <article class="acard">
+          <div class="img g-e" role="img" aria-label="Beakers and formulation notes on a lab bench"></div>
+          <div class="body">
+            <span class="tag">Behind the Lab</span>
+            <h3><a href="#">Inside our lab: how a formula earns its dose</a></h3>
+            <p class="excerpt">Before an ingredient reaches the bottle, it has to clear the same bar every time. A look at the tests, trials, and vetoes behind one launch.</p>
+            <div class="rmeta">7 min read · Jun 14, 2026</div>
+          </div>
+        </article>
+        <article class="acard">
+          <div class="img g-d" role="img" aria-label="Aluminium refill pouch and glass bottle"></div>
+          <div class="body">
+            <span class="tag">Sustainability</span>
+            <h3><a href="#">Refills, aluminium, and the math behind carbon-neutral shipping</a></h3>
+            <p class="excerpt">What "carbon-neutral" really means on our packing slip, and why refills keep 40 tonnes of packaging out of landfill each year.</p>
+            <div class="rmeta">4 min read · Jun 6, 2026</div>
+          </div>
+        </article>
+        <article class="acard">
+          <div class="img g-a" role="img" aria-label="Close-up of a retinal night treatment texture"></div>
+          <div class="body">
+            <span class="tag">Skin Science</span>
+            <h3><a href="#">Retinal vs retinol: the 30-second difference</a></h3>
+            <p class="excerpt">One is a step closer to the active form your skin uses. Here's what that means for results, tolerance, and how to start.</p>
+            <div class="rmeta">5 min read · May 30, 2026</div>
+          </div>
+        </article>
+        <article class="acard">
+          <div class="img g-c" role="img" aria-label="Three-step routine laid out on linen"></div>
+          <div class="body">
+            <span class="tag">Routines</span>
+            <h3><a href="#">Building a 3-step routine for sensitive skin</a></h3>
+            <p class="excerpt">Fewer products, chosen well, beat a ten-step shelf. A calming cleanse-treat-protect routine for reactive, easily irritated skin.</p>
+            <div class="rmeta">6 min read · May 22, 2026</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER — Dawn: email-signup-banner -->
+  <section class="blk"><div class="wrap"><div class="news">
+    <h2>Get skin science in your inbox</h2>
+    <p>New guides, ingredient deep-dives, and 15% off your first order. No spam, unsubscribe anytime.</p>
+    <form onsubmit="return false"><input type="email" placeholder="you@email.com" aria-label="Email"><button class="btn">Subscribe</button></form>
+  </div></div></section>
+
+  <!-- PAGINATION — Dawn: main-blog (pagination) -->
+  <section style="padding:0 0 64px">
+    <nav class="pager wrap" aria-label="Pagination">
+      <span class="pg disabled" aria-disabled="true">← Prev</span>
+      <a class="pg" href="#" aria-current="page">1</a>
+      <a class="pg" href="#">2</a>
+      <a class="pg" href="#">3</a>
+      <span class="pg dots" aria-hidden="true">…</span>
+      <a class="pg" href="#">8</a>
+      <a class="pg" href="#">Next →</a>
+    </nav>
+  </section>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="wrap fcols">
+      <div><div class="brand" style="margin-bottom:12px">Lumina</div><p style="color:var(--text-muted);font-size:14px;max-width:34ch">Clinically proven skincare with nothing to hide.</p></div>
+      <div><h3>Shop</h3><a>Bestsellers</a><a>Serums</a><a>Moisturizers</a><a>Sets</a></div>
+      <div><h3>Learn</h3><a>Ingredients</a><a>Skin quiz</a><a>Journal</a><a>Reviews</a></div>
+      <div><h3>Support</h3><a>Contact</a><a>Shipping</a><a>Returns</a><a>FAQ</a></div>
+    </div>
+    <div class="fbot">© Lumina Beauty · Baseline template · Structure references Shopify Dawn 15.4.1</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!-- @dsCard group="Collection" name="Collection — Food & Beverage (PLP)" subtitle="Breadcrumb · Collection hero · Filter + sort bar · Facets sidebar · Product grid · Pagination · Footer" viewport="1280x3160" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — Collection (Coffee Roaster)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  /* Warm roast palette: terracotta primary, honey-amber accent, cream surfaces */
+  :root{
+    --primary:#a8432a; --on-primary:#fff5ef;
+    --secondary:#e2a24b; --on-secondary:#2a1a08;
+    --bg:#fbf6ee; --surface:#f4ead9; --surface-2:#ecdcc4;
+    --text:#2a1c14; --text-muted:#6d5b4c; --border:#e6d6bf;
+    --radius:16px; --maxw:1200px;
+    --serif:"Hoefler Text","Baskerville Old Face",Baskerville,"Palatino Linotype",Palatino,Georgia,serif;
+    --sans:"Avenir Next","Avenir",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#17110d; --surface:#201812; --surface-2:#2b2016; --text:#f5e9db; --text-muted:#b6a290; --border:#382a1f; --on-secondary:#2a1a08; }
+  }
+  :root[data-theme="dark"]{ --bg:#17110d; --surface:#201812; --surface-2:#2b2016; --text:#f5e9db; --text-muted:#b6a290; --border:#382a1f; }
+  :root[data-theme="light"]{ --bg:#fbf6ee; --surface:#f4ead9; --surface-2:#ecdcc4; --text:#2a1c14; --text-muted:#6d5b4c; --border:#e6d6bf; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0}
+  .btn{display:inline-block;padding:14px 28px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .15s ease;cursor:pointer}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text)}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--primary);font-weight:700}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+  /* announcement — Dawn: announcement-bar */
+  .announce{background:var(--primary);color:var(--on-primary);text-align:center;font-size:13px;letter-spacing:.04em;padding:9px 16px}
+  .announce b{font-weight:700}
+  /* header — Dawn: header */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:9px}
+  .brand .seal{width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--secondary),var(--primary));display:inline-block}
+  .nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--text-muted);font-weight:500}
+  .nav .icons{display:flex;gap:18px;font-size:14px;color:var(--text-muted)}
+  @media(max-width:760px){.nav ul{display:none}}
+
+  /* breadcrumb — Dawn: main-collection (breadcrumb) */
+  .crumbs{font-size:13px;color:var(--text-muted);padding:20px 0 4px}
+  .crumbs a:hover{color:var(--text)}
+  .crumbs span{margin:0 8px;opacity:.6}
+
+  /* collection hero — Dawn: main-collection (collection banner) */
+  .chero{padding:20px 0 30px}
+  .chero h1{font-size:clamp(30px,4.4vw,48px);line-height:1.06}
+  .chero p{color:var(--text-muted);font-size:17px;max-width:56ch;margin:14px 0 0}
+  .chero .count{margin-top:14px;font-size:13px;color:var(--text-muted);letter-spacing:.04em}
+
+  /* filter + sort bar (sticky under header) — Dawn: facets (horizontal) */
+  .filterbar{position:sticky;top:69px;z-index:15;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .filterbar .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 0}
+  .flabel{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:600;margin-right:2px}
+  .chip{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;transition:border-color .15s ease,background .15s ease}
+  .chip:hover{border-color:var(--primary)}
+  .chip[aria-pressed="true"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+  .filterbar .spacer{flex:1}
+  .sortwrap{display:flex;align-items:center;gap:8px}
+  .sortwrap label{font-size:13px;color:var(--text-muted)}
+  select.sort{appearance:none;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:9px 34px 9px 14px;font-size:13px;font-family:var(--sans);cursor:pointer;
+    background-image:linear-gradient(45deg,transparent 50%,var(--text-muted) 50%),linear-gradient(135deg,var(--text-muted) 50%,transparent 50%);
+    background-position:calc(100% - 18px) 55%,calc(100% - 13px) 55%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+
+  /* layout: facets sidebar + grid */
+  .layout{display:grid;grid-template-columns:260px 1fr;gap:36px;padding:34px 0 12px;align-items:start}
+  @media(max-width:900px){.layout{grid-template-columns:1fr}.facets{display:none}}
+
+  /* facets sidebar — Dawn: facets (vertical) · hidden < 900px */
+  .facets{position:sticky;top:150px}
+  .facet{border-bottom:1px solid var(--border);padding:18px 0}
+  .facet:first-child{padding-top:0}
+  .facet h2{font-family:var(--sans);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);font-weight:700;margin:0 0 14px}
+  .facet .opt{display:flex;align-items:center;gap:10px;font-size:14px;padding:5px 0;color:var(--text);cursor:pointer}
+  .facet .box{width:16px;height:16px;border:1.5px solid var(--border);border-radius:5px;flex:0 0 auto;display:grid;place-items:center;font-size:11px;color:var(--on-primary)}
+  .facet .opt[aria-checked="true"] .box{background:var(--primary);border-color:var(--primary)}
+  .facet .opt .num{margin-left:auto;color:var(--text-muted);font-size:12px}
+  .swrow{display:flex;gap:10px;flex-wrap:wrap}
+  .sw{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);cursor:pointer}
+
+  /* product grid — Dawn: main-collection (product-grid), coffee-bag cards */
+  .products{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:900px){.products{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.products{grid-template-columns:1fr}}
+  .card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
+  .card:hover{transform:translateY(-4px);box-shadow:0 22px 40px -28px rgba(60,20,8,.5)}
+  .card .pouch{position:relative;aspect-ratio:4/5;margin:16px 16px 0;border-radius:12px;
+    background:linear-gradient(165deg,#7a3925,var(--primary) 60%,#5f2a18);
+    box-shadow:inset 0 -14px 30px rgba(0,0,0,.28)}
+  .card .pouch.light{background:linear-gradient(165deg,#c07f3c,#a8542a 62%,#7c3a1f)}
+  .card .pouch.dark{background:linear-gradient(165deg,#4a2414,#2f150c 66%,#1f0d07)}
+  .card .pouch.decaf{background:linear-gradient(165deg,#6b7c46,#4a6138 60%,#324226)}
+  .card .pouch .band{position:absolute;left:12%;right:12%;top:38%;height:24%;border-radius:8px;
+    background:color-mix(in srgb,var(--secondary) 88%,#fff);opacity:.95;box-shadow:0 6px 14px rgba(0,0,0,.25)}
+  .roast-tag{position:absolute;top:12px;left:12px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--bg);color:var(--primary);padding:5px 10px;border-radius:999px;border:1px solid var(--border)}
+  .badge{position:absolute;top:12px;right:12px;background:var(--bg);color:var(--text);font-size:11px;font-weight:600;letter-spacing:.04em;padding:5px 10px;border-radius:999px;border:1px solid var(--border)}
+  .badge.sale{background:var(--secondary);color:var(--on-secondary);border-color:transparent}
+  .card .body{padding:16px}
+  .card h3{font-family:var(--sans);font-size:16px;font-weight:700}
+  .card .origin{font-size:12px;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase;margin-top:2px}
+  .card .notes{color:var(--text-muted);font-size:13px;margin-top:6px}
+  .card .prow{display:flex;align-items:baseline;justify-content:space-between;margin-top:12px}
+  .card .price{font-weight:700;font-size:16px}
+  .card .price .was{color:var(--text-muted);text-decoration:line-through;margin-left:6px;font-weight:400;font-size:13px}
+  .card .sub{color:var(--text-muted);font-size:12px}
+  .card .rate{font-size:12px;color:var(--text-muted);margin-top:8px}
+  .card .rate .stars{color:var(--secondary);letter-spacing:1px}
+  /* add-to-cart reveal on hover */
+  .atc{position:absolute;left:14px;right:14px;bottom:14px;opacity:0;transform:translateY(8px);transition:opacity .18s ease,transform .18s ease}
+  .card:hover .atc,.card:focus-within .atc{opacity:1;transform:translateY(0)}
+  .atc button{width:100%;border:0;background:var(--primary);color:var(--on-primary);font-family:var(--sans);font-weight:600;font-size:14px;padding:12px 0;border-radius:999px;cursor:pointer}
+  @media(hover:none){.atc{position:static;opacity:1;transform:none;margin-top:14px}.atc button{padding:11px 0}}
+
+  /* pagination — Dawn: main-collection (pagination) */
+  .pager{display:flex;justify-content:center;align-items:center;gap:8px;padding:44px 0 8px}
+  .pager a{min-width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--border);border-radius:10px;font-size:14px;color:var(--text-muted);padding:0 8px}
+  .pager a:hover{border-color:var(--primary);color:var(--text)}
+  .pager a[aria-current="page"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+  .pager a.step{color:var(--text)}
+
+  /* footer — Dawn: footer */
+  footer{border-top:1px solid var(--border);margin-top:40px}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px;padding:56px 0}
+  .fcols h3{font-family:var(--sans);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:700;margin:0 0 14px}
+  .fcols a{display:block;font-size:14px;color:var(--text-muted);padding:5px 0}
+  .fcols a:hover{color:var(--text)}
+  .fbot{border-top:1px solid var(--border);padding:20px 0;font-size:13px;color:var(--text-muted);text-align:center}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <!-- ANNOUNCEMENT — Dawn: announcement-bar -->
+  <div class="announce">Free shipping over <b>$40</b> · Subscribe &amp; save <b>15%</b> · Roasted the day it ships</div>
+
+  <!-- HEADER — Dawn: header -->
+  <header>
+    <nav class="nav wrap">
+      <ul><li>Coffee</li><li>Subscriptions</li><li>Brew Guides</li><li>Our Story</li></ul>
+      <div class="brand"><span class="seal"></span>Ashgrove Roastery</div>
+      <div class="icons"><span>Search</span><span>Cart (0)</span></div>
+    </nav>
+  </header>
+
+  <!-- BREADCRUMB — Dawn: main-collection (breadcrumb) -->
+  <nav class="crumbs wrap" aria-label="Breadcrumb">
+    <a href="#">Home</a><span>/</span><a href="#">Coffee</a><span>/</span>Whole Bean &amp; Ground
+  </nav>
+
+  <!-- COLLECTION HERO — Dawn: main-collection (collection banner) -->
+  <section class="chero wrap">
+    <span class="eyebrow">All Coffee</span>
+    <h1>Roasted to order, shipped the same week.</h1>
+    <p>Single-origin lots and house blends, roasted in small batches the morning your order ships. Filter by roast level, origin, or format to find your next bag — or subscribe and save 15% on every delivery.</p>
+    <div class="count">Showing 12 of 34 coffees</div>
+  </section>
+
+  <!-- FILTER + SORT BAR — Dawn: facets (horizontal) -->
+  <div class="filterbar">
+    <div class="row wrap">
+      <span class="flabel">Roast</span>
+      <button class="chip" aria-pressed="true">Light</button>
+      <button class="chip" aria-pressed="false">Medium</button>
+      <button class="chip" aria-pressed="false">Dark</button>
+      <button class="chip" aria-pressed="false">Espresso</button>
+      <button class="chip" aria-pressed="false">Decaf</button>
+      <div class="spacer"></div>
+      <div class="sortwrap">
+        <label for="sort">Sort by</label>
+        <select class="sort" id="sort" aria-label="Sort coffees">
+          <option>Featured</option>
+          <option>Best selling</option>
+          <option>Price: Low to high</option>
+          <option>Price: High to low</option>
+          <option>Highest rated</option>
+          <option>Newest roasts</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN — facets sidebar + product grid -->
+  <div class="wrap">
+    <div class="layout">
+
+      <!-- FACETS SIDEBAR — Dawn: facets (vertical) · hidden < 900px -->
+      <aside class="facets" aria-label="Filters">
+        <div class="facet">
+          <h2>Roast level</h2>
+          <div class="opt" aria-checked="true" role="checkbox"><span class="box">✓</span> Light <span class="num">7</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Medium <span class="num">13</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Medium-dark <span class="num">6</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Dark <span class="num">5</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Decaf <span class="num">3</span></div>
+          <div class="swrow" style="margin-top:12px">
+            <span class="sw" title="Light roast" style="background:linear-gradient(135deg,#d9a860,#c07f3c)"></span>
+            <span class="sw" title="Medium roast" style="background:linear-gradient(135deg,#a8542a,#7a3925)"></span>
+            <span class="sw" title="Medium-dark roast" style="background:linear-gradient(135deg,#6b3419,#4a2414)"></span>
+            <span class="sw" title="Dark roast" style="background:linear-gradient(135deg,#3a1c10,#20100a)"></span>
+            <span class="sw" title="Decaf" style="background:var(--primary)"></span>
+          </div>
+        </div>
+        <div class="facet">
+          <h2>Origin</h2>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Ethiopia <span class="num">5</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Colombia <span class="num">6</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Guatemala <span class="num">4</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Kenya <span class="num">3</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Brazil <span class="num">4</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> House blend <span class="num">8</span></div>
+        </div>
+        <div class="facet">
+          <h2>Format</h2>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Whole bean <span class="num">34</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Ground — filter <span class="num">34</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Ground — espresso <span class="num">28</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Ground — French press <span class="num">28</span></div>
+        </div>
+        <div class="facet">
+          <h2>Price</h2>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Under $20 <span class="num">8</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> $20 – $24 <span class="num">18</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> $25+ <span class="num">8</span></div>
+        </div>
+        <div class="facet">
+          <h2>Availability</h2>
+          <div class="opt" aria-checked="true" role="checkbox"><span class="box">✓</span> In stock <span class="num">31</span></div>
+          <div class="opt" aria-checked="false" role="checkbox"><span class="box"></span> Subscription only <span class="num">3</span></div>
+        </div>
+        <div class="facet" style="border-bottom:0">
+          <a class="btn btn-ghost" href="#" style="padding:11px 22px;font-size:14px">Clear all</a>
+        </div>
+      </aside>
+
+      <!-- PRODUCT GRID — Dawn: main-collection (product-grid) -->
+      <main>
+        <h2 class="sr-only">Coffee — all products</h2>
+        <div class="products">
+
+          <div class="card">
+            <div class="pouch"><span class="roast-tag">Medium</span><span class="badge">Bestseller</span><span class="band"></span></div>
+            <div class="body"><h3>Sunday Morning Blend</h3><div class="origin">House blend</div><div class="notes">Milk chocolate · toasted almond · brown sugar</div><div class="prow"><span class="price">$19</span><span class="sub">Subscribe $16.15</span></div><div class="rate"><span class="stars">★★★★★</span> 3,120</div></div>
+            <div class="atc"><button>Add to cart</button></div>
+          </div>
+
+          <div class="card">
+            <div class="pouch light"><span class="roast-tag">Light</span><span class="band"></span></div>
+            <div class="body"><h3>Ethiopia Guji Natural</h3><div class="origin">Guji, Ethiopia</div><div class="notes">Blueberry · jasmine · stone fruit</div><div class="prow"><span class="price">$23</span><span class="sub">Subscribe $19.55</span></div><div class="rate"><span class="stars">★★★★★</span> 1,844</div></div>
+            <div class="atc"><button>Add to cart</button></div>
+          </div>
+
+          <div class="card">
+            <div class="pouch dark"><span class="roast-tag">Dark</span><span class="band"></span></div>
+            <div class="body"><h3>Midnight Drum Espresso</h3><div class="origin">Blend · espresso</div><div class="notes">Dark cocoa · molasses · roasted hazelnut</div><div class="prow"><span class="price">$21</span><span class="sub">Subscribe $17.85</span></div><div class="rate"><span class="stars">★★★★★</span> 2,405</div></div>
+            <div class="atc"><button>Add to cart</button></div>
+          </div>
+
+          <div class="card">
+            <div class="pouch decaf"><span class="roast-tag">Decaf</span><span class="band"></span></div>
+            <div class="body"><h3>Lights Out Decaf</h3><div class="origin">Colombia · Swiss Water</div><div class="notes">Caramel · red apple · vanilla</div><div class="prow"><span class="price">$20</span><span class="sub">Subscribe $17.00</span></div><div class="rate"><span class="stars">★★★★☆</span> 612</div></div>
+            <div class="atc"><button>Add to cart</button></div>
+          </div>
+
+          <div class="card">
+            <div class="pouch"><span class="roast-tag">Medium</span><span class="band"></span></div>
+            <div class="body"><h3>Colombia Huila La Esperanza</h3><div class="origin">Huila, Colombia · 1,750m</div><div class="notes">Red apple · caramel · cocoa</div><div class="prow"><span class="price">$22</span><span class="sub">Subscribe $18.70</span></div><div class="rate"><span class="stars">★★★★★</span> 1,290</div></div>
+            <div class="atc"><button>Add to cart</button></div>
+          </div>
+
+          <div class="card">
+            <div class="pouch dark"><span class="roast-tag">Medium-dark</span><span class="band"></span></div>
+            <div class="body"><h3>Guatemala Antigua</h3><div class="origin">Antigua, Guatemala</div><div class="notes">Baking spice · toffee · dried cherry</div><div class="prow"><span class="price">$22</span><span class="sub">Subscribe $18.70</span></div><div class="rate"><span class="stars">★★★★★</span> 908</div></div>
+            <div class="atc"><button>Add to cart</button></div>
+          </div>
+
+          <div class="card">
+            <div class="pouch light"><span class="roast-tag">Light</span><span class="badge">New</span><span class="band"></span></div>
+            <div class="body"><h3>Kenya Nyeri AA</h3><div class="origin">Nyeri, Kenya · washed</div><div class="notes">Black currant · grapefruit · brown sugar</div><div class="prow"><span class="price">$25</span><span class="sub">Subscribe $21.25</span></div><div class="rate"><span class="stars">★★★★★</span> 337</div></div>
+            <div class="atc"><button>Add to cart</button></div>
+          </div>
+
+          <div class="card">
+            <div class="pouch dark"><span class="roast-tag">Dark</span><span class="band"></span></div>
+            <div class="body"><h3>Sumatra Mandheling</h3><div class="origin">Aceh, Sumatra · wet-hulled</div><div class="notes">Cedar · dark chocolate · earthy spice</div><div class="prow"><span class="price">$21</span><span class="sub">Subscribe $17.85</span></div><div class="rate"><span class="stars">★★★★☆</span> 754</div></div>
+            <div class="atc"><button>Add to cart</button></div>
+          </div>
+
+          <div class="card">
+            <div class="pouch"><span class="roast-tag">Medium</span><span class="badge sale">Save 15%</span><span class="band"></span></div>
+            <div class="body"><h3>Brazil Cerrado</h3><div class="origin">Cerrado, Brazil · natural</div><div class="notes">Peanut · milk chocolate · red grape</div><div class="prow"><span class="price">$18 <span class="was">$21</span></span><span class="sub">Subscribe $15.30</span></div><div class="rate"><span class="stars">★★★★★</span> 1,061</div></div>
+            <div class="atc"><button>Add to cart</button></div>
+          </div>
+
+          <div class="card">
+            <div class="pouch dark"><span class="roast-tag">Dark</span><span class="band"></span></div>
+            <div class="body"><h3>Cold Brew Blend</h3><div class="origin">Blend · coarse grind</div><div class="notes">Chocolate · brown sugar · low acidity</div><div class="prow"><span class="price">$19</span><span class="sub">Subscribe $16.15</span></div><div class="rate"><span class="stars">★★★★★</span> 1,533</div></div>
+            <div class="atc"><button>Add to cart</button></div>
+          </div>
+
+          <div class="card">
+            <div class="pouch dark"><span class="roast-tag">Medium-dark</span><span class="band"></span></div>
+            <div class="body"><h3>House Espresso</h3><div class="origin">Blend · espresso</div><div class="notes">Toffee · hazelnut · dried cherry</div><div class="prow"><span class="price">$20</span><span class="sub">Subscribe $17.00</span></div><div class="rate"><span class="stars">★★★★★</span> 2,018</div></div>
+            <div class="atc"><button>Add to cart</button></div>
+          </div>
+
+          <div class="card">
+            <div class="pouch light"><span class="roast-tag">Light-medium</span><span class="band"></span></div>
+            <div class="body"><h3>Costa Rica Tarrazú</h3><div class="origin">Tarrazú, Costa Rica · honey</div><div class="notes">Honey · orange · toasted almond</div><div class="prow"><span class="price">$23</span><span class="sub">Subscribe $19.55</span></div><div class="rate"><span class="stars">★★★★★</span> 689</div></div>
+            <div class="atc"><button>Add to cart</button></div>
+          </div>
+
+        </div>
+
+        <!-- PAGINATION — Dawn: main-collection (pagination) -->
+        <nav class="pager" aria-label="Pagination">
+          <a class="step" href="#" aria-label="Previous page">‹ Prev</a>
+          <a href="#" aria-current="page">1</a>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <a href="#">…</a>
+          <a href="#">6</a>
+          <a class="step" href="#" aria-label="Next page">Next ›</a>
+        </nav>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="wrap fcols">
+      <div><div class="brand" style="margin-bottom:12px"><span class="seal"></span>Ashgrove Roastery</div><p style="color:var(--text-muted);font-size:14px;max-width:34ch">Small-batch coffee, roasted to order and shipped fresh from Portland, Oregon.</p></div>
+      <div><h3>Shop</h3><a>All coffee</a><a>Subscriptions</a><a>Gift boxes</a><a>Brew gear</a></div>
+      <div><h3>Learn</h3><a>Brew guides</a><a>Our growers</a><a>Roast levels</a><a>Journal</a></div>
+      <div><h3>Support</h3><a>Contact</a><a>Shipping</a><a>Manage subscription</a><a>FAQ</a></div>
+    </div>
+    <div class="fbot">© Ashgrove Roastery · Baseline template · Structure references Shopify Dawn 15.4.1</div>
+  </footer>
+</body>
+</html>

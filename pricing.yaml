@@ -1,0 +1,41 @@
+# pricing.yaml — the SINGLE source of truth for all prices. /forge:quote reads ONLY this file.
+# Amounts from the business plan v0.2. Base currency is RMB (大陆港). Region affects PRICE ONLY,
+# never delivery scope. Ranges are (min, max); enterprise max: null = 面议/起.
+#
+# ⚠ These numbers are the商业决策 owned by the human (Jay). Changing a price = editing this file only;
+# no price is hardcoded anywhere else in the pipeline.
+version: "1.0"
+base_currency: RMB
+fx:
+  rmb_per_usd: 7.2          # display FX for USD regions (advisory; finalize at contract time)
+
+# ---- delivery tiers (one-off build) ----
+delivery_tiers:
+  landing:    { min: 2500,   max: 3500,  sla: "48 小时" }
+  standard:   { min: 15000,  max: 25000, sla: "7 天" }
+  custom:     { min: 45000,  max: 80000, sla: "3–4 周" }
+  enterprise: { min: 100000, max: null,  sla: "按合同" }   # ¥100,000 起
+
+# ---- ops tiers (monthly subscription) ----
+ops_tiers:
+  basic:      { min: 1500, max: 3000  }
+  growth:     { min: 3000, max: 6000  }
+  enterprise: { min: 6000, max: 12000 }
+
+# ---- addons (加价项), applied on top of the delivery-tier subtotal ----
+addons:
+  compliance-us: { kind: percent,     value: 20, label_zh: "美国合规包 (+20%)" }
+  multilingual:  { kind: per_language, value: 2000, label_zh: "多语言 (+¥2,000/语种)" }
+  payment-local: { kind: flat_range,   min: 3000, max: 5000, label_zh: "本地支付对接 (+¥3,000–5,000)" }
+
+# ---- regions: PRICE-ONLY modifier (delivery scope is identical everywhere) ----
+regions:
+  mainland_hk:    { currency: RMB, multiplier: 1.00, label_zh: "大陆 / 港" }
+  north_america:  { currency: USD, multiplier: 1.15, label_zh: "北美（USD 上浮）" }
+  europe:         { currency: USD, multiplier: 1.15, label_zh: "欧洲（USD 上浮）" }
+  southeast_asia: { currency: USD, multiplier: 0.85, label_zh: "东南亚（USD 下探）" }
+
+# ---- commercial terms ----
+terms:
+  prepay_percent: 50        # 50% 预付,交付验收后付尾款
+  migration_assessment: { min: 2000, max: 4000, label_zh: "存量店迁移评估费" }  # Phase 14; 待 Jay 确认

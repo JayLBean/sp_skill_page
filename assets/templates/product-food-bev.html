@@ -1,0 +1,419 @@
+<!-- @dsCard group="Product" name="Product (PDP) — Food & Beverage" subtitle="Breadcrumb · Gallery · Buy box (grind/size · one-time vs subscribe) · Tasting notes + brew guide accordion · Pairs with · Reviews · Sticky ATC bar · Footer" viewport="1280x2960" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — Product (Coffee Roaster)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  /* Warm roast palette: terracotta primary, honey-amber accent, cream surfaces */
+  :root{
+    --primary:#a8432a; --on-primary:#fff5ef;
+    --secondary:#e2a24b; --on-secondary:#2a1a08;
+    --bg:#fbf6ee; --surface:#f4ead9; --surface-2:#ecdcc4;
+    --text:#2a1c14; --text-muted:#6d5b4c; --border:#e6d6bf;
+    --radius:16px; --maxw:1200px;
+    --serif:"Hoefler Text","Baskerville Old Face",Baskerville,"Palatino Linotype",Palatino,Georgia,serif;
+    --sans:"Avenir Next","Avenir",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#17110d; --surface:#201812; --surface-2:#2b2016; --text:#f5e9db; --text-muted:#b6a290; --border:#382a1f; --on-secondary:#2a1a08; }
+  }
+  :root[data-theme="dark"]{ --bg:#17110d; --surface:#201812; --surface-2:#2b2016; --text:#f5e9db; --text-muted:#b6a290; --border:#382a1f; }
+  :root[data-theme="light"]{ --bg:#fbf6ee; --surface:#f4ead9; --surface-2:#ecdcc4; --text:#2a1c14; --text-muted:#6d5b4c; --border:#e6d6bf; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0}
+  .btn{display:inline-block;padding:14px 28px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .15s ease;cursor:pointer}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text)}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--primary);font-weight:700}
+  .stars{color:var(--secondary);letter-spacing:1px}
+
+  /* announcement — Dawn: announcement-bar */
+  .announce{background:var(--primary);color:var(--on-primary);text-align:center;font-size:13px;letter-spacing:.04em;padding:9px 16px}
+  .announce b{font-weight:700}
+  /* header — Dawn: header */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:9px}
+  .brand .seal{width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--secondary),var(--primary));display:inline-block}
+  .nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--text-muted);font-weight:500}
+  .nav .icons{display:flex;gap:18px;font-size:14px;color:var(--text-muted)}
+  @media(max-width:760px){.nav ul{display:none}}
+
+  /* breadcrumb — Dawn: main-product (breadcrumb) */
+  .crumbs{font-size:13px;color:var(--text-muted);padding:20px 0 8px}
+  .crumbs a:hover{color:var(--text)}
+  .crumbs span{margin:0 8px;opacity:.6}
+
+  /* main product — two columns — Dawn: main-product */
+  .pdp{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;padding:12px 0 8px;align-items:start}
+  @media(max-width:900px){.pdp{grid-template-columns:1fr;gap:28px}}
+
+  /* gallery — Dawn: main-product (media gallery) */
+  .gallery{position:sticky;top:92px}
+  @media(max-width:900px){.gallery{position:static}}
+  .main-img{position:relative;overflow:hidden;aspect-ratio:4/5;border-radius:var(--radius);
+    background:radial-gradient(120% 90% at 75% 16%,var(--secondary) 0%,transparent 50%),linear-gradient(160deg,#7a3925,var(--primary) 60%,#5f2a18);
+    box-shadow:0 30px 60px -34px rgba(60,20,8,.5)}
+  .main-img .band{position:absolute;left:20%;right:20%;top:40%;height:20%;border-radius:10px;
+    background:color-mix(in srgb,var(--secondary) 88%,#fff);opacity:.95;box-shadow:0 8px 18px rgba(0,0,0,.3)}
+  .thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+  .thumb{aspect-ratio:1/1;border-radius:10px;border:1px solid var(--border);cursor:pointer}
+  .thumb.t1{background:radial-gradient(120% 100% at 70% 16%,var(--secondary) 0%,transparent 52%),linear-gradient(160deg,#7a3925,var(--primary))}
+  .thumb.t2{background:linear-gradient(150deg,#3a1c10,#20100a)}
+  .thumb.t3{background:linear-gradient(150deg,var(--surface-2),var(--secondary))}
+  .thumb.t4{background:linear-gradient(160deg,#6b7c46,#4a6138)}
+  .thumb[aria-current="true"]{border-color:var(--primary);outline:2px solid var(--primary);outline-offset:-2px}
+
+  /* buy box — Dawn: main-product (product information) */
+  .buybox h1{font-size:clamp(26px,3.4vw,38px);line-height:1.1;margin-top:6px}
+  .rrow{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);margin-top:12px}
+  .rrow a{text-decoration:underline;text-underline-offset:2px}
+  .pricerow{display:flex;align-items:baseline;gap:12px;margin:18px 0 6px}
+  .pricerow .now{font-size:26px;font-weight:600}
+  .pricerow .was{color:var(--text-muted);text-decoration:line-through;font-size:16px}
+  .pricerow .save{background:var(--secondary);color:var(--on-secondary);font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px}
+  .blurb{color:var(--text-muted);font-size:15px;max-width:48ch;margin:6px 0 26px}
+
+  .opt-group{margin-bottom:22px}
+  .opt-group .lbl{font-size:13px;font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between}
+  .opt-group .lbl span{color:var(--text-muted);font-weight:400}
+  .picks{display:flex;gap:10px;flex-wrap:wrap}
+  .pick{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:10px;padding:10px 16px;font-size:14px;cursor:pointer;transition:border-color .15s ease;font-family:inherit}
+  .pick:hover{border-color:var(--primary)}
+  .pick[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+
+  /* purchase type: one-time vs subscribe toggle */
+  .buytype{display:grid;gap:10px;margin-bottom:20px}
+  .buytype .opt{border:1px solid var(--border);background:var(--surface);border-radius:12px;padding:14px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;text-align:left;font-family:inherit;color:var(--text);width:100%}
+  .buytype .opt[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+  .buytype .radio{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border);flex:0 0 auto;margin-top:2px;display:grid;place-items:center}
+  .buytype .opt[aria-pressed="true"] .radio{border-color:var(--primary)}
+  .buytype .opt[aria-pressed="true"] .radio::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--primary)}
+  .buytype .txt{flex:1}
+  .buytype .t{font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
+  .buytype .d{font-size:13px;color:var(--text-muted);margin-top:3px}
+  .buytype .save-pill{background:var(--secondary);color:var(--on-secondary);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
+  .buytype .now{font-weight:700;font-size:15px;white-space:nowrap}
+  .freq{margin-top:12px;padding-left:30px}
+  .freq label{font-size:13px;color:var(--text-muted);display:block;margin-bottom:6px}
+  select.pick-sel{appearance:none;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:10px;padding:11px 34px 11px 14px;font-size:14px;font-family:var(--sans);cursor:pointer;width:100%;max-width:280px;
+    background-image:linear-gradient(45deg,transparent 50%,var(--text-muted) 50%),linear-gradient(135deg,var(--text-muted) 50%,transparent 50%);
+    background-position:calc(100% - 18px) 55%,calc(100% - 13px) 55%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+
+  .buyrow{display:flex;gap:12px;align-items:stretch;margin:6px 0 18px}
+  .stepper{display:flex;align-items:center;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .stepper button{border:0;background:transparent;color:var(--text);width:44px;font-size:18px;cursor:pointer}
+  .stepper span{min-width:34px;text-align:center;font-size:15px;font-weight:600}
+  .btn-add{flex:1;border:0;text-align:center;font-size:16px;padding:16px 24px}
+  .subline{font-size:12px;color:var(--text-muted);text-align:center;margin-bottom:22px}
+
+  .trust-badges{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:18px 0}
+  .tb{text-align:center;font-size:12px;color:var(--text-muted);line-height:1.35}
+  .tb .ic{width:30px;height:30px;border-radius:9px;background:var(--secondary);color:var(--on-secondary);display:grid;place-items:center;margin:0 auto 8px;font-weight:700;font-size:13px}
+
+  /* section shell */
+  section.blk{padding:64px 0}
+  .head{text-align:center;max-width:60ch;margin:0 auto 40px}
+  .head h2{font-size:clamp(24px,3.2vw,36px)}
+  .head p{color:var(--text-muted);margin-top:12px}
+
+  /* accordion — Dawn: main-product (collapsible-tab blocks) */
+  .accordion{max-width:820px;margin:0 auto}
+  .acc{border-bottom:1px solid var(--border)}
+  .acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:20px 2px;font-family:var(--serif);font-size:19px;font-weight:600}
+  .acc summary::-webkit-details-marker{display:none}
+  .acc summary .plus{font-family:var(--sans);font-size:24px;font-weight:400;color:var(--text-muted);transition:transform .2s ease}
+  .acc[open] summary .plus{transform:rotate(45deg)}
+  .acc .content{padding:0 2px 22px;color:var(--text-muted);font-size:15px;max-width:70ch}
+  .acc .content p{margin:0 0 12px}
+  .acc .content ul{margin:0;padding-left:18px}
+  .acc .content li{margin:6px 0}
+  /* roast profile meter */
+  .roastmeter{display:flex;align-items:center;gap:12px;margin:4px 0 16px;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+  .roastmeter .track{flex:1;max-width:320px;height:8px;border-radius:999px;background:linear-gradient(90deg,#d9a860,#a8542a 55%,#20100a)}
+  .roastmeter .dot{width:14px;height:14px;border-radius:50%;background:var(--primary);border:2px solid var(--bg);box-shadow:0 0 0 1px var(--border);margin-left:-7px}
+
+  /* pairs with row — Dawn: related-products */
+  .products{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  @media(max-width:900px){.products{grid-template-columns:repeat(2,1fr)}}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform .18s ease}
+  .card:hover{transform:translateY(-3px)}
+  .card .ph{position:relative;aspect-ratio:1/1;background:linear-gradient(160deg,#7a3925,var(--primary) 60%,#5f2a18)}
+  .card .ph.g2{background:linear-gradient(160deg,#3a1c10,#20100a)}
+  .card .ph.g3{background:linear-gradient(160deg,#c07f3c,#a8542a 62%,#7c3a1f)}
+  .card .ph.g4{background:linear-gradient(160deg,#6b7c46,#4a6138)}
+  .card .ph .band{position:absolute;left:22%;right:22%;top:42%;height:18%;border-radius:6px;background:color-mix(in srgb,var(--secondary) 88%,#fff);opacity:.95}
+  .card .body{padding:16px}
+  .card h3{font-family:var(--sans);font-size:15px;font-weight:700}
+  .card .price{color:var(--text-muted);font-size:14px;margin-top:4px}
+  .card .rate{font-size:12px;color:var(--text-muted);margin-top:8px}
+
+  /* reviews summary — Dawn: product-reviews (app block) */
+  .reviews{background:var(--surface-2)}
+  .rsum{display:grid;grid-template-columns:260px 1fr;gap:44px;align-items:center}
+  @media(max-width:760px){.rsum{grid-template-columns:1fr;gap:28px}}
+  .rscore{text-align:center}
+  .rscore .big{font-family:var(--serif);font-size:64px;line-height:1}
+  .rscore .stars{font-size:20px}
+  .rscore .n{color:var(--text-muted);font-size:13px;margin-top:6px}
+  .bars{display:flex;flex-direction:column;gap:8px}
+  .bar{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--text-muted)}
+  .bar .track{flex:1;height:8px;background:var(--surface);border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .bar .fill{height:100%;background:var(--primary)}
+  .rquotes{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:34px}
+  @media(max-width:760px){.rquotes{grid-template-columns:1fr}}
+  .rq{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px}
+  .rq .stars{font-size:13px}
+  .rq p{font-size:14px;margin:10px 0 12px}
+  .rq .who{font-size:12px;color:var(--text-muted)}
+
+  /* sticky mobile add-to-cart bar — Dawn: main-product (sticky buy buttons) */
+  .stickybar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:none;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+  .stickybar .inner{display:flex;align-items:center;gap:14px;max-width:var(--maxw);margin:0 auto}
+  .stickybar .meta{flex:0 0 auto}
+  .stickybar .meta .t{font-size:13px;font-weight:600;white-space:nowrap;max-width:38vw;overflow:hidden;text-overflow:ellipsis}
+  .stickybar .meta .p{font-size:13px;color:var(--text-muted)}
+  .stickybar .btn-add{flex:1;border:0;padding:14px 20px;font-size:15px}
+  @media(max-width:760px){.stickybar{display:block}body{padding-bottom:78px}}
+
+  /* footer — Dawn: footer */
+  footer{border-top:1px solid var(--border);margin-top:8px}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px;padding:56px 0}
+  .fcols h3{font-family:var(--sans);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:700;margin:0 0 14px}
+  .fcols a{display:block;font-size:14px;color:var(--text-muted);padding:5px 0}
+  .fcols a:hover{color:var(--text)}
+  .fbot{border-top:1px solid var(--border);padding:20px 0;font-size:13px;color:var(--text-muted);text-align:center}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <!-- ANNOUNCEMENT — Dawn: announcement-bar -->
+  <div class="announce">Free shipping over <b>$40</b> · Subscribe &amp; save <b>15%</b> · Roasted the day it ships</div>
+
+  <!-- HEADER — Dawn: header -->
+  <header>
+    <nav class="nav wrap">
+      <ul><li>Coffee</li><li>Subscriptions</li><li>Brew Guides</li><li>Our Story</li></ul>
+      <div class="brand"><span class="seal"></span>Ashgrove Roastery</div>
+      <div class="icons"><span>Search</span><span>Cart (0)</span></div>
+    </nav>
+  </header>
+
+  <!-- BREADCRUMB — Dawn: main-product (breadcrumb) -->
+  <nav class="crumbs wrap" aria-label="Breadcrumb">
+    <a href="#">Home</a><span>/</span><a href="#">Coffee</a><span>/</span>Ethiopia Guji Natural
+  </nav>
+
+  <!-- MAIN PRODUCT — Dawn: main-product -->
+  <section class="wrap">
+    <div class="pdp">
+
+      <!-- GALLERY — Dawn: main-product (media gallery) -->
+      <div class="gallery">
+        <div class="main-img" role="img" aria-label="Ethiopia Guji Natural, 340g coffee bag"><span class="band"></span></div>
+        <div class="thumbs">
+          <div class="thumb t1" aria-current="true" role="button" aria-label="View 1 — bag front"></div>
+          <div class="thumb t2" role="button" aria-label="View 2 — roasted whole beans"></div>
+          <div class="thumb t3" role="button" aria-label="View 3 — brewed cup"></div>
+          <div class="thumb t4" role="button" aria-label="View 4 — the farm"></div>
+        </div>
+      </div>
+
+      <!-- BUY BOX — Dawn: main-product (product information) -->
+      <div class="buybox">
+        <span class="eyebrow">Light roast · Single origin</span>
+        <h1>Ethiopia Guji Natural</h1>
+        <div class="rrow"><span class="stars">★★★★★</span> 4.9 · <a href="#reviews">1,844 reviews</a></div>
+
+        <div class="pricerow">
+          <span class="now">$23</span>
+          <span class="save">Subscribe &amp; save 15%</span>
+        </div>
+        <p class="blurb">A naturally processed lot from the Guji zone that drinks like a berry compote — bright blueberry up front, jasmine in the middle, a clean stone-fruit finish. Roasted light to keep the fruit loud.</p>
+
+        <!-- variant: grind — Dawn: main-product (variant picker) -->
+        <div class="opt-group">
+          <div class="lbl"><span style="color:var(--text)">Grind</span> <span>Whole bean selected</span></div>
+          <div class="picks">
+            <button class="pick" aria-pressed="true">Whole bean</button>
+            <button class="pick" aria-pressed="false">Filter / pour-over</button>
+            <button class="pick" aria-pressed="false">Espresso</button>
+            <button class="pick" aria-pressed="false">French press</button>
+            <button class="pick" aria-pressed="false">Moka pot</button>
+          </div>
+        </div>
+
+        <!-- variant: size — Dawn: main-product (variant picker) -->
+        <div class="opt-group">
+          <div class="lbl"><span style="color:var(--text)">Size</span> <span>340 g selected</span></div>
+          <div class="picks">
+            <button class="pick" aria-pressed="false">200 g · $15</button>
+            <button class="pick" aria-pressed="true">340 g · $23</button>
+            <button class="pick" aria-pressed="false">1 kg · $58</button>
+          </div>
+        </div>
+
+        <!-- purchase type: one-time vs subscribe — Dawn: main-product (selling-plan / subscription) -->
+        <div class="opt-group">
+          <div class="lbl"><span style="color:var(--text)">Purchase</span></div>
+          <div class="buytype">
+            <button class="opt" aria-pressed="false">
+              <span class="radio"></span>
+              <span class="txt"><span class="t">One-time purchase</span><span class="d">Roasted to order, shipped once</span></span>
+              <span class="now">$23</span>
+            </button>
+            <button class="opt" aria-pressed="true">
+              <span class="radio"></span>
+              <span class="txt"><span class="t">Subscribe &amp; save <span class="save-pill">Save 15%</span></span><span class="d">Fresh coffee on a schedule — pause, swap, or skip anytime</span></span>
+              <span class="now">$19.55</span>
+            </button>
+            <div class="freq">
+              <label for="freq">Delivery every</label>
+              <select class="pick-sel" id="freq" aria-label="Delivery frequency">
+                <option>1 week</option>
+                <option selected>2 weeks</option>
+                <option>3 weeks</option>
+                <option>4 weeks</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- quantity + add to cart -->
+        <div class="buyrow">
+          <div class="stepper" aria-label="Quantity">
+            <button aria-label="Decrease quantity">−</button>
+            <span>1</span>
+            <button aria-label="Increase quantity">+</button>
+          </div>
+          <button class="btn btn-primary btn-add">Add to cart · $19.55</button>
+        </div>
+        <div class="subline">Free shipping over $40 · Roasted &amp; shipped within 24 hours</div>
+
+        <!-- trust badges -->
+        <div class="trust-badges">
+          <div class="tb"><div class="ic">✓</div>Roasted to order</div>
+          <div class="tb"><div class="ic">24h</div>Ships within 24 hours</div>
+          <div class="tb"><div class="ic">♺</div>Compostable bag</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TASTING NOTES + BREW GUIDE ACCORDION — Dawn: main-product (collapsible-tab blocks) -->
+  <section class="blk">
+    <div class="wrap accordion">
+      <div class="head" style="margin-bottom:20px"><span class="eyebrow">The details</span><h2>Tasting notes &amp; how to brew it</h2></div>
+      <details class="acc" open>
+        <summary>Tasting notes &amp; roast profile <span class="plus">+</span></summary>
+        <div class="content">
+          <div class="roastmeter"><span>Light</span><span class="track"><span class="dot" style="margin-left:26%"></span></span><span>Dark</span></div>
+          <p>Roasted light to protect the delicate fruit that natural processing brings out. Expect a syrupy body and a juicy, wine-like acidity.</p>
+          <ul>
+            <li><b>Aroma</b> — blueberry, ripe strawberry</li>
+            <li><b>Flavor</b> — blueberry compote, jasmine, stone fruit</li>
+            <li><b>Finish</b> — clean, sweet, lingering florals</li>
+            <li><b>Body</b> — syrupy · <b>Acidity</b> — bright</li>
+          </ul>
+        </div>
+      </details>
+      <details class="acc">
+        <summary>Brew guide <span class="plus">+</span></summary>
+        <div class="content">
+          <p>Dialed in by our roasters. Start here, then adjust grind to taste.</p>
+          <ul>
+            <li><b>Pour-over</b> — 22 g coffee : 360 g water, 96°C, medium grind, 3:00 total brew</li>
+            <li><b>French press</b> — 30 g coffee : 500 g water, coarse grind, 4:00 steep</li>
+            <li><b>Espresso</b> — 18 g in : 40 g out, fine grind, 28 seconds</li>
+          </ul>
+          <p>Best enjoyed within 3–4 weeks of the roast date printed on your bag.</p>
+        </div>
+      </details>
+      <details class="acc">
+        <summary>Origin &amp; sourcing <span class="plus">+</span></summary>
+        <div class="content">
+          <p>Grown at 1,900–2,100m by smallholder farmers around the Guji zone of Oromia, Ethiopia, and dried on raised beds for up to three weeks. Heirloom varieties, natural process.</p>
+          <p>Bought direct at prices set above Fair Trade, from the same washing station year after year.</p>
+        </div>
+      </details>
+      <details class="acc">
+        <summary>Shipping &amp; returns <span class="plus">+</span></summary>
+        <div class="content">
+          <p>Free shipping on orders over $40. We roast and ship within 24 hours, so every bag arrives days — not months — off the roaster.</p>
+          <p>Not your cup? Tell us within 30 days and we'll make it right with a replacement or refund.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- PAIRS WITH — Dawn: related-products -->
+  <section class="blk" style="background:var(--surface)">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Complete the shelf</span><h2>Pairs well with</h2></div>
+      <div class="products">
+        <div class="card"><div class="ph g3"><span class="band"></span></div><div class="body"><h3>Costa Rica Tarrazú</h3><div class="price">$23 · Light-medium</div><div class="rate"><span class="stars">★★★★★</span> 689</div></div></div>
+        <div class="card"><div class="ph"><span class="band"></span></div><div class="body"><h3>Sunday Morning Blend</h3><div class="price">$19 · Medium</div><div class="rate"><span class="stars">★★★★★</span> 3,120</div></div></div>
+        <div class="card"><div class="ph g2"><span class="band"></span></div><div class="body"><h3>Midnight Drum Espresso</h3><div class="price">$21 · Dark</div><div class="rate"><span class="stars">★★★★★</span> 2,405</div></div></div>
+        <div class="card"><div class="ph g4"><span class="band"></span></div><div class="body"><h3>Ceramic Pour-Over Kit</h3><div class="price">$46 · Brew gear</div><div class="rate"><span class="stars">★★★★☆</span> 421</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS SUMMARY — Dawn: product-reviews (app block) -->
+  <section class="blk reviews" id="reviews">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">What people say</span><h2>Loved by 1,844 home brewers</h2></div>
+      <div class="rsum">
+        <div class="rscore">
+          <div class="big">4.9</div>
+          <div class="stars">★★★★★</div>
+          <div class="n">Based on 1,844 reviews</div>
+        </div>
+        <div class="bars">
+          <div class="bar"><span>5★</span><div class="track"><div class="fill" style="width:91%"></div></div><span>91%</span></div>
+          <div class="bar"><span>4★</span><div class="track"><div class="fill" style="width:6%"></div></div><span>6%</span></div>
+          <div class="bar"><span>3★</span><div class="track"><div class="fill" style="width:2%"></div></div><span>2%</span></div>
+          <div class="bar"><span>2★</span><div class="track"><div class="fill" style="width:1%"></div></div><span>1%</span></div>
+          <div class="bar"><span>1★</span><div class="track"><div class="fill" style="width:0%"></div></div><span>0%</span></div>
+        </div>
+      </div>
+      <div class="rquotes">
+        <div class="rq"><div class="stars">★★★★★</div><p>“It genuinely tastes like blueberry jam. My pour-over has never been this fruity — and it showed up two days after roasting.”</p><div class="who">— Dani R. · Subscriber, 8 months</div></div>
+        <div class="rq"><div class="stars">★★★★★</div><p>“Bought a bag on a whim, immediately switched my subscription to it. The jasmine note on the finish is unreal.”</p><div class="who">— Marcus T. · Verified buyer</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="wrap fcols">
+      <div><div class="brand" style="margin-bottom:12px"><span class="seal"></span>Ashgrove Roastery</div><p style="color:var(--text-muted);font-size:14px;max-width:34ch">Small-batch coffee, roasted to order and shipped fresh from Portland, Oregon.</p></div>
+      <div><h3>Shop</h3><a>All coffee</a><a>Subscriptions</a><a>Gift boxes</a><a>Brew gear</a></div>
+      <div><h3>Learn</h3><a>Brew guides</a><a>Our growers</a><a>Roast levels</a><a>Journal</a></div>
+      <div><h3>Support</h3><a>Contact</a><a>Shipping</a><a>Manage subscription</a><a>FAQ</a></div>
+    </div>
+    <div class="fbot">© Ashgrove Roastery · Baseline template · Structure references Shopify Dawn 15.4.1</div>
+  </footer>
+
+  <!-- STICKY MOBILE ADD-TO-CART — Dawn: main-product (sticky buy buttons) -->
+  <div class="stickybar">
+    <div class="inner">
+      <div class="meta">
+        <div class="t">Ethiopia Guji Natural</div>
+        <div class="p">340 g · Subscribe $19.55</div>
+      </div>
+      <button class="btn btn-primary btn-add">Add to cart</button>
+    </div>
+  </div>
+</body>
+</html>

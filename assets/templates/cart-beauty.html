@@ -1,0 +1,291 @@
+<!-- @dsCard group="Cart" name="Cart — Beauty" subtitle="Cart header · Free-shipping bar · Line-item table · Order summary · You may also like" viewport="1280x1720" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — Cart (Beauty)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  :root{
+    --primary:#1f6f54; --on-primary:#ffffff;
+    --secondary:#e8b4b8; --on-secondary:#111111;
+    --bg:#ffffff; --surface:#f7f5f2; --surface-2:#efeae3;
+    --text:#1a1a1a; --text-muted:#5c5c5c; --border:#e2e2e2;
+    --radius:14px; --maxw:1200px;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#14110f; --surface:#1d1a17; --surface-2:#252019; --text:#f2ede7; --text-muted:#a9a199; --border:#332e29; --on-secondary:#111; }
+  }
+  :root[data-theme="dark"]{ --bg:#14110f; --surface:#1d1a17; --surface-2:#252019; --text:#f2ede7; --text-muted:#a9a199; --border:#332e29; }
+  :root[data-theme="light"]{ --bg:#ffffff; --surface:#f7f5f2; --surface-2:#efeae3; --text:#1a1a1a; --text-muted:#5c5c5c; --border:#e2e2e2; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0}
+  .btn{display:inline-block;padding:14px 28px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .15s ease;cursor:pointer}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text)}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+  .stars{color:var(--primary);letter-spacing:1px}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+  /* announcement */
+  .announce{background:var(--primary);color:var(--on-primary);text-align:center;font-size:13px;letter-spacing:.04em;padding:9px 16px}
+  /* header */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.02em}
+  .nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--text-muted)}
+  .nav .icons{display:flex;gap:18px;font-size:14px}
+  @media(max-width:760px){.nav ul{display:none}}
+
+  /* cart header */
+  .charohero{padding:34px 0 6px}
+  .charohero h1{font-size:clamp(30px,4.4vw,48px);line-height:1.06;margin-top:6px}
+  .csub{color:var(--text-muted);font-size:15px;margin:12px 0 0}
+
+  /* free-shipping progress */
+  .freeship{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;margin:22px 0 4px}
+  .fstext{margin:0 0 12px;font-size:14px}
+  .fstext b{color:var(--primary)}
+  .progress{height:8px;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .progress .fill{height:100%;background:var(--primary)}
+
+  /* cart layout: items table + summary sidebar */
+  .cartgrid{display:grid;grid-template-columns:1fr 360px;gap:44px;padding:26px 0 12px;align-items:start}
+  @media(max-width:900px){.cartgrid{grid-template-columns:1fr;gap:28px}.summary{position:static}}
+
+  /* line-item table (scrolls horizontally on mobile) */
+  .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{width:100%;border-collapse:collapse;min-width:620px}
+  caption{text-align:left}
+  thead th{text-align:left;font-family:var(--sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:700;padding:0 0 14px;border-bottom:1px solid var(--border)}
+  thead th.num{text-align:right}
+  tbody td{padding:20px 0;border-bottom:1px solid var(--border);vertical-align:middle;font-size:14px}
+  td.num{text-align:right;white-space:nowrap}
+  td.total{font-weight:600}
+  td.prodcell{padding-right:20px}
+  .prod{display:flex;align-items:center;gap:16px}
+  .pimg{width:72px;height:72px;flex:0 0 auto;border-radius:10px;background:linear-gradient(150deg,var(--surface-2),var(--secondary))}
+  .pimg.g2{background:linear-gradient(150deg,var(--surface-2),var(--primary))}
+  .pimg.g3{background:radial-gradient(120% 120% at 70% 20%,var(--secondary) 0%,transparent 55%),linear-gradient(160deg,var(--surface-2),var(--primary))}
+  .pname{font-weight:600;font-size:15px}
+  .pvar{color:var(--text-muted);font-size:13px;margin-top:2px}
+  td.qty{padding:20px 16px}
+  .stepper{display:inline-flex;align-items:center;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .stepper button{border:0;background:transparent;color:var(--text);width:38px;height:38px;font-size:18px;cursor:pointer}
+  .stepper span{min-width:28px;text-align:center;font-size:14px;font-weight:600}
+  .remove{border:0;background:transparent;color:var(--text-muted);font-family:var(--sans);font-size:13px;text-decoration:underline;text-underline-offset:2px;cursor:pointer;padding:6px 0;white-space:nowrap}
+  .remove:hover{color:var(--text)}
+
+  /* order summary sidebar */
+  .summary{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px;position:sticky;top:92px}
+  .summary h2{font-size:21px;margin-bottom:16px}
+  .srow{display:flex;justify-content:space-between;gap:16px;font-size:14px;padding:9px 0}
+  .srow.muted{color:var(--text-muted)}
+  .srow.grand{border-top:1px solid var(--border);margin-top:8px;padding-top:16px;font-size:16px;font-weight:600}
+  .discount{margin:16px 0}
+  .discount label{display:block;font-size:13px;font-weight:600;margin-bottom:8px}
+  .drow{display:flex;gap:8px}
+  .drow input{flex:1;min-width:0;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:14px;font-family:var(--sans)}
+  .drow input:focus{outline:2px solid var(--primary);outline-offset:1px;border-color:var(--primary)}
+  .drow .btn{padding:12px 18px;font-size:14px}
+  .checkout{display:block;text-align:center;width:100%;margin-top:8px;font-size:16px}
+  .securenote{text-align:center;color:var(--text-muted);font-size:12px;margin:12px 0 18px}
+  .sbadges{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;border-top:1px solid var(--border);padding-top:18px}
+  .sb{text-align:center;font-size:11px;color:var(--text-muted);line-height:1.35}
+  .sb .ic{width:30px;height:30px;border-radius:9px;background:var(--secondary);color:var(--on-secondary);display:grid;place-items:center;margin:0 auto 7px;font-weight:700;font-size:13px}
+
+  /* section shell + you may also like */
+  section.blk{padding:56px 0}
+  .head{text-align:center;max-width:60ch;margin:0 auto 36px}
+  .head h2{font-size:clamp(24px,3.2vw,36px)}
+  .products{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  @media(max-width:900px){.products{grid-template-columns:repeat(2,1fr)}}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform .18s ease}
+  .card:hover{transform:translateY(-3px)}
+  .card .ph{aspect-ratio:1/1;background:linear-gradient(150deg,var(--surface-2),var(--secondary))}
+  .card .ph.g2{background:linear-gradient(150deg,var(--surface-2),var(--primary))}
+  .card .ph.g3{background:radial-gradient(120% 120% at 70% 20%,var(--secondary) 0%,transparent 55%),linear-gradient(160deg,var(--surface-2),var(--primary))}
+  .card .body{padding:16px}
+  .card h3{font-family:var(--sans);font-size:15px;font-weight:600}
+  .card .price{color:var(--text-muted);font-size:14px;margin-top:4px}
+  .card .rate{font-size:12px;color:var(--text-muted);margin-top:8px}
+
+  /* footer */
+  footer{border-top:1px solid var(--border);margin-top:8px}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px;padding:56px 0}
+  .fcols h3{font-family:var(--sans);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:700;margin:0 0 14px}
+  .fcols a{display:block;font-size:14px;color:var(--text-muted);padding:5px 0}
+  .fbot{border-top:1px solid var(--border);padding:20px 0;font-size:13px;color:var(--text-muted);text-align:center}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <div class="announce">Free carbon-neutral shipping over $50 · 30-day happiness guarantee</div>
+
+  <!-- Dawn: header -->
+  <header>
+    <nav class="nav wrap">
+      <ul><li>Shop</li><li>Bestsellers</li><li>Ingredients</li><li>About</li></ul>
+      <div class="brand">Lumina</div>
+      <div class="icons"><span>Search</span><span>Cart (3)</span></div>
+    </nav>
+  </header>
+
+  <!-- CART HEADER — Dawn: main-cart-items (title) -->
+  <section class="charohero wrap">
+    <span class="eyebrow">Cart</span>
+    <h1>Your cart</h1>
+    <p class="csub">3 items · Free returns within 30 days</p>
+  </section>
+
+  <!-- FREE-SHIPPING PROGRESS — Dawn: main-cart-items (free-shipping bar block) -->
+  <div class="wrap">
+    <div class="freeship">
+      <p class="fstext">You're <b>$8.00</b> away from free carbon-neutral shipping.</p>
+      <div class="progress" role="progressbar" aria-label="Free shipping progress: 84% of $50 reached" aria-valuenow="42" aria-valuemin="0" aria-valuemax="50">
+        <div class="fill" style="width:84%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART BODY — line items + order summary -->
+  <div class="wrap">
+    <div class="cartgrid">
+
+      <!-- LINE-ITEM TABLE — Dawn: main-cart-items -->
+      <section class="items">
+        <div class="tablewrap">
+          <table>
+            <caption class="sr-only">Items in your cart</caption>
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col" class="num">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col" class="num">Total</th>
+                <th scope="col"><span class="sr-only">Remove item</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="prodcell">
+                  <div class="prod">
+                    <div class="pimg g3" role="img" aria-label="Radiance Vitamin C Serum"></div>
+                    <div><div class="pname">Radiance Vitamin C Serum</div><div class="pvar">30 ml · Original 15%</div></div>
+                  </div>
+                </td>
+                <td class="num">$48.00</td>
+                <td class="qty">
+                  <div class="stepper" role="group" aria-label="Quantity for Radiance Vitamin C Serum">
+                    <button type="button" aria-label="Decrease quantity of Radiance Vitamin C Serum">−</button>
+                    <span>1</span>
+                    <button type="button" aria-label="Increase quantity of Radiance Vitamin C Serum">+</button>
+                  </div>
+                </td>
+                <td class="num total">$48.00</td>
+                <td class="num"><button type="button" class="remove">Remove<span class="sr-only"> Radiance Vitamin C Serum</span></button></td>
+              </tr>
+              <tr>
+                <td class="prodcell">
+                  <div class="prod">
+                    <div class="pimg" role="img" aria-label="Barrier Repair Cream"></div>
+                    <div><div class="pname">Barrier Repair Cream</div><div class="pvar">50 ml · Fragrance-free</div></div>
+                  </div>
+                </td>
+                <td class="num">$42.00</td>
+                <td class="qty">
+                  <div class="stepper" role="group" aria-label="Quantity for Barrier Repair Cream">
+                    <button type="button" aria-label="Decrease quantity of Barrier Repair Cream">−</button>
+                    <span>1</span>
+                    <button type="button" aria-label="Increase quantity of Barrier Repair Cream">+</button>
+                  </div>
+                </td>
+                <td class="num total">$42.00</td>
+                <td class="num"><button type="button" class="remove">Remove<span class="sr-only"> Barrier Repair Cream</span></button></td>
+              </tr>
+              <tr>
+                <td class="prodcell">
+                  <div class="prod">
+                    <div class="pimg g2" role="img" aria-label="Gentle Milk Cleanser"></div>
+                    <div><div class="pname">Gentle Milk Cleanser</div><div class="pvar">150 ml</div></div>
+                  </div>
+                </td>
+                <td class="num">$28.00</td>
+                <td class="qty">
+                  <div class="stepper" role="group" aria-label="Quantity for Gentle Milk Cleanser">
+                    <button type="button" aria-label="Decrease quantity of Gentle Milk Cleanser">−</button>
+                    <span>1</span>
+                    <button type="button" aria-label="Increase quantity of Gentle Milk Cleanser">+</button>
+                  </div>
+                </td>
+                <td class="num total">$28.00</td>
+                <td class="num"><button type="button" class="remove">Remove<span class="sr-only"> Gentle Milk Cleanser</span></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ORDER SUMMARY — Dawn: main-cart-footer -->
+      <aside class="summary" aria-labelledby="sumh">
+        <h2 id="sumh">Order summary</h2>
+        <div class="srow"><span>Subtotal</span><span>$118.00</span></div>
+        <div class="srow"><span>Shipping estimate</span><span>$8.00</span></div>
+        <div class="srow muted"><span>Taxes</span><span>Calculated at checkout</span></div>
+
+        <form class="discount" onsubmit="return false">
+          <label for="discount">Discount code</label>
+          <div class="drow">
+            <input id="discount" type="text" name="discount" placeholder="Enter code" autocomplete="off">
+            <button class="btn btn-ghost" type="submit">Apply</button>
+          </div>
+        </form>
+
+        <div class="srow grand"><span>Estimated total</span><span>$126.00</span></div>
+        <a class="btn btn-primary checkout" href="#">Checkout</a>
+        <p class="securenote">Secure checkout · Encrypted payment</p>
+
+        <div class="sbadges">
+          <div class="sb"><div class="ic">✓</div>30-day money-back</div>
+          <div class="sb"><div class="ic">♺</div>Carbon-neutral</div>
+          <div class="sb"><div class="ic">★</div>50k+ 5-star reviews</div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- YOU MAY ALSO LIKE — Dawn: product-recommendations -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Complete the ritual</span><h2>You may also like</h2></div>
+      <div class="products">
+        <div class="card"><div class="ph g3"></div><div class="body"><h3>Overnight Renewal Mask</h3><div class="price">$54</div><div class="rate"><span class="stars">★★★★☆</span> 986</div></div></div>
+        <div class="card"><div class="ph"></div><div class="body"><h3>Mineral Daily Defense SPF 40</h3><div class="price">$36</div><div class="rate"><span class="stars">★★★★★</span> 2,301</div></div></div>
+        <div class="card"><div class="ph g2"></div><div class="body"><h3>Hyaluronic Hydra-Drops</h3><div class="price">$40</div><div class="rate"><span class="stars">★★★★★</span> 2,760</div></div></div>
+        <div class="card"><div class="ph g3"></div><div class="body"><h3>Peptide Firming Serum</h3><div class="price">$58</div><div class="rate"><span class="stars">★★★★★</span> 412</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="wrap fcols">
+      <div><div class="brand" style="margin-bottom:12px">Lumina</div><p style="color:var(--text-muted);font-size:14px;max-width:34ch">Clinically proven skincare with nothing to hide.</p></div>
+      <div><h3>Shop</h3><a>Bestsellers</a><a>Serums</a><a>Moisturizers</a><a>Sets</a></div>
+      <div><h3>Learn</h3><a>Ingredients</a><a>Skin quiz</a><a>Journal</a><a>Reviews</a></div>
+      <div><h3>Support</h3><a>Contact</a><a>Shipping</a><a>Returns</a><a>FAQ</a></div>
+    </div>
+    <div class="fbot">© Lumina Beauty · Baseline template · Structure references Shopify Dawn 15.4.1</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!-- @dsCard group="Merch" name="Subscription — Beauty" subtitle="Announcement · Subscribe-and-save hero · How it works · Plan / cadence selector · What's included · Benefits · FAQ · Testimonials · CTA" viewport="1280x3600" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — Subscription (Beauty)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  :root{
+    --primary:#1f6f54; --on-primary:#ffffff;
+    --secondary:#e8b4b8; --on-secondary:#111111;
+    --bg:#ffffff; --surface:#f7f5f2; --surface-2:#efeae3;
+    --text:#1a1a1a; --text-muted:#5c5c5c; --border:#e2e2e2;
+    --radius:14px; --maxw:1200px;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#14110f; --surface:#1d1a17; --surface-2:#252019; --text:#f2ede7; --text-muted:#a9a199; --border:#332e29; --on-secondary:#111; }
+  }
+  :root[data-theme="dark"]{ --bg:#14110f; --surface:#1d1a17; --surface-2:#252019; --text:#f2ede7; --text-muted:#a9a199; --border:#332e29; }
+  :root[data-theme="light"]{ --bg:#ffffff; --surface:#f7f5f2; --surface-2:#efeae3; --text:#1a1a1a; --text-muted:#5c5c5c; --border:#e2e2e2; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0}
+  .btn{display:inline-block;padding:14px 28px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .15s ease;cursor:pointer}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text)}
+  .btn-lg{padding:17px 40px;font-size:16px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+
+  /* announcement */
+  .announce{background:var(--primary);color:var(--on-primary);text-align:center;font-size:13px;letter-spacing:.04em;padding:9px 16px}
+  /* header */
+  header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.02em}
+  .nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--text-muted)}
+  .nav .icons{display:flex;gap:18px;font-size:14px}
+  @media(max-width:760px){.nav ul{display:none}}
+
+  /* hero — subscribe & save */
+  .hero{position:relative;min-height:520px;display:flex;align-items:center;background:
+    linear-gradient(105deg,var(--surface) 0%,var(--surface-2) 100%)}
+  .hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;width:100%;padding:64px 0}
+  .hero h1{font-size:clamp(34px,5vw,58px);line-height:1.05}
+  .hero p{color:var(--text-muted);font-size:18px;max-width:44ch;margin:20px 0 32px}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero .microcopy{font-size:13px;color:var(--text-muted);margin-top:18px}
+  .hero .art{position:relative;aspect-ratio:4/5;border-radius:var(--radius);background:
+    radial-gradient(120% 120% at 70% 20%,var(--secondary) 0%,transparent 55%),
+    linear-gradient(160deg,var(--surface-2),var(--primary));box-shadow:0 30px 60px -30px rgba(0,0,0,.35)}
+  .save-badge{position:absolute;top:18px;right:18px;background:var(--secondary);color:var(--on-secondary);font-size:13px;font-weight:700;padding:8px 16px;border-radius:999px}
+  @media(max-width:760px){.hero .grid{grid-template-columns:1fr;text-align:center}.hero .cta{justify-content:center}.hero .art{max-width:360px;margin:8px auto 0}}
+
+  /* section shell */
+  section.blk{padding:72px 0}
+  .head{text-align:center;max-width:60ch;margin:0 auto 44px}
+  .head h2{font-size:clamp(26px,3.4vw,40px)}
+  .head p{color:var(--text-muted);margin-top:12px}
+
+  /* how it works — 3 steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:760px){.steps{grid-template-columns:1fr}}
+  .step{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+  .step .num{width:40px;height:40px;border-radius:12px;background:var(--secondary);color:var(--on-secondary);display:grid;place-items:center;font-weight:700;margin-bottom:14px}
+  .step h3{font-family:var(--sans);font-size:17px;font-weight:600}
+  .step p{color:var(--text-muted);font-size:14px;margin-top:8px}
+
+  /* plan / cadence selector */
+  .plan{max-width:540px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px}
+  .plan h3{font-family:var(--serif);font-size:24px;margin-top:6px}
+  .plan .blurb{color:var(--text-muted);font-size:14px;margin:8px 0 24px;max-width:46ch}
+  .cadence-lbl{font-size:13px;font-weight:600;margin-bottom:10px}
+  .cadence{display:flex;gap:10px;margin:0 0 24px}
+  .cadence button{flex:1;border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:10px;padding:14px 12px;font-size:14px;font-weight:600;cursor:pointer;text-align:center;transition:border-color .15s ease}
+  .cadence button:hover{border-color:var(--primary)}
+  .cadence button[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+  .cadence button small{display:block;font-weight:400;color:var(--text-muted);font-size:12px;margin-top:3px}
+  .pricerow{display:flex;align-items:baseline;gap:12px;margin:4px 0 4px}
+  .pricerow .now{font-size:30px;font-weight:600}
+  .pricerow .per{font-size:14px;color:var(--text-muted)}
+  .pricerow .was{color:var(--text-muted);text-decoration:line-through;font-size:16px}
+  .pricerow .save{background:var(--secondary);color:var(--on-secondary);font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px}
+  .plan .onetime{font-size:13px;color:var(--text-muted);margin:6px 0 22px}
+  .plan .btn-sub{display:block;width:100%;text-align:center;border:0;font-size:16px;padding:16px 24px}
+  .plan .subline{font-size:12px;color:var(--text-muted);text-align:center;margin-top:14px}
+
+  /* what's included */
+  .incl{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:760px){.incl{grid-template-columns:1fr}}
+  .item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .item .ph{aspect-ratio:1/1;background:linear-gradient(150deg,var(--surface-2),var(--secondary))}
+  .item .ph.g2{background:radial-gradient(120% 120% at 70% 20%,var(--secondary) 0%,transparent 55%),linear-gradient(160deg,var(--surface-2),var(--primary))}
+  .item .ph.g3{background:linear-gradient(150deg,var(--surface-2),var(--primary))}
+  .item .b{padding:18px}
+  .item h3{font-family:var(--sans);font-size:16px;font-weight:600}
+  .item p{color:var(--text-muted);font-size:13px;margin-top:6px}
+
+  /* benefits */
+  .bens{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media(max-width:900px){.bens{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.bens{grid-template-columns:1fr}}
+  .ben{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px}
+  .ben .ic{width:44px;height:44px;border-radius:12px;background:var(--secondary);color:var(--on-secondary);display:grid;place-items:center;margin-bottom:14px}
+  .ben .ic svg{width:22px;height:22px}
+  .ben h3{font-family:var(--sans);font-size:16px;font-weight:600}
+  .ben p{color:var(--text-muted);font-size:13px;margin-top:8px}
+
+  /* FAQ accordion */
+  .accordion{max-width:820px;margin:0 auto}
+  .acc{border-bottom:1px solid var(--border)}
+  .acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 2px;font-family:var(--serif);font-size:19px;font-weight:600}
+  .acc summary::-webkit-details-marker{display:none}
+  .acc summary .plus{font-family:var(--sans);font-size:24px;font-weight:400;color:var(--text-muted);transition:transform .2s ease}
+  .acc[open] summary .plus{transform:rotate(45deg)}
+  .acc .content{padding:0 2px 22px;color:var(--text-muted);font-size:15px;max-width:70ch}
+  .acc .content p{margin:0}
+
+  /* testimonials */
+  .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:760px){.tgrid{grid-template-columns:1fr}}
+  .tq{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+  .tq .stars{color:var(--primary);letter-spacing:1px;font-size:13px}
+  .tq p{font-size:15px;margin:10px 0 12px}
+  .tq .who{font-size:12px;color:var(--text-muted)}
+
+  /* CTA */
+  .cta-band{background:var(--primary);color:var(--on-primary);border-radius:var(--radius);padding:64px 32px;text-align:center}
+  .cta-band h2{color:var(--on-primary);font-size:clamp(28px,3.6vw,42px)}
+  .cta-band p{opacity:.9;margin:14px auto 28px;max-width:44ch}
+  .cta-band .btn{background:var(--bg);color:var(--text)}
+
+  /* footer */
+  footer{border-top:1px solid var(--border);margin-top:8px}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px;padding:56px 0}
+  .fcols h3{font-family:var(--sans);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:700;margin:0 0 14px}
+  .fcols a{display:block;font-size:14px;color:var(--text-muted);padding:5px 0}
+  .fbot{border-top:1px solid var(--border);padding:20px 0;font-size:13px;color:var(--text-muted);text-align:center}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <div class="announce">Free carbon-neutral shipping over $50 · 30-day happiness guarantee</div>
+
+  <!-- Dawn: header -->
+  <header>
+    <nav class="nav wrap">
+      <ul><li>Shop</li><li>Bestsellers</li><li>Ingredients</li><li>About</li></ul>
+      <div class="brand">Lumina</div>
+      <div class="icons"><span>Search</span><span>Cart (0)</span></div>
+    </nav>
+  </header>
+
+  <!-- HERO — Dawn: image-banner -->
+  <section class="hero">
+    <div class="grid wrap">
+      <div>
+        <span class="eyebrow">Subscribe &amp; save</span>
+        <h1>Never run out of your ritual.</h1>
+        <p>Get your skincare essentials delivered on your schedule — 20% off every order, free shipping always, and total control to skip or cancel anytime.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#plan">Build my plan</a>
+          <a class="btn btn-ghost" href="#how">How it works</a>
+        </div>
+        <div class="microcopy">No commitment · Skip, pause or cancel in two taps</div>
+      </div>
+      <div class="art" role="img" aria-label="Lumina subscription box">
+        <span class="save-badge">Save 20%</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS — Dawn: multicolumn -->
+  <section class="blk" id="how">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">How it works</span><h2>Set it once, glow on repeat</h2><p>Three steps to a routine that restocks itself.</p></div>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><h3>Build your routine</h3><p>Choose the products your skin already loves — or start from a curated set and adjust later.</p></div>
+        <div class="step"><div class="num">2</div><h3>Pick your cadence</h3><p>Every month or every other month, timed to how fast you actually go through each bottle.</p></div>
+        <div class="step"><div class="num">3</div><h3>Save &amp; relax</h3><p>Enjoy 20% off every delivery. Skip a shipment, swap a product, or pause whenever life happens.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAN / CADENCE SELECTOR — Dawn: main-product (selling-plan group) -->
+  <section class="blk" id="plan" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Choose your plan</span><h2>The Complete Ritual, delivered</h2></div>
+      <div class="plan">
+        <span class="eyebrow">Subscription set</span>
+        <h3>The Complete Ritual</h3>
+        <p class="blurb">Cleanser, brightening serum, and barrier moisturizer — the full morning-to-night routine, restocked automatically.</p>
+
+        <!-- selling-plan: delivery frequency -->
+        <div class="cadence-lbl">Delivery frequency</div>
+        <div class="cadence" role="group" aria-label="Delivery frequency">
+          <button aria-pressed="true">Monthly<small>Every 4 weeks</small></button>
+          <button aria-pressed="false">Bi-monthly<small>Every 8 weeks</small></button>
+        </div>
+
+        <div class="pricerow">
+          <span class="now">$96</span>
+          <span class="per">/ shipment</span>
+          <span class="was">$120</span>
+          <span class="save">Save 20%</span>
+        </div>
+        <div class="onetime">One-time purchase $120 · Subscribers lock in $96 for every delivery</div>
+
+        <button class="btn btn-primary btn-sub">Subscribe &amp; save · $96/shipment</button>
+        <div class="subline">Free carbon-neutral shipping · Cancel anytime, no fees</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S INCLUDED — Dawn: multicolumn / featured-collection -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">What's included</span><h2>Everything in your box</h2><p>Three full-size clinical formulas, dosed and labeled — a $120 value.</p></div>
+      <div class="incl">
+        <div class="item"><div class="ph g3"></div><div class="b"><h3>Gentle Milk Cleanser · 150 ml</h3><p>A pH-balanced, non-stripping wash that removes the day without touching your barrier.</p></div></div>
+        <div class="item"><div class="ph g2"></div><div class="b"><h3>Radiance Vitamin C Serum · 30 ml</h3><p>Stabilized 15% L-ascorbic acid to visibly brighten and even tone over 28 days.</p></div></div>
+        <div class="item"><div class="ph"></div><div class="b"><h3>Barrier Repair Cream · 50 ml</h3><p>Ceramide-rich moisture that seals in actives and calms sensitivity overnight.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS — Dawn: multicolumn (icon list) -->
+  <section class="blk" style="background:var(--surface)">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Member benefits</span><h2>Why subscribe</h2></div>
+      <div class="bens">
+        <div class="ben">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+          <h3>Free shipping, always</h3>
+          <p>Every subscriber order ships free and carbon-neutral — no minimum, no exceptions.</p>
+        </div>
+        <div class="ben">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></div>
+          <h3>Skip or pause anytime</h3>
+          <p>Manage everything from your account. Skip a month, pause for a season, cancel with no fees.</p>
+        </div>
+        <div class="ben">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <h3>20% off every order</h3>
+          <p>Locked-in member pricing on your whole routine — repurchase the essentials for less.</p>
+        </div>
+        <div class="ben">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 .5-5.5 4.5L18 21l-6-3.5L6 21l1.5-7L2 9.5 9 9z"/></svg></div>
+          <h3>Member perks</h3>
+          <p>Early access to launches, a birthday gift, and double rewards points on every shipment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ — Dawn: collapsible-content -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Good to know</span><h2>Subscription questions</h2></div>
+      <div class="accordion">
+        <details class="acc" open>
+          <summary>Can I change the products in my plan? <span class="plus">+</span></summary>
+          <div class="content"><p>Anytime. Swap any product, add a new favorite, or change sizes from your account — the change applies to your next shipment.</p></div>
+        </details>
+        <details class="acc">
+          <summary>How do skip and pause work? <span class="plus">+</span></summary>
+          <div class="content"><p>Skip your next delivery with a single tap, or pause your whole plan for up to three months. We'll email you before every order so nothing is a surprise.</p></div>
+        </details>
+        <details class="acc">
+          <summary>When will I be charged? <span class="plus">+</span></summary>
+          <div class="content"><p>On the day each shipment is prepared, at your locked-in 20% member price. You'll always get a reminder 3 days ahead so you have time to skip or edit.</p></div>
+        </details>
+        <details class="acc">
+          <summary>Can I cancel anytime? <span class="plus">+</span></summary>
+          <div class="content"><p>Yes — there's no minimum commitment and no cancellation fee. Cancel in two taps from your account, and keep whatever you've already received.</p></div>
+        </details>
+        <details class="acc">
+          <summary>Do subscribers earn rewards? <span class="plus">+</span></summary>
+          <div class="content"><p>Every shipment earns double points in the Lumina rewards program, plus a birthday gift and early access to new launches before they go public.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS — Dawn: quote / testimonials -->
+  <section class="blk" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Subscriber love</span><h2>Fewer 11pm reorders, more good skin days</h2></div>
+      <div class="tgrid">
+        <div class="tq"><div class="stars">★★★★★</div><p>“Subscribing means I never panic-buy my serum at midnight again. It just shows up right as I'm running low.”</p><div class="who">— Priya M. · Subscriber, 14 months</div></div>
+        <div class="tq"><div class="stars">★★★★★</div><p>“Skipped a month while traveling — took ten seconds from my phone. Back on schedule now, no fuss.”</p><div class="who">— Daniela R. · Subscriber, 8 months</div></div>
+        <div class="tq"><div class="stars">★★★★★</div><p>“20% off the products I'd repurchase anyway, plus free shipping? Easy yes. My whole routine is on autopilot.”</p><div class="who">— Jordan T. · Subscriber, 2 years</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA — Dawn: rich-text / image-banner -->
+  <section class="blk"><div class="wrap"><div class="cta-band">
+    <h2>Your ritual, handled.</h2>
+    <p>Start your subscription today — 20% off every order, free carbon-neutral shipping, and a 30-day happiness guarantee.</p>
+    <a class="btn btn-lg" href="#plan">Build my plan</a>
+  </div></div></section>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="wrap fcols">
+      <div><div class="brand" style="margin-bottom:12px">Lumina</div><p style="color:var(--text-muted);font-size:14px;max-width:34ch">Clinically proven skincare with nothing to hide.</p></div>
+      <div><h3>Shop</h3><a>Bestsellers</a><a>Serums</a><a>Moisturizers</a><a>Sets</a></div>
+      <div><h3>Learn</h3><a>Ingredients</a><a>Skin quiz</a><a>Journal</a><a>Reviews</a></div>
+      <div><h3>Support</h3><a>Contact</a><a>Shipping</a><a>Returns</a><a>FAQ</a></div>
+    </div>
+    <div class="fbot">© Lumina Beauty · Baseline template · Structure references Shopify Dawn 15.4.1</div>
+  </footer>
+</body>
+</html>
