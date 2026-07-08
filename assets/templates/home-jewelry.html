@@ -1,0 +1,296 @@
+<!-- @dsCard group="Home" name="Home — Jewelry (luxe)" subtitle="Announcement · Understated hero · Featured pieces · Craftsmanship story · Collections · Bespoke CTA · Testimonials · Newsletter" viewport="1280x3360" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — Jewelry Home (Luxe)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  :root{
+    --primary:#2b2823; --on-primary:#faf7f0;
+    --secondary:#b0925f; --on-secondary:#2b2823;
+    --bg:#faf7f0; --surface:#f3ede2; --surface-2:#ece4d5;
+    --text:#2b2823; --text-muted:#847b6c; --border:#e7dfd0;
+    --radius:4px; --maxw:1240px;
+    --serif:"Baskerville","Hoefler Text","Garamond","Palatino Linotype",Georgia,serif;
+    --sans:"Avenir Next","Avenir","Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1a1815; --surface:#211e1a; --surface-2:#2a2620; --text:#f1ebe0; --text-muted:#a49a89; --border:#332e27; --primary:#f1ebe0; --on-primary:#1a1815; }
+  }
+  :root[data-theme="dark"]{ --bg:#1a1815; --surface:#211e1a; --surface-2:#2a2620; --text:#f1ebe0; --text-muted:#a49a89; --border:#332e27; --primary:#f1ebe0; --on-primary:#1a1815; }
+  :root[data-theme="light"]{ --bg:#faf7f0; --surface:#f3ede2; --surface-2:#ece4d5; --text:#2b2823; --text-muted:#847b6c; --border:#e7dfd0; --primary:#2b2823; --on-primary:#faf7f0; }
+
+  *{box-sizing:border-box}
+  html,body{overflow-x:hidden}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:.005em;margin:0}
+  .btn{display:inline-block;padding:14px 32px;font-weight:500;font-size:12px;letter-spacing:.18em;text-transform:uppercase;border-radius:var(--radius);transition:background .2s ease,color .2s ease}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-primary:hover{background:var(--secondary);color:var(--on-secondary)}
+  .btn-outline{border:1px solid var(--border);color:var(--text)}
+  .btn-outline:hover{border-color:var(--secondary);color:var(--secondary)}
+  .link{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--text);border-bottom:1px solid var(--secondary);padding-bottom:4px}
+  .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--secondary);font-weight:600}
+  .rule{width:44px;height:1px;background:var(--secondary);margin:0 auto}
+
+  /* announcement — Dawn: announcement-bar (slim, refined) */
+  .announce{background:var(--surface);color:var(--text-muted);text-align:center;font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:12px 16px;border-bottom:1px solid var(--border)}
+
+  /* header — Dawn: header (centered brand, airy) */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:82px}
+  .nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted)}
+  .nav ul.right{justify-content:flex-end}
+  .brand{font-family:var(--serif);font-size:28px;letter-spacing:.24em;text-transform:uppercase;text-align:center}
+  @media(max-width:900px){.nav{grid-template-columns:1fr auto 1fr}.nav ul li:nth-child(n+3){display:none}.nav ul.right li:nth-child(1){display:none}}
+  @media(max-width:640px){.nav ul{display:none}.nav{grid-template-columns:1fr}.brand{grid-column:1}}
+
+  /* HERO — Dawn: image-banner (understated, single hero piece) */
+  .hero{padding:88px 0 0;text-align:center}
+  .hero .lead{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  .hero .rule{margin-bottom:26px}
+  .hero h1{font-size:clamp(38px,6vw,76px);line-height:1.06;letter-spacing:0;max-width:16ch;margin:22px auto 0}
+  .hero h1 em{font-style:italic;color:var(--secondary)}
+  .hero p{color:var(--text-muted);font-size:16px;max-width:44ch;margin:22px auto 30px}
+  .hero .cta{display:flex;gap:22px;justify-content:center;align-items:center;flex-wrap:wrap}
+  .hero .vitrine{margin-top:70px;height:clamp(340px,48vw,560px);position:relative;
+    background:
+      radial-gradient(60% 80% at 50% 32%,rgba(176,146,95,.34) 0%,transparent 62%),
+      radial-gradient(closest-side at 50% 46%,rgba(250,247,240,.16),transparent),
+      linear-gradient(180deg,#3a352d 0%,#221f1a 60%,#2c2823 100%)}
+  .hero .vitrine .piece{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:clamp(150px,18vw,230px);aspect-ratio:1/1;border-radius:50%;
+    background:radial-gradient(40% 40% at 42% 34%,#f7ecd4 0%,#d9b877 32%,#a8834b 66%,#6f5330 100%);
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+  .hero .vitrine .cap{position:absolute;bottom:22px;left:0;right:0;color:#e9e0cf;font-size:11px;letter-spacing:.24em;text-transform:uppercase;opacity:.8}
+
+  /* section shell */
+  section.blk{padding:104px 0}
+  .head{text-align:center;max-width:60ch;margin:0 auto 60px}
+  .head .rule{margin-bottom:22px}
+  .head h2{font-size:clamp(30px,4vw,50px);line-height:1.08}
+  .head p{color:var(--text-muted);font-size:15px;margin-top:16px}
+
+  /* FEATURED PIECES — Dawn: featured-collection (airy, borderless) */
+  .pieces{display:grid;grid-template-columns:repeat(4,1fr);gap:48px}
+  @media(max-width:900px){.pieces{grid-template-columns:repeat(2,1fr);gap:40px 32px}}
+  @media(max-width:520px){.pieces{grid-template-columns:1fr}}
+  .piece-card{text-align:center}
+  .piece-card .ph{aspect-ratio:3/4;border-radius:var(--radius);position:relative;overflow:hidden;
+    background:linear-gradient(170deg,var(--surface),var(--surface-2))}
+  .piece-card .ph::after{content:"";position:absolute;inset:0;
+    background:radial-gradient(42% 40% at 50% 40%,rgba(176,146,95,.4) 0%,transparent 60%)}
+  .piece-card:nth-child(2) .ph::after{background:radial-gradient(40% 38% at 50% 42%,rgba(160,168,178,.42) 0%,transparent 60%)}
+  .piece-card:nth-child(3) .ph::after{background:radial-gradient(40% 38% at 50% 40%,rgba(196,150,120,.42) 0%,transparent 60%)}
+  .piece-card:nth-child(4) .ph::after{background:radial-gradient(40% 38% at 50% 42%,rgba(150,160,150,.4) 0%,transparent 60%)}
+  .piece-card h3{font-size:18px;margin-top:22px;letter-spacing:.01em}
+  .piece-card .mat{color:var(--text-muted);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-top:6px}
+  .piece-card .price{font-size:14px;margin-top:12px;letter-spacing:.04em}
+
+  /* CRAFTSMANSHIP STORY — Dawn: image-with-text */
+  .story{background:var(--surface)}
+  .story .grid{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;min-height:600px}
+  .story .art{position:relative;min-height:440px;
+    background:radial-gradient(70% 60% at 40% 40%,rgba(176,146,95,.35),transparent 60%),linear-gradient(160deg,#332e27,#221f1a)}
+  .story .art .stamp{position:absolute;bottom:24px;left:26px;color:#e9e0cf;font-size:11px;letter-spacing:.24em;text-transform:uppercase;opacity:.8}
+  .story .txt{padding:96px 84px;display:flex;flex-direction:column;justify-content:center}
+  .story h2{font-size:clamp(30px,3.6vw,50px);line-height:1.08;margin:18px 0 0}
+  .story p{color:var(--text-muted);font-size:16px;margin:24px 0 0;max-width:42ch}
+  .story .specs{display:flex;gap:40px;margin:36px 0 34px;flex-wrap:wrap}
+  .story .specs .n{font-family:var(--serif);font-size:34px}
+  .story .specs .l{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);margin-top:4px}
+  @media(max-width:900px){.story .grid{grid-template-columns:1fr}.story .txt{padding:64px 32px}}
+
+  /* COLLECTIONS — Dawn: collection-list (framed, centered labels) */
+  .collections{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  @media(max-width:760px){.collections{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
+  .coll{text-align:center}
+  .coll .frame{aspect-ratio:1/1;border-radius:var(--radius);border:1px solid var(--border);position:relative;overflow:hidden;
+    display:grid;place-items:center;background:linear-gradient(170deg,var(--surface),var(--bg))}
+  .coll:nth-child(1) .frame{background:radial-gradient(48% 46% at 50% 44%,rgba(176,146,95,.28),transparent 62%),linear-gradient(170deg,var(--surface),var(--bg))}
+  .coll:nth-child(2) .frame{background:radial-gradient(48% 46% at 50% 44%,rgba(160,168,178,.28),transparent 62%),linear-gradient(170deg,var(--surface),var(--bg))}
+  .coll:nth-child(3) .frame{background:radial-gradient(48% 46% at 50% 44%,rgba(196,150,120,.28),transparent 62%),linear-gradient(170deg,var(--surface),var(--bg))}
+  .coll .frame .orb{width:38%;aspect-ratio:1/1;border-radius:50%;background:radial-gradient(40% 40% at 42% 34%,#f7ecd4,#c7a468 40%,#8a6a3e 100%);opacity:.9}
+  .coll h3{font-size:22px;margin-top:22px}
+  .coll .link{display:inline-block;margin-top:12px;border-bottom-color:var(--border);color:var(--text-muted)}
+
+  /* BESPOKE CTA — Dawn: image-banner (invitation band) */
+  .bespoke{background:var(--primary);color:var(--on-primary);text-align:center;padding:112px 24px}
+  .bespoke .rule{background:var(--secondary)}
+  .bespoke .eyebrow{color:var(--secondary)}
+  .bespoke h2{color:var(--on-primary);font-size:clamp(32px,4.6vw,58px);line-height:1.06;margin:22px auto 0;max-width:18ch}
+  .bespoke h2 em{font-style:italic;color:var(--secondary)}
+  .bespoke p{opacity:.75;font-size:16px;margin:22px auto 34px;max-width:48ch}
+  .bespoke .btn-primary{background:var(--secondary);color:var(--on-secondary)}
+  .bespoke .btn-primary:hover{background:var(--on-primary);color:var(--primary)}
+
+  /* TESTIMONIALS — Dawn: multicolumn / quote (quiet 3-up) */
+  .testi{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+  @media(max-width:760px){.testi{grid-template-columns:1fr;max-width:520px;margin:0 auto}}
+  .testi .t{text-align:center;padding:0 8px}
+  .testi .stars{color:var(--secondary);letter-spacing:.24em;font-size:13px}
+  .testi blockquote{font-family:var(--serif);font-size:19px;line-height:1.5;margin:18px 0 0}
+  .testi .who{color:var(--text-muted);font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-top:16px}
+
+  /* NEWSLETTER — Dawn: email-signup-banner (understated) */
+  .news{border-top:1px solid var(--border);padding:104px 0;text-align:center}
+  .news .rule{margin-bottom:22px}
+  .news h2{font-size:clamp(28px,3.4vw,44px);line-height:1.1}
+  .news p{color:var(--text-muted);font-size:15px;margin:16px auto 30px;max-width:44ch}
+  .news form{display:flex;gap:12px;max-width:460px;margin:0 auto;align-items:flex-end}
+  .news input{flex:1;padding:14px 4px;border:0;border-bottom:1px solid var(--text);background:transparent;color:var(--text);font-size:16px;font-family:var(--sans);text-align:center}
+  .news input:focus{outline:none;border-color:var(--secondary)}
+  @media(max-width:520px){.news form{flex-direction:column;align-items:stretch}.news input{text-align:center}}
+
+  /* footer — Dawn: footer */
+  footer{border-top:1px solid var(--border);padding-top:76px;margin-top:8px}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;padding-bottom:56px;max-width:var(--maxw);margin:0 auto;padding-left:32px;padding-right:32px}
+  .fcols .brand{text-align:left;margin-bottom:16px}
+  .fcols h3{font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:700;margin:0 0 16px}
+  .fcols a{display:block;font-size:13px;color:var(--text-muted);padding:6px 0}
+  .fcols p{color:var(--text-muted);font-size:13px;max-width:34ch}
+  .fbot{border-top:1px solid var(--border);padding:22px 32px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);text-align:center}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <!-- ANNOUNCEMENT — Dawn: announcement-bar (slim) -->
+  <div class="announce">Complimentary shipping &amp; signature gift wrapping on every order</div>
+
+  <!-- HEADER — Dawn: header (centered brand) -->
+  <header>
+    <nav class="nav wrap">
+      <ul><li>Rings</li><li>Necklaces</li><li>Bespoke</li></ul>
+      <div class="brand">Aurelle</div>
+      <ul class="right"><li>Search</li><li>Account</li><li>Bag (0)</li></ul>
+    </nav>
+  </header>
+
+  <!-- HERO — Dawn: image-banner (understated, single hero piece) -->
+  <section class="hero">
+    <div class="lead">
+      <div class="rule"></div>
+      <span class="eyebrow">The Solstice Edit</span>
+      <h1>Quiet gold, made to be <em>kept</em>.</h1>
+      <p>Fine jewellery cast in solid 18k and set by hand — designed for the everyday, made to outlast it.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#">Explore the collection</a>
+        <a class="link" href="#">Book an appointment</a>
+      </div>
+    </div>
+    <div class="vitrine">
+      <div class="piece" role="img" aria-label="Signature hero piece"></div>
+      <div class="cap">The Solstice Signet · 18k recycled gold</div>
+    </div>
+  </section>
+
+  <!-- FEATURED PIECES — Dawn: featured-collection -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head">
+        <div class="rule"></div>
+        <span class="eyebrow" style="display:block;margin-top:18px">The essentials</span>
+        <h2 style="margin-top:14px">Featured pieces</h2>
+        <p>Four quiet icons, each finished and hallmarked by a single maker.</p>
+      </div>
+      <div class="pieces">
+        <article class="piece-card"><div class="ph"></div><h3>Solstice Signet</h3><div class="mat">18k Yellow Gold</div><div class="price">$1,480</div></article>
+        <article class="piece-card"><div class="ph"></div><h3>Fil Diamond Line</h3><div class="mat">Platinum · 0.5ct</div><div class="price">$3,900</div></article>
+        <article class="piece-card"><div class="ph"></div><h3>Amber Drop Earrings</h3><div class="mat">18k Gold · Citrine</div><div class="price">$960</div></article>
+        <article class="piece-card"><div class="ph"></div><h3>Halo Pendant</h3><div class="mat">18k Gold · Diamond</div><div class="price">$1,240</div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CRAFTSMANSHIP STORY — Dawn: image-with-text -->
+  <section class="story">
+    <div class="grid">
+      <div class="art"><span class="stamp">The atelier · Established 1998</span></div>
+      <div class="txt">
+        <span class="eyebrow">Made by hand</span>
+        <h2>One maker, from wax to hallmark.</h2>
+        <p>Every piece is carved, cast, and set within our atelier — never outsourced, never rushed. We work only in recycled precious metals and traceable, conflict-free stones.</p>
+        <div class="specs">
+          <div><div class="n">18k</div><div class="l">Solid recycled gold</div></div>
+          <div><div class="n">100%</div><div class="l">Traceable stones</div></div>
+          <div><div class="n">Life</div><div class="l">Repair guarantee</div></div>
+        </div>
+        <div><a class="link" href="#">Read our craft story</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLECTIONS — Dawn: collection-list -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head">
+        <div class="rule"></div>
+        <span class="eyebrow" style="display:block;margin-top:18px">Browse by</span>
+        <h2 style="margin-top:14px">Collections</h2>
+      </div>
+      <div class="collections">
+        <a class="coll" href="#"><div class="frame"><div class="orb"></div></div><h3>Rings</h3><span class="link">Discover</span></a>
+        <a class="coll" href="#"><div class="frame"><div class="orb"></div></div><h3>Necklaces</h3><span class="link">Discover</span></a>
+        <a class="coll" href="#"><div class="frame"><div class="orb"></div></div><h3>Gifts</h3><span class="link">Discover</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BESPOKE CTA — Dawn: image-banner (consultation invitation) -->
+  <section class="bespoke">
+    <div class="rule"></div>
+    <span class="eyebrow" style="display:block;margin-top:20px">Bespoke &amp; engagement</span>
+    <h2>Commission something <em>only yours</em>.</h2>
+    <p>Sit with one of our designers — in the atelier or by video — to shape a piece from the first sketch to the final hallmark.</p>
+    <a class="btn btn-primary" href="#">Book a private consultation</a>
+  </section>
+
+  <!-- TESTIMONIALS — Dawn: multicolumn / quote -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head">
+        <div class="rule"></div>
+        <h2 style="margin-top:18px">In their words</h2>
+      </div>
+      <div class="testi">
+        <div class="t"><div class="stars">★★★★★</div><blockquote>“The signet is perfect — weighty, warm, and somehow already feels like an heirloom.”</blockquote><div class="who">Eleanor V. · London</div></div>
+        <div class="t"><div class="stars">★★★★★</div><blockquote>“They designed our rings over three video calls. The care showed in every detail.”</blockquote><div class="who">Marcus &amp; Jun · Verified</div></div>
+        <div class="t"><div class="stars">★★★★★</div><blockquote>“Wrapped beautifully, arrived early, and hasn't left my hand since. Faultless.”</blockquote><div class="who">Priya S. · Verified buyer</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER — Dawn: email-signup-banner -->
+  <section class="news">
+    <div class="wrap">
+      <div class="rule"></div>
+      <span class="eyebrow" style="display:block;margin-top:18px">The Aurelle list</span>
+      <h2 style="margin-top:14px">Private views &amp; new commissions.</h2>
+      <p>Early access to limited editions, atelier notes, and invitations to seasonal previews.</p>
+      <form onsubmit="return false">
+        <input type="email" placeholder="Your email address" aria-label="Email">
+        <button class="btn btn-primary" type="submit">Join</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="fcols">
+      <div>
+        <div class="brand">Aurelle</div>
+        <p>Fine jewellery, made by hand in solid recycled gold and traceable stones since 1998.</p>
+      </div>
+      <div><h3>Shop</h3><a>Rings</a><a>Necklaces</a><a>Earrings</a><a>Gifts</a></div>
+      <div><h3>Atelier</h3><a>Bespoke</a><a>Our craft</a><a>Appointments</a><a>Stores</a></div>
+      <div><h3>Care</h3><a>Shipping</a><a>Returns</a><a>Repairs</a><a>Sizing guide</a></div>
+    </div>
+    <div class="fbot">© Aurelle Fine Jewellery · Baseline template · Structure references Shopify Dawn 15.4.1</div>
+  </footer>
+</body>
+</html>

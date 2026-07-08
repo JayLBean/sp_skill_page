@@ -1,0 +1,351 @@
+<!-- @dsCard group="Collection" name="Collection — Fashion (PLP)" subtitle="Breadcrumb · Campaign hero · Filter + sort bar · Product grid · Editorial break · Pagination · Newsletter · Footer" viewport="1280x2760" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — Collection (Fashion)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) — copied verbatim from home-fashion.html ---- */
+  :root{
+    --primary:#111111; --on-primary:#f6f4ef;
+    --secondary:#e8462a; --on-secondary:#ffffff;
+    --bg:#f6f4ef; --surface:#efece5; --surface-2:#e5e1d8;
+    --text:#141414; --text-muted:#6a655d; --border:#ddd8cd;
+    --radius:3px; --maxw:1320px;
+    --serif:"Didot","Bodoni MT","Playfair Display",Georgia,"Times New Roman",serif;
+    --sans:"Helvetica Neue",Helvetica,Arial,"Segoe UI",Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0d0d0d; --surface:#151412; --surface-2:#1e1c19; --text:#f3efe8; --text-muted:#9a948b; --border:#2a2825; --primary:#f3efe8; --on-primary:#0d0d0d; }
+  }
+  :root[data-theme="dark"]{ --bg:#0d0d0d; --surface:#151412; --surface-2:#1e1c19; --text:#f3efe8; --text-muted:#9a948b; --border:#2a2825; --primary:#f3efe8; --on-primary:#0d0d0d; }
+  :root[data-theme="light"]{ --bg:#f6f4ef; --surface:#efece5; --surface-2:#e5e1d8; --text:#141414; --text-muted:#6a655d; --border:#ddd8cd; --primary:#111111; --on-primary:#f6f4ef; }
+
+  *{box-sizing:border-box}
+  html,body{overflow-x:hidden}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;margin:0}
+  .btn{display:inline-block;padding:15px 34px;font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-radius:var(--radius);transition:opacity .15s ease,transform .15s ease;cursor:pointer;border:0}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-accent{background:var(--secondary);color:var(--on-secondary)}
+  .btn-ghost{border:1px solid currentColor;color:inherit}
+  .btn-line{border:1px solid var(--border);color:var(--text)}
+  .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--text-muted);font-weight:700}
+
+  /* announcement — Dawn: announcement-bar */
+  .announce{background:var(--primary);color:var(--on-primary);text-align:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:11px 16px;font-weight:600}
+
+  /* header — Dawn: header (sticky, solid over content) */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-family:var(--serif);font-size:24px;font-weight:400;letter-spacing:.14em;text-transform:uppercase}
+  .nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+  .nav .icons{display:flex;gap:20px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+  @media(max-width:900px){.nav ul{display:none}.brand{font-size:20px}}
+
+  /* breadcrumb — Dawn: main-collection (breadcrumb) */
+  .crumbs{font-size:12px;letter-spacing:.06em;color:var(--text-muted);padding:20px 0 6px;text-transform:uppercase}
+  .crumbs a:hover{color:var(--text)}
+  .crumbs span{margin:0 9px;opacity:.55}
+
+  /* CAMPAIGN COLLECTION HERO — Dawn: main-collection (collection banner) / image-banner */
+  .chero{position:relative;color:#f6f4ef;overflow:hidden;
+    background:
+      linear-gradient(180deg,rgba(10,10,10,.22) 0%,rgba(10,10,10,0) 40%,rgba(10,10,10,.62) 100%),
+      radial-gradient(90% 120% at 80% 12%,#c9542f 0%,transparent 48%),
+      linear-gradient(150deg,#2b2724 0%,#0f0e0d 62%,#1a1512 100%)}
+  .chero .inner{max-width:var(--maxw);margin:0 auto;padding:72px 32px 58px}
+  .chero .kicker{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .chero .kicker .bar{height:1px;width:54px;background:var(--secondary)}
+  .chero .kicker span{font-size:11px;letter-spacing:.26em;text-transform:uppercase;font-weight:700}
+  .chero h1{font-size:clamp(38px,6.4vw,94px);line-height:.94;letter-spacing:-.02em;max-width:17ch}
+  .chero p{font-size:16px;max-width:52ch;opacity:.9;margin:24px 0 0}
+  .chero .count{margin-top:22px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;opacity:.75}
+
+  /* FILTER + SORT BAR — Dawn: facets (horizontal) · Size / Color / Category / Sort */
+  .filterbar{position:sticky;top:64px;z-index:15;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .filterbar .row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:14px 0}
+  .fgroup{display:flex;align-items:center;gap:9px}
+  .flabel{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:700}
+  .chip{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:var(--radius);padding:8px 14px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:border-color .15s ease,background .15s ease}
+  .chip:hover{border-color:var(--text)}
+  .chip[aria-pressed="true"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+  .swrow{display:flex;gap:8px}
+  .sw{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);cursor:pointer;padding:0}
+  .sw[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:2px}
+  select.sel{appearance:none;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:var(--radius);padding:9px 34px 9px 14px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-family:var(--sans);font-weight:600;cursor:pointer;
+    background-image:linear-gradient(45deg,transparent 50%,var(--text-muted) 50%),linear-gradient(135deg,var(--text-muted) 50%,transparent 50%);
+    background-position:calc(100% - 18px) 55%,calc(100% - 13px) 55%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+  .filterbar .spacer{flex:1}
+  .sortwrap{display:flex;align-items:center;gap:9px}
+
+  /* RESULTS HEADER (grid section h2) */
+  .results{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:36px 0 4px}
+  .results h2{font-size:clamp(22px,3vw,30px);letter-spacing:-.01em}
+  .results .rcount{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+
+  /* PRODUCT GRID — Dawn: main-collection (product-grid) · 9–12 cards */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;padding:22px 0 0}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);gap:20px}}
+  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+  .look{position:relative}
+  .look .ph{aspect-ratio:3/4;border-radius:var(--radius);position:relative;overflow:hidden;background:linear-gradient(150deg,var(--surface-2),var(--surface));display:block}
+  .look .ph.g1{background:linear-gradient(155deg,#3a3430,#8a5038)}
+  .look .ph.g2{background:linear-gradient(155deg,#2c2b2a,#5f6b63)}
+  .look .ph.g3{background:linear-gradient(155deg,#4a3d33,#c9542f)}
+  .look .ph.g4{background:linear-gradient(155deg,#26262b,#7a6a86)}
+  .look .ph.g5{background:linear-gradient(155deg,#332b28,#b07a4a)}
+  .look .ph.g6{background:linear-gradient(155deg,#242527,#6a6f73)}
+  .look .tag{position:absolute;top:12px;left:12px;background:var(--bg);color:var(--text);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:5px 9px;border-radius:999px}
+  .look .meta{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;gap:10px}
+  .look h3{font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.01em}
+  .look .cat{color:var(--text-muted);font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
+  .look .price{font-size:14px;font-weight:600;white-space:nowrap}
+  .look .dots{display:flex;gap:7px;margin-top:10px}
+  .look .cdot{width:14px;height:14px;border-radius:50%;border:1px solid var(--border);display:inline-block}
+
+  /* EDITORIAL BREAK — Dawn: image-banner (full-span promo inside grid) */
+  .ebreak{grid-column:1/-1;position:relative;overflow:hidden;border-radius:var(--radius);min-height:360px;display:flex;align-items:flex-end;color:#f6f4ef;margin:8px 0;
+    background:
+      linear-gradient(115deg,rgba(10,10,10,.66) 0%,rgba(10,10,10,.08) 72%),
+      linear-gradient(150deg,#231f1c,#8a5038 130%)}
+  .ebreak .inner{padding:46px;max-width:56ch}
+  .ebreak .eyebrow{color:#f6f4ef;opacity:.78}
+  .ebreak h3{font-family:var(--serif);font-size:clamp(28px,4.4vw,50px);line-height:1;letter-spacing:-.02em;margin:14px 0 18px}
+  .ebreak p{opacity:.9;font-size:15px;margin:0 0 24px;max-width:46ch}
+  @media(max-width:520px){.ebreak .inner{padding:34px 26px}}
+
+  /* pagination — Dawn: main-collection (pagination) */
+  .pager{display:flex;justify-content:center;align-items:center;gap:8px;padding:48px 0 8px}
+  .pager a{min-width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;color:var(--text-muted);padding:0 10px}
+  .pager a:hover{border-color:var(--text);color:var(--text)}
+  .pager a[aria-current="page"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+  .pager a.step{color:var(--text);text-transform:uppercase;font-size:11px;letter-spacing:.12em;font-weight:700}
+
+  /* NEWSLETTER — Dawn: email-signup-banner */
+  .news{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:96px 0;margin-top:48px}
+  .news .grid2{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  .news h2{font-size:clamp(32px,4.4vw,56px);line-height:.98;letter-spacing:-.02em;max-width:14ch}
+  .news p{color:var(--text-muted);font-size:15px;margin:16px 0 0;max-width:40ch}
+  .news form{display:flex;gap:12px;flex-wrap:wrap}
+  .news input{flex:1;min-width:220px;padding:16px 4px;border:0;border-bottom:1px solid var(--text);background:transparent;color:var(--text);font-size:16px;font-family:var(--sans)}
+  .news input:focus{outline:none;border-color:var(--secondary)}
+  @media(max-width:760px){.news .grid2{grid-template-columns:1fr;gap:28px}}
+
+  /* footer — Dawn: footer */
+  footer{background:var(--primary);color:var(--on-primary);padding-top:72px}
+  .fcols{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:32px;padding-bottom:56px;max-width:var(--maxw);margin:0 auto;padding-left:32px;padding-right:32px}
+  .fcols .brand{color:var(--on-primary);margin-bottom:16px}
+  .fcols h3{font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.6;margin:0 0 16px;font-weight:700}
+  .fcols a{display:block;font-size:13px;opacity:.85;padding:6px 0}
+  .fcols p{opacity:.6;font-size:13px;max-width:32ch}
+  .fbot{border-top:1px solid rgba(255,255,255,.14);padding:22px 32px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.55;text-align:center}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <!-- ANNOUNCEMENT — Dawn: announcement-bar -->
+  <div class="announce">Complimentary shipping over $150 · Free returns within 30 days</div>
+
+  <!-- HEADER — Dawn: header -->
+  <header>
+    <nav class="nav wrap">
+      <ul><li>New In</li><li>Women</li><li>Men</li><li>Collections</li></ul>
+      <div class="brand">Marché</div>
+      <div class="icons"><span>Search</span><span>Bag (0)</span></div>
+    </nav>
+  </header>
+
+  <!-- BREADCRUMB — Dawn: main-collection (breadcrumb) -->
+  <nav class="crumbs wrap" aria-label="Breadcrumb">
+    <a href="#">Home</a><span>/</span><a href="#">Women</a><span>/</span>Coats &amp; Outerwear
+  </nav>
+
+  <!-- CAMPAIGN COLLECTION HERO — Dawn: main-collection (collection banner) -->
+  <section class="chero">
+    <div class="inner">
+      <div class="kicker"><span class="bar"></span><span>Autumn / Winter · Collection 07</span></div>
+      <h1>Coats &amp; outerwear, cut for the cold months.</h1>
+      <p>Structured tailoring in deadstock wool, boiled melton, and waxed cotton — engineered to layer through the season and outlast it. Made in limited runs, worn without apology.</p>
+      <div class="count">Showing 12 of 48 styles</div>
+    </div>
+  </section>
+
+  <!-- FILTER + SORT BAR — Dawn: facets (horizontal) -->
+  <div class="filterbar">
+    <div class="row wrap">
+      <div class="fgroup">
+        <span class="flabel">Size</span>
+        <button class="chip" aria-pressed="false">XS</button>
+        <button class="chip" aria-pressed="true">S</button>
+        <button class="chip" aria-pressed="false">M</button>
+        <button class="chip" aria-pressed="false">L</button>
+        <button class="chip" aria-pressed="false">XL</button>
+      </div>
+      <div class="fgroup">
+        <span class="flabel">Color</span>
+        <div class="swrow">
+          <button class="sw" aria-pressed="true" aria-label="Color: Charcoal" style="background:#3a3a3a"></button>
+          <button class="sw" aria-pressed="false" aria-label="Color: Camel" style="background:linear-gradient(135deg,#c99a5f,#a06a34)"></button>
+          <button class="sw" aria-pressed="false" aria-label="Color: Ecru" style="background:linear-gradient(135deg,#efe7d8,#ddd0ba)"></button>
+          <button class="sw" aria-pressed="false" aria-label="Color: Sage" style="background:#7d8471"></button>
+          <button class="sw" aria-pressed="false" aria-label="Color: Vermillion" style="background:var(--secondary)"></button>
+          <button class="sw" aria-pressed="false" aria-label="Color: Black" style="background:#141414"></button>
+        </div>
+      </div>
+      <div class="fgroup">
+        <span class="flabel">Category</span>
+        <select class="sel" aria-label="Filter by category">
+          <option>All outerwear</option>
+          <option>Wool coats</option>
+          <option>Parkas &amp; shells</option>
+          <option>Blazers &amp; tailoring</option>
+          <option>Puffers &amp; liners</option>
+          <option>Capes &amp; wraps</option>
+        </select>
+      </div>
+      <div class="spacer"></div>
+      <div class="sortwrap">
+        <span class="flabel">Sort</span>
+        <select class="sel" aria-label="Sort products">
+          <option>Featured</option>
+          <option>Newest</option>
+          <option>Price: Low to high</option>
+          <option>Price: High to low</option>
+          <option>Best selling</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN — results header + product grid -->
+  <main class="wrap">
+    <div class="results">
+      <h2>All pieces</h2>
+      <span class="rcount">48 styles · Autumn / Winter 07</span>
+    </div>
+
+    <!-- PRODUCT GRID — Dawn: main-collection (product-grid) -->
+    <div class="grid">
+      <article class="look">
+        <a class="ph g1" href="#" aria-label="Structured Wool Coat"><span class="tag">New</span></a>
+        <div class="meta"><div><h3><a href="#">Structured Wool Coat</a></h3><div class="cat">Outerwear</div></div><div class="price">$390</div></div>
+        <div class="dots" aria-label="Available colours"><span class="cdot" title="Charcoal" style="background:#3a3a3a"></span><span class="cdot" title="Camel" style="background:linear-gradient(135deg,#c99a5f,#a06a34)"></span><span class="cdot" title="Black" style="background:#141414"></span></div>
+      </article>
+      <article class="look">
+        <a class="ph g2" href="#" aria-label="Boiled Wool Overcoat"></a>
+        <div class="meta"><div><h3><a href="#">Boiled Wool Overcoat</a></h3><div class="cat">Outerwear</div></div><div class="price">$420</div></div>
+        <div class="dots" aria-label="Available colours"><span class="cdot" title="Sage" style="background:#7d8471"></span><span class="cdot" title="Charcoal" style="background:#3a3a3a"></span></div>
+      </article>
+      <article class="look">
+        <a class="ph g5" href="#" aria-label="Waxed Cotton Parka"></a>
+        <div class="meta"><div><h3><a href="#">Waxed Cotton Parka</a></h3><div class="cat">Outerwear</div></div><div class="price">$340</div></div>
+        <div class="dots" aria-label="Available colours"><span class="cdot" title="Olive" style="background:#5a5a3f"></span><span class="cdot" title="Ecru" style="background:linear-gradient(135deg,#efe7d8,#ddd0ba)"></span><span class="cdot" title="Black" style="background:#141414"></span></div>
+      </article>
+      <article class="look">
+        <a class="ph g6" href="#" aria-label="Belted Trench Coat"><span class="tag">Limited</span></a>
+        <div class="meta"><div><h3><a href="#">Belted Trench Coat</a></h3><div class="cat">Outerwear</div></div><div class="price">$360</div></div>
+        <div class="dots" aria-label="Available colours"><span class="cdot" title="Ecru" style="background:linear-gradient(135deg,#efe7d8,#ddd0ba)"></span><span class="cdot" title="Charcoal" style="background:#3a3a3a"></span></div>
+      </article>
+      <article class="look">
+        <a class="ph g4" href="#" aria-label="Cropped Quilted Puffer"></a>
+        <div class="meta"><div><h3><a href="#">Cropped Quilted Puffer</a></h3><div class="cat">Outerwear</div></div><div class="price">$280</div></div>
+        <div class="dots" aria-label="Available colours"><span class="cdot" title="Black" style="background:#141414"></span><span class="cdot" title="Vermillion" style="background:var(--secondary)"></span><span class="cdot" title="Camel" style="background:linear-gradient(135deg,#c99a5f,#a06a34)"></span></div>
+      </article>
+      <article class="look">
+        <a class="ph g3" href="#" aria-label="Double-Breasted Blazer"></a>
+        <div class="meta"><div><h3><a href="#">Double-Breasted Blazer</a></h3><div class="cat">Tailoring</div></div><div class="price">$310</div></div>
+        <div class="dots" aria-label="Available colours"><span class="cdot" title="Charcoal" style="background:#3a3a3a"></span><span class="cdot" title="Sage" style="background:#7d8471"></span></div>
+      </article>
+
+      <!-- EDITORIAL BREAK ROW — Dawn: image-banner (full-span, mid-grid) -->
+      <aside class="ebreak">
+        <div class="inner">
+          <span class="eyebrow">The Concrete Series</span>
+          <h3>Dress like the city you live in.</h3>
+          <p>Nine outerwear pieces engineered to layer, travel, and last past the season — cut from a palette pulled straight off wet pavement. Released in one run only.</p>
+          <a class="btn btn-accent" href="#">Shop the capsule</a>
+        </div>
+      </aside>
+
+      <article class="look">
+        <a class="ph g5" href="#" aria-label="Melton Car Coat"></a>
+        <div class="meta"><div><h3><a href="#">Melton Car Coat</a></h3><div class="cat">Outerwear</div></div><div class="price">$400</div></div>
+        <div class="dots" aria-label="Available colours"><span class="cdot" title="Camel" style="background:linear-gradient(135deg,#c99a5f,#a06a34)"></span><span class="cdot" title="Charcoal" style="background:#3a3a3a"></span></div>
+      </article>
+      <article class="look">
+        <a class="ph g4" href="#" aria-label="Quilted Liner Jacket"></a>
+        <div class="meta"><div><h3><a href="#">Quilted Liner Jacket</a></h3><div class="cat">Outerwear</div></div><div class="price">$220</div></div>
+        <div class="dots" aria-label="Available colours"><span class="cdot" title="Black" style="background:#141414"></span><span class="cdot" title="Olive" style="background:#5a5a3f"></span></div>
+      </article>
+      <article class="look">
+        <a class="ph g1" href="#" aria-label="Shearling-Collar Jacket"><span class="tag">Limited</span></a>
+        <div class="meta"><div><h3><a href="#">Shearling-Collar Jacket</a></h3><div class="cat">Outerwear</div></div><div class="price">$460</div></div>
+        <div class="dots" aria-label="Available colours"><span class="cdot" title="Tan" style="background:linear-gradient(135deg,#b07a4a,#8a5038)"></span><span class="cdot" title="Black" style="background:#141414"></span></div>
+      </article>
+      <article class="look">
+        <a class="ph g2" href="#" aria-label="Herringbone Chore Coat"></a>
+        <div class="meta"><div><h3><a href="#">Herringbone Chore Coat</a></h3><div class="cat">Outerwear</div></div><div class="price">$290</div></div>
+        <div class="dots" aria-label="Available colours"><span class="cdot" title="Charcoal" style="background:#3a3a3a"></span><span class="cdot" title="Sage" style="background:#7d8471"></span><span class="cdot" title="Ecru" style="background:linear-gradient(135deg,#efe7d8,#ddd0ba)"></span></div>
+      </article>
+      <article class="look">
+        <a class="ph g6" href="#" aria-label="Longline Wrap Coat"></a>
+        <div class="meta"><div><h3><a href="#">Longline Wrap Coat</a></h3><div class="cat">Outerwear</div></div><div class="price">$380</div></div>
+        <div class="dots" aria-label="Available colours"><span class="cdot" title="Charcoal" style="background:#3a3a3a"></span><span class="cdot" title="Camel" style="background:linear-gradient(135deg,#c99a5f,#a06a34)"></span></div>
+      </article>
+      <article class="look">
+        <a class="ph g3" href="#" aria-label="Tailored Wool Cape"><span class="tag">New</span></a>
+        <div class="meta"><div><h3><a href="#">Tailored Wool Cape</a></h3><div class="cat">Outerwear</div></div><div class="price">$330</div></div>
+        <div class="dots" aria-label="Available colours"><span class="cdot" title="Vermillion" style="background:var(--secondary)"></span><span class="cdot" title="Charcoal" style="background:#3a3a3a"></span><span class="cdot" title="Ecru" style="background:linear-gradient(135deg,#efe7d8,#ddd0ba)"></span></div>
+      </article>
+    </div>
+
+    <!-- PAGINATION — Dawn: main-collection (pagination) -->
+    <nav class="pager" aria-label="Pagination">
+      <a class="step" href="#" aria-label="Previous page">‹ Prev</a>
+      <a href="#" aria-current="page">1</a>
+      <a href="#">2</a>
+      <a href="#">3</a>
+      <a href="#">…</a>
+      <a href="#">4</a>
+      <a class="step" href="#" aria-label="Next page">Next ›</a>
+    </nav>
+  </main>
+
+  <!-- NEWSLETTER — Dawn: email-signup-banner -->
+  <section class="news">
+    <div class="wrap grid2">
+      <div>
+        <span class="eyebrow">The list</span>
+        <h2 style="margin-top:14px">First looks, before anyone else.</h2>
+      </div>
+      <div>
+        <p style="margin-bottom:22px">Early access to drops, restock alerts, and the occasional archive sale. One email, no noise.</p>
+        <form onsubmit="return false">
+          <input type="email" placeholder="Enter your email" aria-label="Email">
+          <button class="btn btn-primary" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="fcols">
+      <div>
+        <div class="brand">Marché</div>
+        <p>Small-batch, ready-to-wear tailoring made in limited runs from deadstock and recycled cloth.</p>
+      </div>
+      <div><h3>Shop</h3><a href="#">New In</a><a href="#">Women</a><a href="#">Men</a><a href="#">Accessories</a></div>
+      <div><h3>House</h3><a href="#">Our story</a><a href="#">Sustainability</a><a href="#">Lookbook</a><a href="#">Stores</a></div>
+      <div><h3>Care</h3><a href="#">Shipping</a><a href="#">Returns</a><a href="#">Size guide</a><a href="#">Contact</a></div>
+    </div>
+    <div class="fbot">© Marché · Baseline template · Structure references Shopify Dawn 15.4.1</div>
+  </footer>
+</body>
+</html>

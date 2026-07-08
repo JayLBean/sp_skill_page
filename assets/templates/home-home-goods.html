@@ -1,0 +1,303 @@
+<!-- @dsCard group="Home" name="Home — Home Goods (DTC)" subtitle="Announcement · Lifestyle hero · Shop by room · Featured collection · Materials story · Designed to last · Customer photos · Newsletter" viewport="1280x3480" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — Home Goods Home (Lifestyle)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  /* Warm-neutral palette: sage primary, dusty-blue accent, sand/clay surfaces */
+  :root{
+    --primary:#5f6f57; --on-primary:#f6f8f2;
+    --secondary:#93a9b0; --on-secondary:#16211f;
+    --bg:#faf6f0; --surface:#f1eadf; --surface-2:#e7dccd;
+    --text:#2c2822; --text-muted:#6f685c; --border:#e4d9c8;
+    --radius:12px; --maxw:1200px;
+    --serif:"Palatino Linotype",Palatino,"Book Antiqua","Iowan Old Style",Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Roboto,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#15140f; --surface:#1d1b15; --surface-2:#26231b; --text:#f1ece2; --text-muted:#aca492; --border:#332f26; --on-secondary:#e9f0f0; }
+  }
+  :root[data-theme="dark"]{ --bg:#15140f; --surface:#1d1b15; --surface-2:#26231b; --text:#f1ece2; --text-muted:#aca492; --border:#332f26; --on-secondary:#e9f0f0; }
+  :root[data-theme="light"]{ --bg:#faf6f0; --surface:#f1eadf; --surface-2:#e7dccd; --text:#2c2822; --text-muted:#6f685c; --border:#e4d9c8; --on-secondary:#16211f; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:.005em;margin:0}
+  .btn{display:inline-block;padding:14px 30px;border-radius:8px;font-weight:600;font-size:15px;transition:transform .15s ease,background .15s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-light{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text)}
+  .eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+
+  /* announcement — Dawn: announcement-bar */
+  .announce{background:var(--surface-2);color:var(--text);text-align:center;font-size:13px;letter-spacing:.05em;padding:11px 16px;border-bottom:1px solid var(--border)}
+
+  /* header — Dawn: header */
+  header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .brand{font-family:var(--serif);font-size:23px;font-weight:500;letter-spacing:.04em}
+  .nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--text-muted)}
+  .nav .icons{display:flex;gap:20px;font-size:14px;color:var(--text-muted)}
+  @media(max-width:760px){.nav ul{display:none}}
+
+  /* hero — Dawn: image-banner (full-bleed room scene, overlay content) */
+  .hero{position:relative;min-height:600px;display:flex;align-items:center;
+    background:
+      radial-gradient(70% 90% at 82% 12%,rgba(147,169,176,.55),transparent 55%),
+      radial-gradient(60% 70% at 8% 95%,rgba(214,190,158,.6),transparent 60%),
+      linear-gradient(150deg,#e9ddca 0%,#dccbb2 45%,#c9b59b 100%)}
+  .hero .win{position:absolute;right:8%;top:12%;width:190px;height:300px;border-radius:14px;
+    background:linear-gradient(160deg,rgba(255,255,255,.5),rgba(147,169,176,.35));
+    box-shadow:0 30px 60px -30px rgba(60,50,35,.4);opacity:.7}
+  .hero .sofa{position:absolute;right:14%;bottom:0;width:340px;height:150px;border-radius:26px 26px 0 0;
+    background:linear-gradient(160deg,#8b9a83,#6f7f68);opacity:.6}
+  .hero .inner{position:relative;padding:96px 0}
+  .hero .card{max-width:560px;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(6px);
+    border:1px solid var(--border);border-radius:var(--radius);padding:44px 44px}
+  .hero h1{font-size:clamp(36px,5vw,58px);line-height:1.06}
+  .hero p{color:var(--text-muted);font-size:18px;max-width:44ch;margin:20px 0 30px}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+  @media(max-width:760px){.hero{min-height:auto}.hero .win,.hero .sofa{display:none}.hero .inner{padding:60px 0}.hero .card{padding:32px 26px}}
+
+  /* section shell — generous, spacious rhythm */
+  section.blk{padding:88px 0}
+  .head{max-width:60ch;margin:0 auto 48px;text-align:center}
+  .head h2{font-size:clamp(28px,3.6vw,42px)}
+  .head p{color:var(--text-muted);margin-top:14px;font-size:16px}
+
+  /* shop by room — Dawn: collection-list (category tiles) */
+  .rooms{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media(max-width:900px){.rooms{grid-template-columns:repeat(2,1fr)}}
+  .room{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:3/4;display:flex;align-items:flex-end;
+    border:1px solid var(--border);transition:transform .2s ease}
+  .room:hover{transform:translateY(-4px)}
+  .room .r-body{position:relative;padding:20px;z-index:1}
+  .room h3{font-family:var(--serif);font-size:21px;font-weight:500;color:#fff}
+  .room span{font-size:13px;color:rgba(255,255,255,.82)}
+  .room::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(30,26,20,.55))}
+  .room.living{background:linear-gradient(155deg,#9aa891,#6f7f68 70%,#4f5c48)}
+  .room.bedroom{background:linear-gradient(155deg,#b7a488,#8f7d63 70%,#6b5c45)}
+  .room.kitchen{background:linear-gradient(155deg,#a9b7bc,#7f959c 70%,#5d757c)}
+  .room.bath{background:linear-gradient(155deg,#cdbfa8,#a99a80 70%,#82735c)}
+
+  /* featured collection — Dawn: featured-collection */
+  .products{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  @media(max-width:900px){.products{grid-template-columns:repeat(2,1fr)}}
+  .card{background:transparent}
+  .card .ph{aspect-ratio:1/1;border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;position:relative}
+  .card:nth-child(1) .ph{background:linear-gradient(155deg,#d8c8ac,#b7a488)}
+  .card:nth-child(2) .ph{background:linear-gradient(155deg,#b3c2c6,#8ba1a8)}
+  .card:nth-child(3) .ph{background:linear-gradient(155deg,#cfc3ad,#a99a80)}
+  .card:nth-child(4) .ph{background:linear-gradient(155deg,#a7b59d,#7f8f74)}
+  .card .ph .tagline{position:absolute;top:12px;left:12px;background:color-mix(in srgb,var(--bg) 92%,transparent);
+    font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--primary);padding:5px 10px;border-radius:999px}
+  .card h3{font-family:var(--sans);font-size:15px;font-weight:600;margin-top:14px}
+  .card .price{color:var(--text-muted);font-size:14px;margin-top:4px}
+  .card .swatches{display:flex;gap:6px;margin-top:10px}
+  .card .swatches i{width:15px;height:15px;border-radius:50%;border:1px solid var(--border)}
+  .featured .cta-row{text-align:center;margin-top:44px}
+
+  /* materials & quality story — Dawn: image-with-text */
+  .iwt{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+  .iwt .art{aspect-ratio:4/5;border-radius:var(--radius);position:relative;overflow:hidden;
+    background:
+      radial-gradient(80% 60% at 25% 20%,rgba(147,169,176,.5),transparent 55%),
+      linear-gradient(160deg,#c9b89b 0%,#a08a6c 55%,#7c6a4f 120%);
+    box-shadow:0 34px 60px -34px rgba(60,50,35,.4)}
+  .iwt .art .chip{position:absolute;left:22px;bottom:22px;background:color-mix(in srgb,var(--bg) 92%,transparent);
+    backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:12px;padding:12px 16px;font-size:13px}
+  .iwt .art .chip b{display:block;font-size:15px}
+  .iwt p{color:var(--text-muted);margin:18px 0 26px;font-size:16px}
+  .matlist{list-style:none;margin:0 0 30px;padding:0;display:grid;gap:14px}
+  .matlist li{display:flex;gap:12px;align-items:flex-start;font-size:15px}
+  .matlist li::before{content:"";flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:var(--primary);margin-top:8px}
+  @media(max-width:760px){.iwt{grid-template-columns:1fr}}
+
+  /* designed to last — Dawn: multicolumn (3-up values) */
+  .vals{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  @media(max-width:760px){.vals{grid-template-columns:1fr}}
+  .val{padding:34px 30px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
+  .val .mark{width:44px;height:44px;border-radius:12px;background:var(--surface-2);color:var(--primary);display:grid;place-items:center;margin-bottom:18px}
+  .val .mark svg{width:22px;height:22px}
+  .val h3{font-family:var(--sans);font-size:18px;font-weight:600}
+  .val p{color:var(--text-muted);font-size:14px;margin-top:10px}
+
+  /* customer photos + testimonial — Dawn: image-gallery + testimonials */
+  .ugc{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:44px}
+  @media(max-width:900px){.ugc{grid-template-columns:repeat(2,1fr)}}
+  .ugc .shot{aspect-ratio:1/1;border-radius:var(--radius);border:1px solid var(--border)}
+  .ugc .shot:nth-child(1){background:linear-gradient(155deg,#c9b89b,#8f7d63)}
+  .ugc .shot:nth-child(2){background:linear-gradient(155deg,#a9b7bc,#7f959c)}
+  .ugc .shot:nth-child(3){background:linear-gradient(155deg,#a7b59d,#6f7f68)}
+  .ugc .shot:nth-child(4){background:linear-gradient(155deg,#d8c8ac,#a99a80)}
+  .quote{text-align:center;max-width:40ch;margin:0 auto}
+  .quote .stars{color:var(--secondary);letter-spacing:3px;font-size:16px}
+  .quote blockquote{font-family:var(--serif);font-size:clamp(21px,2.8vw,30px);line-height:1.4;margin:16px auto 0}
+  .quote .who{color:var(--text-muted);font-size:14px;margin-top:18px}
+  .quote .handle{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);margin-top:34px}
+
+  /* newsletter — Dawn: email-signup-banner */
+  .news{border:1px solid var(--border);border-radius:var(--radius);padding:60px 32px;text-align:center;background:var(--surface)}
+  .news h2{font-size:clamp(26px,3.2vw,38px)}
+  .news p{color:var(--text-muted);margin-top:12px}
+  .news form{display:flex;gap:10px;max-width:440px;margin:24px auto 0}
+  .news input{flex:1;padding:15px 18px;border-radius:8px;border:1px solid var(--border);font-size:15px;font-family:inherit;background:var(--bg);color:var(--text)}
+  .news .btn{background:var(--primary);color:var(--on-primary)}
+  @media(max-width:520px){.news form{flex-direction:column}}
+
+  /* footer — Dawn: footer */
+  footer{border-top:1px solid var(--border);margin-top:8px}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px;padding:60px 0}
+  .fcols h3{font-family:var(--sans);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:700;margin:0 0 14px}
+  .fcols a{display:block;font-size:14px;color:var(--text-muted);padding:5px 0}
+  .fcols a:hover{color:var(--text)}
+  .fbot{border-top:1px solid var(--border);padding:22px 0;font-size:13px;color:var(--text-muted);text-align:center}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <!-- ANNOUNCEMENT — Dawn: announcement-bar -->
+  <div class="announce">Complimentary shipping over $75 · Free 60-day returns · Made in small batches</div>
+
+  <!-- HEADER — Dawn: header -->
+  <header>
+    <nav class="nav wrap">
+      <ul><li>Living</li><li>Bedroom</li><li>Kitchen &amp; Dining</li><li>Our Materials</li></ul>
+      <div class="brand">Hearth &amp; Loom</div>
+      <div class="icons"><span>Search</span><span>Account</span><span>Cart (0)</span></div>
+    </nav>
+  </header>
+
+  <!-- HERO — Dawn: image-banner (lifestyle room scene, overlay content card) -->
+  <section class="hero">
+    <div class="win" aria-hidden="true"></div>
+    <div class="sofa" aria-hidden="true"></div>
+    <div class="inner wrap">
+      <div class="card">
+        <span class="eyebrow">New · The Autumn Collection</span>
+        <h1>Made for the rooms you actually live in.</h1>
+        <p>Natural materials, quiet colors, and pieces built to soften with age — thoughtfully made goods for a home that feels like a deep exhale.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#">Shop new arrivals</a>
+          <a class="btn btn-light" href="#">Explore by room</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOP BY ROOM — Dawn: collection-list -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Shop by room</span><h2>Start where you spend your time</h2><p>Curated pieces for every corner of the home — chosen to layer, mix, and last.</p></div>
+      <div class="rooms">
+        <a class="room living" href="#"><div class="r-body"><h3>Living Room</h3><span>Throws · pillows · lighting</span></div></a>
+        <a class="room bedroom" href="#"><div class="r-body"><h3>Bedroom</h3><span>Bedding · rugs · lamps</span></div></a>
+        <a class="room kitchen" href="#"><div class="r-body"><h3>Kitchen &amp; Dining</h3><span>Stoneware · linens · boards</span></div></a>
+        <a class="room bath" href="#"><div class="r-body"><h3>Bath</h3><span>Towels · baskets · scents</span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED COLLECTION — Dawn: featured-collection -->
+  <section class="blk featured" style="background:var(--surface)">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">The Autumn Collection</span><h2>New this season</h2><p>Warm textures and grounded tones, made in limited runs.</p></div>
+      <div class="products">
+        <div class="card"><div class="ph"><span class="tagline">Best seller</span></div><h3>Alder Wool Throw</h3><div class="price">$128</div><div class="swatches"><i style="background:#8f7d63"></i><i style="background:#6f7f68"></i><i style="background:#a9b7bc"></i></div></div>
+        <div class="card"><div class="ph"></div><h3>Rill Stoneware Dinner Set</h3><div class="price">$164 · set of 4</div><div class="swatches"><i style="background:#8ba1a8"></i><i style="background:#c9b89b"></i></div></div>
+        <div class="card"><div class="ph"><span class="tagline">New</span></div><h3>Washed Linen Duvet</h3><div class="price">$218</div><div class="swatches"><i style="background:#d8c8ac"></i><i style="background:#a99a80"></i><i style="background:#7f959c"></i></div></div>
+        <div class="card"><div class="ph"></div><h3>Grove Oak Side Table</h3><div class="price">$246</div><div class="swatches"><i style="background:#a99a80"></i><i style="background:#6f7f68"></i></div></div>
+      </div>
+      <div class="cta-row"><a class="btn btn-ghost" href="#">Shop the collection</a></div>
+    </div>
+  </section>
+
+  <!-- MATERIALS & QUALITY STORY — Dawn: image-with-text -->
+  <section class="blk">
+    <div class="wrap iwt">
+      <div class="art" role="img" aria-label="Natural materials close-up">
+        <div class="chip"><b>Belgian flax linen</b>Stonewashed · OEKO-TEX certified</div>
+      </div>
+      <div>
+        <span class="eyebrow">Honest materials</span>
+        <h2>Made from things that get better with age.</h2>
+        <p>We work with natural, traceable materials — Belgian flax, responsibly sourced oak, undyed wool — and partner with small family workshops who still make by hand. Nothing here is meant to be replaced next year.</p>
+        <ul class="matlist">
+          <li>Stonewashed flax linen that softens with every wash</li>
+          <li>FSC-certified solid oak, joined not glued</li>
+          <li>Undyed, mulesing-free wool from named farms</li>
+        </ul>
+        <a class="btn btn-ghost" href="#">Explore our materials</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGNED TO LAST — Dawn: multicolumn (3-up values) -->
+  <section class="blk" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Designed to last</span><h2>Bought once, kept for years</h2></div>
+      <div class="vals">
+        <div class="val">
+          <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 4v5c0 4-3 7-7 8-4-1-7-4-7-8V7l7-4z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></div>
+          <h3>A 10-year guarantee</h3>
+          <p>If it fails from normal use in the first decade, we repair or replace it — no receipt gymnastics.</p>
+        </div>
+        <div class="val">
+          <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg></div>
+          <h3>Made in small batches</h3>
+          <p>Limited runs with family-run workshops mean better craft and far less waste than fast furniture.</p>
+        </div>
+        <div class="val">
+          <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 010 18"/><path d="M3 12l3 3M3 12l3-3"/></svg></div>
+          <h3>Kind to the planet</h3>
+          <p>Plastic-free packaging, carbon-neutral delivery, and a take-back program for pieces you've outgrown.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOMER PHOTOS + TESTIMONIAL — Dawn: image-gallery + testimonials -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">#atHearthAndLoom</span><h2>At home with our community</h2></div>
+      <div class="ugc">
+        <div class="shot" role="img" aria-label="Customer living room"></div>
+        <div class="shot" role="img" aria-label="Customer kitchen shelf"></div>
+        <div class="shot" role="img" aria-label="Customer bedroom"></div>
+        <div class="shot" role="img" aria-label="Customer reading nook"></div>
+      </div>
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Everything arrived beautifully wrapped, and the linen only gets softer. It's the first bedding I've wanted to keep forever."</blockquote>
+        <div class="who">— Elena K., Portland OR · Verified buyer</div>
+        <div class="handle">Tag us to be featured</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER — Dawn: email-signup-banner -->
+  <section class="blk"><div class="wrap"><div class="news">
+    <h2>Slow down your inbox, too</h2>
+    <p>Early access to new collections, styling notes, and the occasional restock — about twice a month. No noise.</p>
+    <form onsubmit="return false"><input type="email" placeholder="you@email.com" aria-label="Email"><button class="btn">Join the list</button></form>
+  </div></div></section>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="wrap fcols">
+      <div><div class="brand" style="margin-bottom:12px">Hearth &amp; Loom</div><p style="color:var(--text-muted);font-size:14px;max-width:34ch">Thoughtfully made home goods in natural materials, built to age well and stay a while.</p></div>
+      <div><h3>Shop</h3><a>Living</a><a>Bedroom</a><a>Kitchen &amp; Dining</a><a>Bath</a></div>
+      <div><h3>About</h3><a>Our materials</a><a>Our makers</a><a>Sustainability</a><a>Journal</a></div>
+      <div><h3>Support</h3><a>Contact</a><a>Shipping</a><a>Returns &amp; care</a><a>Trade program</a></div>
+    </div>
+    <div class="fbot">© Hearth &amp; Loom · Baseline template · Structure references Shopify Dawn 15.4.1</div>
+  </footer>
+</body>
+</html>

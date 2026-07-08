@@ -1,0 +1,377 @@
+<!-- @dsCard group="Product" name="Product (PDP) — Fashion" subtitle="Breadcrumb · Gallery · Buy box · Accordion · Styled with · Reviews · Sticky ATC bar · Footer" viewport="1280x2620" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — Product (Fashion)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) — copied verbatim from home-fashion.html ---- */
+  :root{
+    --primary:#111111; --on-primary:#f6f4ef;
+    --secondary:#e8462a; --on-secondary:#ffffff;
+    --bg:#f6f4ef; --surface:#efece5; --surface-2:#e5e1d8;
+    --text:#141414; --text-muted:#6a655d; --border:#ddd8cd;
+    --radius:3px; --maxw:1320px;
+    --serif:"Didot","Bodoni MT","Playfair Display",Georgia,"Times New Roman",serif;
+    --sans:"Helvetica Neue",Helvetica,Arial,"Segoe UI",Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0d0d0d; --surface:#151412; --surface-2:#1e1c19; --text:#f3efe8; --text-muted:#9a948b; --border:#2a2825; --primary:#f3efe8; --on-primary:#0d0d0d; }
+  }
+  :root[data-theme="dark"]{ --bg:#0d0d0d; --surface:#151412; --surface-2:#1e1c19; --text:#f3efe8; --text-muted:#9a948b; --border:#2a2825; --primary:#f3efe8; --on-primary:#0d0d0d; }
+  :root[data-theme="light"]{ --bg:#f6f4ef; --surface:#efece5; --surface-2:#e5e1d8; --text:#141414; --text-muted:#6a655d; --border:#ddd8cd; --primary:#111111; --on-primary:#f6f4ef; }
+
+  *{box-sizing:border-box}
+  html,body{overflow-x:hidden}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;margin:0}
+  .btn{display:inline-block;padding:15px 34px;font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-radius:var(--radius);transition:opacity .15s ease,transform .15s ease;cursor:pointer;border:0}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-accent{background:var(--secondary);color:var(--on-secondary)}
+  .btn-ghost{border:1px solid currentColor;color:inherit}
+  .btn-line{border:1px solid var(--border);color:var(--text)}
+  .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--text-muted);font-weight:700}
+  .stars{color:var(--secondary);letter-spacing:2px}
+
+  /* announcement — Dawn: announcement-bar */
+  .announce{background:var(--primary);color:var(--on-primary);text-align:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:11px 16px;font-weight:600}
+
+  /* header — Dawn: header (sticky) */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-family:var(--serif);font-size:24px;font-weight:400;letter-spacing:.14em;text-transform:uppercase}
+  .nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+  .nav .icons{display:flex;gap:20px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+  @media(max-width:900px){.nav ul{display:none}.brand{font-size:20px}}
+
+  /* breadcrumb — Dawn: main-product (breadcrumb) */
+  .crumbs{font-size:12px;letter-spacing:.06em;color:var(--text-muted);padding:20px 0 10px;text-transform:uppercase}
+  .crumbs a:hover{color:var(--text)}
+  .crumbs span{margin:0 9px;opacity:.55}
+
+  /* main product — two columns — Dawn: main-product */
+  .pdp{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;padding:12px 0 8px;align-items:start}
+  @media(max-width:900px){.pdp{grid-template-columns:1fr;gap:30px}}
+
+  /* GALLERY — Dawn: main-product (media gallery) */
+  .gallery{position:sticky;top:88px}
+  @media(max-width:900px){.gallery{position:static}}
+  .main-img{aspect-ratio:3/4;border-radius:var(--radius);position:relative;overflow:hidden;
+    background:linear-gradient(155deg,#3a3430,#8a5038);box-shadow:0 30px 60px -34px rgba(0,0,0,.4)}
+  .main-img .cap{position:absolute;bottom:16px;left:18px;color:#f6f4ef;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.85;font-weight:700}
+  .thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+  .thumb{aspect-ratio:1/1;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;padding:0}
+  .thumb.t1{background:linear-gradient(155deg,#3a3430,#8a5038)}
+  .thumb.t2{background:linear-gradient(155deg,#2c2b2a,#5f6b63)}
+  .thumb.t3{background:linear-gradient(155deg,#4a3d33,#c9542f)}
+  .thumb.t4{background:linear-gradient(140deg,var(--surface),var(--surface-2))}
+  .thumb[aria-current="true"]{outline:2px solid var(--text);outline-offset:-2px}
+
+  /* BUY BOX — Dawn: main-product (product information) */
+  .buybox h1{font-size:clamp(30px,3.6vw,46px);line-height:1.04;letter-spacing:-.01em;margin-top:10px}
+  .rrow{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);margin-top:14px}
+  .rrow a{text-decoration:underline;text-underline-offset:2px}
+  .pricerow{display:flex;align-items:baseline;gap:14px;margin:20px 0 8px}
+  .pricerow .now{font-size:24px;font-weight:600;letter-spacing:.01em}
+  .pricerow .was{color:var(--text-muted);text-decoration:line-through;font-size:15px}
+  .blurb{color:var(--text-muted);font-size:15px;max-width:50ch;margin:8px 0 28px}
+
+  .opt-group{margin-bottom:24px}
+  .opt-group .lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .opt-group .lbl .val{color:var(--text-muted);font-weight:400;letter-spacing:.02em;text-transform:none;font-size:13px}
+  .opt-group .lbl a{color:var(--text-muted);text-decoration:underline;text-underline-offset:2px;font-weight:600;letter-spacing:.06em}
+  .swatches{display:flex;gap:12px;flex-wrap:wrap}
+  .swatch{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);cursor:pointer;padding:0}
+  .swatch[aria-pressed="true"]{outline:2px solid var(--text);outline-offset:2px}
+  .sizes{display:flex;gap:10px;flex-wrap:wrap}
+  .size{min-width:54px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:var(--radius);padding:12px 14px;font-size:12px;letter-spacing:.08em;font-weight:600;cursor:pointer;text-transform:uppercase;transition:border-color .15s ease}
+  .size:hover{border-color:var(--text)}
+  .size[aria-pressed="true"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+  .size[disabled]{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+
+  .buyrow{display:flex;gap:12px;align-items:stretch;margin:8px 0 14px}
+  .stepper{display:flex;align-items:center;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .stepper button{border:0;background:transparent;color:var(--text);width:46px;font-size:18px;cursor:pointer}
+  .stepper span{min-width:34px;text-align:center;font-size:14px;font-weight:600}
+  .btn-add{flex:1;text-align:center}
+  .subline{font-size:12px;color:var(--text-muted);margin:2px 0 22px;letter-spacing:.02em}
+
+  .ship{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:18px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .ship .tb{text-align:center;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:700;line-height:1.6}
+  .ship .tb .ic{display:block;font-size:16px;margin-bottom:6px;color:var(--text)}
+
+  /* section shell */
+  section.blk{padding:72px 0}
+  .head{max-width:60ch;margin:0 0 40px}
+  .head .eyebrow{display:block;margin-bottom:14px}
+  .head h2{font-size:clamp(28px,4vw,48px);line-height:1;letter-spacing:-.02em}
+
+  /* ACCORDION — Dawn: main-product (collapsible-tab blocks) */
+  .accordion{max-width:900px;margin:0 auto}
+  .acc{border-bottom:1px solid var(--border)}
+  .acc:first-child{border-top:1px solid var(--border)}
+  .acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:22px 2px;font-family:var(--serif);font-size:21px;font-weight:400}
+  .acc summary::-webkit-details-marker{display:none}
+  .acc summary .plus{font-family:var(--sans);font-size:24px;font-weight:400;color:var(--text-muted);transition:transform .2s ease}
+  .acc[open] summary .plus{transform:rotate(45deg)}
+  .acc .content{padding:0 2px 24px;color:var(--text-muted);font-size:15px;max-width:74ch}
+  .acc .content p{margin:0 0 12px}
+  .acc .content ul{margin:0;padding-left:18px}
+  .acc .content li{margin:6px 0}
+
+  /* STYLED WITH — Dawn: related-products / complete-the-look */
+  .products{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+  @media(max-width:900px){.products{grid-template-columns:repeat(2,1fr);gap:20px}}
+  .look .ph{aspect-ratio:3/4;border-radius:var(--radius);position:relative;overflow:hidden;display:block;background:linear-gradient(150deg,var(--surface-2),var(--surface))}
+  .look .ph.g1{background:linear-gradient(155deg,#2c2b2a,#5f6b63)}
+  .look .ph.g2{background:linear-gradient(155deg,#332b28,#b07a4a)}
+  .look .ph.g3{background:linear-gradient(155deg,#26262b,#7a6a86)}
+  .look .ph.g4{background:linear-gradient(155deg,#4a3d33,#c9542f)}
+  .look .meta{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;gap:10px}
+  .look h3{font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.01em}
+  .look .cat{color:var(--text-muted);font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
+  .look .price{font-size:14px;font-weight:600;white-space:nowrap}
+
+  /* REVIEWS — Dawn: product-reviews (app block) */
+  .reviews{background:var(--surface)}
+  .rsum{display:grid;grid-template-columns:250px 1fr;gap:48px;align-items:center}
+  @media(max-width:760px){.rsum{grid-template-columns:1fr;gap:28px}}
+  .rscore{text-align:center}
+  .rscore .big{font-family:var(--serif);font-size:66px;line-height:1}
+  .rscore .stars{font-size:18px}
+  .rscore .n{color:var(--text-muted);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-top:8px}
+  .bars{display:flex;flex-direction:column;gap:8px}
+  .bar{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--text-muted)}
+  .bar .track{flex:1;height:8px;background:var(--bg);border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .bar .fill{height:100%;background:var(--text)}
+  .rquotes{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:34px}
+  @media(max-width:760px){.rquotes{grid-template-columns:1fr}}
+  .rq{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+  .rq .stars{font-size:13px}
+  .rq p{font-size:14px;margin:12px 0 14px;font-style:italic}
+  .rq .who{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
+
+  /* STICKY MOBILE ADD-TO-BAG — Dawn: main-product (sticky buy buttons) */
+  .stickybar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:none;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+  .stickybar .inner{display:flex;align-items:center;gap:14px;max-width:var(--maxw);margin:0 auto}
+  .stickybar .meta{flex:0 0 auto}
+  .stickybar .meta .t{font-size:13px;font-weight:600;white-space:nowrap;max-width:40vw;overflow:hidden;text-overflow:ellipsis}
+  .stickybar .meta .p{font-size:12px;color:var(--text-muted)}
+  .stickybar .btn-add{flex:1;padding:14px 20px}
+  @media(max-width:760px){.stickybar{display:block}body{padding-bottom:82px}}
+
+  /* footer — Dawn: footer */
+  footer{background:var(--primary);color:var(--on-primary);padding-top:72px}
+  .fcols{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:32px;padding-bottom:56px;max-width:var(--maxw);margin:0 auto;padding-left:32px;padding-right:32px}
+  .fcols .brand{color:var(--on-primary);margin-bottom:16px}
+  .fcols h3{font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.6;margin:0 0 16px;font-weight:700}
+  .fcols a{display:block;font-size:13px;opacity:.85;padding:6px 0}
+  .fcols p{opacity:.6;font-size:13px;max-width:32ch}
+  .fbot{border-top:1px solid rgba(255,255,255,.14);padding:22px 32px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.55;text-align:center}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <!-- ANNOUNCEMENT — Dawn: announcement-bar -->
+  <div class="announce">Complimentary shipping over $150 · Free returns within 30 days</div>
+
+  <!-- HEADER — Dawn: header -->
+  <header>
+    <nav class="nav wrap">
+      <ul><li>New In</li><li>Women</li><li>Men</li><li>Collections</li></ul>
+      <div class="brand">Marché</div>
+      <div class="icons"><span>Search</span><span>Bag (0)</span></div>
+    </nav>
+  </header>
+
+  <!-- BREADCRUMB — Dawn: main-product (breadcrumb) -->
+  <nav class="crumbs wrap" aria-label="Breadcrumb">
+    <a href="#">Home</a><span>/</span><a href="#">Coats &amp; Outerwear</a><span>/</span>Structured Wool Coat
+  </nav>
+
+  <!-- MAIN PRODUCT — Dawn: main-product -->
+  <section class="wrap">
+    <div class="pdp">
+
+      <!-- GALLERY — Dawn: main-product (media gallery) -->
+      <div class="gallery">
+        <div class="main-img" role="img" aria-label="Structured Wool Coat in Charcoal, full-length front view">
+          <span class="cap">Editorial 07 — shot in Marseille</span>
+        </div>
+        <div class="thumbs">
+          <button class="thumb t1" aria-current="true" aria-label="View 1 — front"></button>
+          <button class="thumb t2" aria-label="View 2 — back"></button>
+          <button class="thumb t3" aria-label="View 3 — on figure"></button>
+          <button class="thumb t4" aria-label="View 4 — fabric detail"></button>
+        </div>
+      </div>
+
+      <!-- BUY BOX — Dawn: main-product (product information) -->
+      <div class="buybox">
+        <span class="eyebrow">Autumn / Winter · Outerwear</span>
+        <h1>Structured Wool Coat</h1>
+        <div class="rrow"><span class="stars">★★★★★</span> 4.8 · <a href="#reviews">318 reviews</a></div>
+
+        <div class="pricerow">
+          <span class="now">$390</span>
+          <span class="was">$450</span>
+        </div>
+        <p class="blurb">A clean-lined, single-breasted coat cut from Italian deadstock wool-melton. Softly structured shoulder, hidden placket, and a length that falls just past the knee — built to layer over everything.</p>
+
+        <!-- variant: color swatches -->
+        <div class="opt-group">
+          <div class="lbl"><span>Color</span> <span class="val">Charcoal</span></div>
+          <div class="swatches">
+            <button class="swatch" aria-pressed="true"  aria-label="Color: Charcoal" style="background:#3a3a3a"></button>
+            <button class="swatch" aria-pressed="false" aria-label="Color: Camel" style="background:linear-gradient(135deg,#c99a5f,#a06a34)"></button>
+            <button class="swatch" aria-pressed="false" aria-label="Color: Black" style="background:#141414"></button>
+            <button class="swatch" aria-pressed="false" aria-label="Color: Ecru" style="background:linear-gradient(135deg,#efe7d8,#ddd0ba)"></button>
+          </div>
+        </div>
+
+        <!-- variant: size + size guide -->
+        <div class="opt-group">
+          <div class="lbl"><span>Size</span> <a href="#">Size guide</a></div>
+          <div class="sizes">
+            <button class="size" aria-pressed="false">XS</button>
+            <button class="size" aria-pressed="true">S</button>
+            <button class="size" aria-pressed="false">M</button>
+            <button class="size" aria-pressed="false">L</button>
+            <button class="size" disabled>XL</button>
+          </div>
+        </div>
+
+        <!-- quantity + add to bag -->
+        <div class="buyrow">
+          <div class="stepper" aria-label="Quantity">
+            <button aria-label="Decrease quantity">−</button>
+            <span>1</span>
+            <button aria-label="Increase quantity">+</button>
+          </div>
+          <button class="btn btn-accent btn-add">Add to bag · $390</button>
+        </div>
+        <div class="subline">In stock · ships in 1–2 business days from our Marseille atelier.</div>
+
+        <!-- shipping / returns trust row -->
+        <div class="ship">
+          <div class="tb"><span class="ic">◍</span>Made in limited runs</div>
+          <div class="tb"><span class="ic">↺</span>Free 30-day returns</div>
+          <div class="tb"><span class="ic">✂</span>Deadstock Italian wool</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ACCORDION — Dawn: main-product (collapsible-tab blocks) -->
+  <section class="blk">
+    <div class="wrap accordion">
+      <details class="acc" open>
+        <summary>Details &amp; fit <span class="plus">+</span></summary>
+        <div class="content">
+          <p>A relaxed, straight-cut silhouette with a softly built shoulder and a concealed two-button placket. Falls just past the knee; welt pockets at the hip and a single interior pocket.</p>
+          <ul>
+            <li>Regular fit — size down for a sharper line</li>
+            <li>Model is 5'10" / 178cm and wears a size S</li>
+            <li>Fully lined; back vent for movement</li>
+          </ul>
+        </div>
+      </details>
+      <details class="acc">
+        <summary>Materials &amp; care <span class="plus">+</span></summary>
+        <div class="content">
+          <p>Shell: 82% virgin wool, 18% recycled polyamide woven from Italian deadstock melton. Lining: 100% recycled cupro.</p>
+          <p>Dry clean only. Steam to refresh between wears; store on a broad hanger to hold the shoulder.</p>
+        </div>
+      </details>
+      <details class="acc">
+        <summary>Shipping &amp; returns <span class="plus">+</span></summary>
+        <div class="content">
+          <p>Complimentary carbon-neutral shipping on orders over $150. Standard delivery 2–5 business days; express options at checkout.</p>
+          <p>Not right? Return within 30 days in original condition for a full refund. Prepaid return label included in every box.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- STYLED WITH — Dawn: related-products (complete the look) -->
+  <section class="blk" style="background:var(--surface)">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Complete the look</span><h2>Styled with</h2></div>
+      <div class="products">
+        <article class="look">
+          <a class="ph g1" href="#" aria-label="Raw-Hem Denim"></a>
+          <div class="meta"><div><h3><a href="#">Raw-Hem Denim</a></h3><div class="cat">Trousers</div></div><div class="price">$180</div></div>
+        </article>
+        <article class="look">
+          <a class="ph g2" href="#" aria-label="Boxy Poplin Shirt"></a>
+          <div class="meta"><div><h3><a href="#">Boxy Poplin Shirt</a></h3><div class="cat">Shirting</div></div><div class="price">$120</div></div>
+        </article>
+        <article class="look">
+          <a class="ph g3" href="#" aria-label="Leather Ankle Boot"></a>
+          <div class="meta"><div><h3><a href="#">Leather Ankle Boot</a></h3><div class="cat">Footwear</div></div><div class="price">$260</div></div>
+        </article>
+        <article class="look">
+          <a class="ph g4" href="#" aria-label="Ribbed Wool Scarf"></a>
+          <div class="meta"><div><h3><a href="#">Ribbed Wool Scarf</a></h3><div class="cat">Accessories</div></div><div class="price">$90</div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS — Dawn: product-reviews (app block) -->
+  <section class="blk reviews" id="reviews">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">What people say</span><h2>Loved by 318 verified buyers</h2></div>
+      <div class="rsum">
+        <div class="rscore">
+          <div class="big">4.8</div>
+          <div class="stars">★★★★★</div>
+          <div class="n">Based on 318 reviews</div>
+        </div>
+        <div class="bars">
+          <div class="bar"><span>5★</span><div class="track"><div class="fill" style="width:82%"></div></div><span>82%</span></div>
+          <div class="bar"><span>4★</span><div class="track"><div class="fill" style="width:12%"></div></div><span>12%</span></div>
+          <div class="bar"><span>3★</span><div class="track"><div class="fill" style="width:4%"></div></div><span>4%</span></div>
+          <div class="bar"><span>2★</span><div class="track"><div class="fill" style="width:1%"></div></div><span>1%</span></div>
+          <div class="bar"><span>1★</span><div class="track"><div class="fill" style="width:1%"></div></div><span>1%</span></div>
+        </div>
+      </div>
+      <div class="rquotes">
+        <div class="rq"><div class="stars">★★★★★</div><p>“The wool has real weight to it — this is the coat I reach for every grey morning. Runs true, the shoulder sits perfectly.”</p><div class="who">— Elise T. · Verified buyer</div></div>
+        <div class="rq"><div class="stars">★★★★★</div><p>“Bought the charcoal, went back for the camel. Feels like something from an archive, not a fast-fashion rail.”</p><div class="who">— Marcus L. · Verified buyer</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="fcols">
+      <div>
+        <div class="brand">Marché</div>
+        <p>Small-batch, ready-to-wear tailoring made in limited runs from deadstock and recycled cloth.</p>
+      </div>
+      <div><h3>Shop</h3><a href="#">New In</a><a href="#">Women</a><a href="#">Men</a><a href="#">Accessories</a></div>
+      <div><h3>House</h3><a href="#">Our story</a><a href="#">Sustainability</a><a href="#">Lookbook</a><a href="#">Stores</a></div>
+      <div><h3>Care</h3><a href="#">Shipping</a><a href="#">Returns</a><a href="#">Size guide</a><a href="#">Contact</a></div>
+    </div>
+    <div class="fbot">© Marché · Baseline template · Structure references Shopify Dawn 15.4.1</div>
+  </footer>
+
+  <!-- STICKY MOBILE ADD-TO-BAG — Dawn: main-product (sticky buy buttons) -->
+  <div class="stickybar">
+    <div class="inner">
+      <div class="meta">
+        <div class="t">Structured Wool Coat</div>
+        <div class="p">Charcoal · S · $390</div>
+      </div>
+      <button class="btn btn-accent btn-add">Add to bag</button>
+    </div>
+  </div>
+</body>
+</html>

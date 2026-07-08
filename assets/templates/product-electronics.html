@@ -1,0 +1,467 @@
+<!-- @dsCard group="Product" name="Product (PDP) — Electronics" subtitle="Breadcrumb · Gallery · Buy box · Spec table · What's in the box · Accordion · Reviews · Related · Sticky ATC bar" viewport="1280x2720" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — Product (Electronics)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  :root{
+    --primary:#2563eb; --on-primary:#ffffff;
+    --secondary:#22d3ee; --on-secondary:#06121a;
+    --bg:#ffffff; --surface:#f4f7fb; --surface-2:#e9eef5;
+    --text:#0b1220; --text-muted:#586274; --border:#e2e7ef;
+    --radius:14px; --maxw:1200px;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  /* Dark-first tech aesthetic, but light overrides stay fully intentional */
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0a0c10; --surface:#12151c; --surface-2:#1a1f29; --text:#eef2f8; --text-muted:#9aa6b6; --border:#232a35; }
+  }
+  :root[data-theme="dark"]{ --bg:#0a0c10; --surface:#12151c; --surface-2:#1a1f29; --text:#eef2f8; --text-muted:#9aa6b6; --border:#232a35; }
+  :root[data-theme="light"]{ --bg:#ffffff; --surface:#f4f7fb; --surface-2:#e9eef5; --text:#0b1220; --text-muted:#586274; --border:#e2e7ef; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--sans);font-weight:700;letter-spacing:-.02em;margin:0}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:11px;font-weight:600;font-size:15px;transition:transform .15s ease,box-shadow .15s ease;cursor:pointer}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary);box-shadow:0 12px 30px -12px rgba(37,99,235,.7)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text)}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);font-weight:700;display:inline-flex;align-items:center;gap:8px}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--secondary);box-shadow:0 0 10px var(--secondary)}
+  .stars{color:var(--secondary);letter-spacing:1px}
+
+  /* announcement — Dawn: announcement-bar */
+  .announce{background:var(--primary);color:var(--on-primary);text-align:center;font-size:13px;letter-spacing:.04em;padding:9px 16px;font-weight:500}
+  .announce b{font-weight:700}
+
+  /* header — Dawn: header */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{font-size:20px;font-weight:800;letter-spacing:.12em}
+  .brand span{color:var(--primary)}
+  .nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0;font-size:14px;font-weight:500;color:var(--text-muted)}
+  .nav ul li:hover{color:var(--text)}
+  .nav .icons{display:flex;gap:18px;font-size:14px;color:var(--text-muted);align-items:center}
+  .nav .icons .cart{color:var(--text);font-weight:600}
+  @media(max-width:760px){.nav ul{display:none}}
+
+  /* breadcrumb — Dawn: main-product (breadcrumb) */
+  .crumbs{font-size:13px;color:var(--text-muted);padding:20px 0 8px}
+  .crumbs a:hover{color:var(--text)}
+  .crumbs span{margin:0 8px;opacity:.6}
+
+  /* main product — two columns — Dawn: main-product */
+  .pdp{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;padding:12px 0 8px;align-items:start}
+  @media(max-width:900px){.pdp{grid-template-columns:1fr;gap:28px}}
+
+  /* gallery — Dawn: main-product (media gallery) · always dark studio, both themes */
+  .gallery{position:sticky;top:92px}
+  @media(max-width:900px){.gallery{position:static}}
+  .main-img{position:relative;overflow:hidden;aspect-ratio:4/5;border-radius:var(--radius);
+    background:
+     radial-gradient(80% 70% at 70% 18%, rgba(37,99,235,.42), transparent 62%),
+     radial-gradient(50% 50% at 20% 90%, rgba(34,211,238,.20), transparent 60%),
+     repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 40px),
+     repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 1px, transparent 1px 40px),
+     linear-gradient(160deg,#1b2536,#0b1016);
+    box-shadow:0 30px 60px -34px rgba(0,0,0,.6)}
+  .main-img::before{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-8deg);width:46%;height:70%;border-radius:22px;
+    background:linear-gradient(150deg,#2b3546,#0a0d13);box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 30px 54px -20px rgba(0,0,0,.85)}
+  .main-img::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-56%) rotate(-8deg);width:34%;height:44%;border-radius:12px;
+    background:radial-gradient(120% 90% at 40% 20%,#1c4bd8,#0a1630 70%);box-shadow:0 0 44px rgba(37,99,235,.7), inset 0 0 22px rgba(34,211,238,.4)}
+  .main-img .gtag{position:absolute;left:16px;bottom:16px;z-index:2;font-size:12px;font-weight:600;letter-spacing:.05em;padding:7px 11px;border-radius:9px;
+    background:rgba(10,13,19,.72);border:1px solid rgba(255,255,255,.14);color:#eaf0f8;backdrop-filter:blur(6px)}
+  .main-img .gtag b{color:var(--secondary)}
+  .thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+  .thumb{position:relative;overflow:hidden;aspect-ratio:1/1;border-radius:10px;border:1px solid var(--border);cursor:pointer;background:linear-gradient(150deg,#1b2536,#0b1016)}
+  .thumb::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44%;aspect-ratio:1/1;border-radius:8px;
+    background:radial-gradient(circle at 40% 34%,#4d90ff,#0e1a34 72%);box-shadow:0 0 18px rgba(59,130,246,.6)}
+  .thumb.t2::after{background:radial-gradient(circle at 40% 34%,#22d3ee,#063039 72%)}
+  .thumb.t3::after{border-radius:50%}
+  .thumb.t4::after{width:60%;height:18%;border-radius:999px}
+  .thumb[aria-current="true"]{border-color:var(--primary);outline:2px solid var(--primary);outline-offset:-2px}
+
+  /* buy box — Dawn: main-product (product information) */
+  .buybox h1{font-size:clamp(26px,3.4vw,40px);line-height:1.08;margin-top:6px}
+  .rrow{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);margin-top:12px}
+  .rrow a{text-decoration:underline;text-underline-offset:2px}
+  .rrow .instock{margin-left:auto;color:var(--primary);font-weight:600}
+  .pricerow{display:flex;align-items:baseline;gap:12px;margin:18px 0 6px}
+  .pricerow .now{font-size:28px;font-weight:800;letter-spacing:-.02em}
+  .pricerow .was{color:var(--text-muted);text-decoration:line-through;font-size:16px}
+  .pricerow .save{background:var(--secondary);color:var(--on-secondary);font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px}
+  .blurb{color:var(--text-muted);font-size:15px;max-width:50ch;margin:6px 0 24px}
+
+  .opt-group{margin-bottom:20px}
+  .opt-group .lbl{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;justify-content:space-between}
+  .opt-group .lbl span{color:var(--text-muted);font-weight:400}
+  .sizes{display:flex;gap:10px;flex-wrap:wrap}
+  .size{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:10px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease}
+  .size:hover{border-color:var(--primary)}
+  .size[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+  .size .sub{display:block;font-size:11px;font-weight:400;color:var(--text-muted);margin-top:1px}
+  .shades{display:flex;gap:12px;flex-wrap:wrap}
+  .shade{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);cursor:pointer}
+  .shade[aria-pressed="true"]{outline:2px solid var(--primary);outline-offset:2px}
+
+  .buyrow{display:flex;gap:12px;align-items:stretch;margin:6px 0 14px}
+  .stepper{display:flex;align-items:center;border:1px solid var(--border);border-radius:11px;overflow:hidden}
+  .stepper button{border:0;background:transparent;color:var(--text);width:44px;font-size:18px;cursor:pointer}
+  .stepper span{min-width:34px;text-align:center;font-size:15px;font-weight:700}
+  .btn-add{flex:1;border:0;text-align:center;font-size:16px;padding:16px 24px}
+
+  /* warranty + financing note — Dawn: main-product (custom-liquid / payment terms) */
+  .finance{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 15px;font-size:13px;color:var(--text-muted);margin-bottom:20px}
+  .finance .fic{flex:0 0 auto;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:var(--primary);
+    background:color-mix(in srgb,var(--primary) 16%,var(--bg));border:1px solid color-mix(in srgb,var(--primary) 30%,var(--border))}
+  .finance .fic svg{width:17px;height:17px}
+  .finance b{color:var(--text);font-weight:600}
+
+  .trust-badges{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:18px 0}
+  .tb{text-align:center;font-size:12px;color:var(--text-muted);line-height:1.35}
+  .tb .ic{width:30px;height:30px;border-radius:9px;background:color-mix(in srgb,var(--primary) 16%,var(--bg));color:var(--primary);border:1px solid color-mix(in srgb,var(--primary) 30%,var(--border));display:grid;place-items:center;margin:0 auto 8px;font-weight:800;font-size:13px}
+
+  /* section shell */
+  section.blk{padding:60px 0}
+  .head{text-align:center;max-width:62ch;margin:0 auto 36px}
+  .head .eyebrow{justify-content:center;margin-bottom:12px}
+  .head h2{font-size:clamp(24px,3.2vw,36px)}
+  .head p{color:var(--text-muted);margin-top:12px}
+
+  /* spec table — Dawn: main-product (custom-liquid spec table) · wide → own scroll box */
+  .specwrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);max-width:960px;margin:0 auto}
+  table.spec{border-collapse:collapse;width:100%;min-width:600px;font-size:14px}
+  table.spec th,table.spec td{padding:14px 20px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+  table.spec tbody th{font-weight:600;color:var(--text-muted);white-space:nowrap;width:230px}
+  table.spec td{color:var(--text)}
+  table.spec tr.grp th{background:var(--surface-2);color:var(--text);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;white-space:normal}
+  table.spec tbody tr:last-child td,table.spec tbody tr:last-child th{border-bottom:0}
+
+  /* what's in the box — Dawn: multicolumn */
+  .box-row{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;max-width:960px;margin:0 auto}
+  @media(max-width:760px){.box-row{grid-template-columns:repeat(2,1fr)}}
+  .box-item{text-align:center}
+  .box-item .tile{position:relative;overflow:hidden;aspect-ratio:1/1;border-radius:12px;border:1px solid var(--border);margin-bottom:10px;
+    background:radial-gradient(90% 80% at 70% 16%, color-mix(in srgb,var(--primary) 22%, transparent), transparent 62%),linear-gradient(150deg,var(--surface-2),var(--surface))}
+  .box-item .tile::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46%;aspect-ratio:1/1;border-radius:9px;
+    background:linear-gradient(150deg,#2b3546,#0a0d13);box-shadow:0 0 18px -6px rgba(59,130,246,.6)}
+  .box-item .t{font-size:13px;font-weight:600}
+  .box-item .s{font-size:12px;color:var(--text-muted);margin-top:2px}
+
+  /* accordion — Dawn: main-product (collapsible-tab blocks) */
+  .accordion{max-width:860px;margin:0 auto}
+  .acc{border-bottom:1px solid var(--border)}
+  .acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:20px 2px;font-family:var(--sans);font-size:18px;font-weight:700;letter-spacing:-.01em}
+  .acc summary::-webkit-details-marker{display:none}
+  .acc summary .plus{font-size:24px;font-weight:400;color:var(--text-muted);transition:transform .2s ease}
+  .acc[open] summary .plus{transform:rotate(45deg)}
+  .acc .content{padding:0 2px 22px;color:var(--text-muted);font-size:15px;max-width:74ch}
+  .acc .content p{margin:0 0 12px}
+  .acc .content ul{margin:0;padding-left:18px}
+  .acc .content li{margin:6px 0}
+
+  /* reviews summary — Dawn: product-reviews (app block) */
+  .reviews{background:var(--surface-2)}
+  .rsum{display:grid;grid-template-columns:260px 1fr;gap:44px;align-items:center}
+  @media(max-width:760px){.rsum{grid-template-columns:1fr;gap:28px}}
+  .rscore{text-align:center}
+  .rscore .big{font-size:64px;font-weight:800;line-height:1;letter-spacing:-.03em}
+  .rscore .stars{font-size:20px}
+  .rscore .n{color:var(--text-muted);font-size:13px;margin-top:6px}
+  .bars{display:flex;flex-direction:column;gap:8px}
+  .bar{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--text-muted)}
+  .bar .track{flex:1;height:8px;background:var(--surface);border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .bar .fill{height:100%;background:var(--primary)}
+  .rquotes{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:34px}
+  @media(max-width:760px){.rquotes{grid-template-columns:1fr}}
+  .rq{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px}
+  .rq .stars{font-size:13px}
+  .rq p{font-size:14px;margin:10px 0 12px}
+  .rq .who{font-size:12px;color:var(--text-muted)}
+  .rq .who b{color:var(--text);font-weight:600}
+
+  /* related products — Dawn: related-products */
+  .products{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  @media(max-width:900px){.products{grid-template-columns:repeat(2,1fr)}}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
+  .card:hover{transform:translateY(-3px);box-shadow:0 22px 44px -28px rgba(0,0,0,.6)}
+  .card .ph{position:relative;overflow:hidden;aspect-ratio:1/1;
+    background:radial-gradient(90% 80% at 72% 16%, color-mix(in srgb,var(--primary) 30%, transparent), transparent 62%),linear-gradient(160deg,var(--surface-2),var(--surface))}
+  .card .ph::before{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:58%;aspect-ratio:1/1;border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #2b3546 0%, #141922 46%, #0a0d13 100%);box-shadow:inset 0 2px 16px rgba(255,255,255,.08), inset 0 -16px 30px rgba(0,0,0,.6), 0 20px 40px -22px rgba(0,0,0,.8)}
+  .card .ph::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:21%;aspect-ratio:1/1;border-radius:50%;
+    background:radial-gradient(circle at 42% 36%, #4d90ff, #0e1a34 72%);box-shadow:0 0 30px rgba(59,130,246,.6), inset 0 0 14px rgba(34,211,238,.5)}
+  .card .ph.g2::after{background:radial-gradient(circle at 42% 36%, #22d3ee, #063039 72%)}
+  .card .ph.g3::before{width:54%;height:64%;aspect-ratio:auto;border-radius:16px;background:linear-gradient(150deg,#2b3546,#0a0d13)}
+  .card .ph.g3::after{width:36%;height:6%;aspect-ratio:auto;border-radius:999px;top:57%;background:linear-gradient(90deg,#4d90ff,#22d3ee);box-shadow:0 0 22px rgba(59,130,246,.7)}
+  .card .body{padding:16px}
+  .card h3{font-size:15px;font-weight:700;letter-spacing:-.01em}
+  .card .spec{font-size:12px;color:var(--text-muted);margin-top:5px}
+  .card .price{font-size:14px;font-weight:700;margin-top:8px}
+  .card .rate{font-size:12px;color:var(--text-muted);margin-top:8px}
+
+  /* sticky mobile add-to-cart bar — Dawn: main-product (sticky buy buttons) */
+  .stickybar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:none;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+  .stickybar .inner{display:flex;align-items:center;gap:14px;max-width:var(--maxw);margin:0 auto}
+  .stickybar .meta{flex:0 0 auto}
+  .stickybar .meta .t{font-size:13px;font-weight:700;white-space:nowrap;max-width:40vw;overflow:hidden;text-overflow:ellipsis}
+  .stickybar .meta .p{font-size:13px;color:var(--text-muted)}
+  .stickybar .btn-add{flex:1;border:0;padding:14px 20px;font-size:15px}
+  @media(max-width:760px){.stickybar{display:block}body{padding-bottom:78px}}
+
+  /* footer — Dawn: footer */
+  footer{border-top:1px solid var(--border);margin-top:8px}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px;padding:56px 0}
+  .fcols .brand{margin-bottom:12px;display:inline-block}
+  .fcols h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:700;margin:0 0 14px}
+  .fcols a{display:block;font-size:14px;color:var(--text-muted);padding:5px 0}
+  .fcols a:hover{color:var(--text)}
+  .fbot{border-top:1px solid var(--border);padding:20px 0;font-size:13px;color:var(--text-muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <!-- ANNOUNCEMENT — Dawn: announcement-bar -->
+  <div class="announce">Free <b>2-day shipping</b> on every order · <b>2-year warranty</b> on all Nova gear</div>
+
+  <!-- HEADER — Dawn: header -->
+  <header>
+    <nav class="nav wrap">
+      <div class="brand">NOVA<span>SONIC</span></div>
+      <ul><li>Shop</li><li>Tech</li><li>Support</li></ul>
+      <div class="icons"><span>Search</span><span class="cart">Cart (0)</span></div>
+    </nav>
+  </header>
+
+  <!-- BREADCRUMB — Dawn: main-product (breadcrumb) -->
+  <nav class="crumbs wrap" aria-label="Breadcrumb">
+    <a href="#">Home</a><span>/</span><a href="#">Audio</a><span>/</span><a href="#">Players</a><span>/</span>Nova Play
+  </nav>
+
+  <!-- MAIN PRODUCT — Dawn: main-product -->
+  <section class="wrap">
+    <div class="pdp">
+
+      <!-- GALLERY — Dawn: main-product (media gallery) -->
+      <div class="gallery">
+        <div class="main-img" role="img" aria-label="Nova Play hi-res portable player, front view">
+          <span class="gtag"><b>◎</b>&nbsp; Hi-Res Audio · MQA</span>
+        </div>
+        <div class="thumbs">
+          <div class="thumb t1" aria-current="true" role="button" aria-label="View 1 — front"></div>
+          <div class="thumb t2" role="button" aria-label="View 2 — back"></div>
+          <div class="thumb t3" role="button" aria-label="View 3 — volume dial"></div>
+          <div class="thumb t4" role="button" aria-label="View 4 — ports"></div>
+        </div>
+      </div>
+
+      <!-- BUY BOX — Dawn: main-product (product information) -->
+      <div class="buybox">
+        <span class="eyebrow">Hi-Res portable player</span>
+        <h1>Nova Play</h1>
+        <div class="rrow"><span class="stars">★★★★★</span> 4.9 · <a href="#reviews">1,120 reviews</a> <span class="instock">In stock</span></div>
+
+        <div class="pricerow">
+          <span class="now">$349</span>
+          <span class="was">$399</span>
+          <span class="save">Save $50</span>
+        </div>
+        <p class="blurb">A pocket-sized reference DAP with dual ESS ES9038Q2M DACs, a balanced 4.4mm output, and 14 hours of Hi-Res playback. Bit-perfect from your library or streaming, straight to your best headphones.</p>
+
+        <!-- config: color swatches -->
+        <div class="opt-group">
+          <div class="lbl"><span style="color:var(--text)">Color</span> <span>Midnight selected</span></div>
+          <div class="shades">
+            <button class="shade" aria-pressed="true"  aria-label="Color: Midnight" style="background:linear-gradient(135deg,#2b3546,#0a0d13)"></button>
+            <button class="shade" aria-pressed="false" aria-label="Color: Silver" style="background:linear-gradient(135deg,#e6ebf2,#c2c9d4)"></button>
+            <button class="shade" aria-pressed="false" aria-label="Color: Cobalt" style="background:linear-gradient(135deg,#3b82f6,#1e3a8a)"></button>
+          </div>
+        </div>
+
+        <!-- config: storage variant -->
+        <div class="opt-group">
+          <div class="lbl"><span style="color:var(--text)">Storage</span> <span>128GB selected</span></div>
+          <div class="sizes">
+            <button class="size" aria-pressed="false">64GB<span class="sub">$299</span></button>
+            <button class="size" aria-pressed="true">128GB<span class="sub">$349</span></button>
+            <button class="size" aria-pressed="false">256GB<span class="sub">$429</span></button>
+          </div>
+        </div>
+
+        <!-- quantity + add to cart -->
+        <div class="buyrow">
+          <div class="stepper" aria-label="Quantity">
+            <button aria-label="Decrease quantity">−</button>
+            <span>1</span>
+            <button aria-label="Increase quantity">+</button>
+          </div>
+          <button class="btn btn-primary btn-add">Add to cart · $349</button>
+        </div>
+
+        <!-- warranty + financing note -->
+        <div class="finance">
+          <span class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+          <div><b>Pay $29.08/mo</b> for 12 months at 0% APR with Shop Pay Installments. <b>2-year warranty</b> included — add 3-year AppleCare-style coverage for $39 at checkout.</div>
+        </div>
+
+        <!-- trust badges -->
+        <div class="trust-badges">
+          <div class="tb"><div class="ic">✓</div>2-year warranty</div>
+          <div class="tb"><div class="ic">◎</div>Hi-Res certified</div>
+          <div class="tb"><div class="ic">45</div>45-day returns</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SPEC TABLE — Dawn: main-product (custom-liquid spec table) -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Under the hood</span><h2>Technical specifications</h2></div>
+      <div class="specwrap">
+        <table class="spec">
+          <caption class="sr-only">Nova Play technical specifications</caption>
+          <tbody>
+            <tr class="grp"><th colspan="2">Audio</th></tr>
+            <tr><th scope="row">DAC</th><td>Dual ESS Sabre ES9038Q2M · 32-bit / 768 kHz PCM · native DSD512</td></tr>
+            <tr><th scope="row">Amplifier</th><td>Dual-channel Class-A/AB · 4.4mm balanced 500 mW + 3.5mm single-ended 190 mW</td></tr>
+            <tr><th scope="row">Outputs</th><td>4.4mm balanced · 3.5mm single-ended · USB-C digital out / DAC mode</td></tr>
+            <tr><th scope="row">Frequency response</th><td>20 Hz – 40 kHz (±0.5 dB) · THD+N 0.0006% · SNR 130 dB</td></tr>
+            <tr class="grp"><th colspan="2">Storage &amp; system</th></tr>
+            <tr><th scope="row">Storage</th><td>128GB internal (UFS 2.1) · microSD up to 2TB · this configuration ships 128GB</td></tr>
+            <tr><th scope="row">Processor</th><td>Octa-core Snapdragon 665 · 4GB RAM · Nova OS on Android 13</td></tr>
+            <tr><th scope="row">Display</th><td>5.0" 1080×1920 AMOLED · Gorilla Glass · capacitive touch</td></tr>
+            <tr class="grp"><th colspan="2">Connectivity &amp; power</th></tr>
+            <tr><th scope="row">Wireless</th><td>Bluetooth 5.4 two-way (LDAC · aptX Adaptive) · dual-band Wi-Fi 6 · AirPlay 2</td></tr>
+            <tr><th scope="row">Battery</th><td>5,000 mAh · up to 14 h balanced / 16 h single-ended · USB-C PD 30 W quick charge</td></tr>
+            <tr><th scope="row">Dimensions</th><td>132 × 71 × 15 mm · 235 g · CNC aluminium unibody · Gorilla Glass back</td></tr>
+            <tr><th scope="row">In the box</th><td>Player · USB-C cable · USB-C→3.5mm adapter · leather case · quick start guide</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S IN THE BOX — Dawn: multicolumn -->
+  <section class="blk" style="background:var(--surface)">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Unboxing</span><h2>What's in the box</h2></div>
+      <div class="box-row">
+        <div class="box-item"><div class="tile" role="img" aria-label="Nova Play player"></div><div class="t">Nova Play</div><div class="s">128GB player</div></div>
+        <div class="box-item"><div class="tile" role="img" aria-label="USB-C cable"></div><div class="t">USB-C cable</div><div class="s">Charge &amp; data</div></div>
+        <div class="box-item"><div class="tile" role="img" aria-label="3.5mm adapter"></div><div class="t">3.5mm adapter</div><div class="s">USB-C → 3.5mm</div></div>
+        <div class="box-item"><div class="tile" role="img" aria-label="Leather case"></div><div class="t">Leather case</div><div class="s">Full-grain, snug fit</div></div>
+        <div class="box-item"><div class="tile" role="img" aria-label="Quick start guide"></div><div class="t">Quick start</div><div class="s">Guide + warranty card</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCORDION — Dawn: main-product (collapsible-tab blocks) -->
+  <section class="blk">
+    <div class="head"><span class="eyebrow">Details</span><h2>Specs, support &amp; shipping</h2></div>
+    <div class="wrap accordion">
+      <details class="acc" open>
+        <summary>Specifications <span class="plus">+</span></summary>
+        <div class="content">
+          <p>The full spec sheet lives in the table above. Highlights worth calling out:</p>
+          <ul>
+            <li><b>Bit-perfect playback</b> — bypasses Android's sample-rate conversion (SRC) for true native output.</li>
+            <li><b>Dual DAC, fully balanced</b> — one ES9038Q2M per channel for lower crosstalk and a wider stage.</li>
+            <li><b>MQA 8× rendering</b> and Roon Ready certification for hi-res streaming libraries.</li>
+            <li><b>Certifications:</b> Hi-Res Audio (JAS), Hi-Res Wireless, FCC, CE, RoHS.</li>
+          </ul>
+        </div>
+      </details>
+      <details class="acc">
+        <summary>Support <span class="plus">+</span></summary>
+        <div class="content">
+          <p>Every Nova Play is covered by a 2-year limited warranty on parts and labor. Extend to 3 years with Nova Care for $39 — accidental damage included, two claims per year.</p>
+          <p>Talk to an audio specialist 7 days a week via chat or email; average first reply is under two hours. Firmware and codec updates arrive over the air at no cost.</p>
+        </div>
+      </details>
+      <details class="acc">
+        <summary>Shipping &amp; returns <span class="plus">+</span></summary>
+        <div class="content">
+          <p>Free carbon-neutral 2-day shipping in the contiguous US; expedited and international options are shown at checkout. Orders placed before 2pm ET ship the same day.</p>
+          <p>Not the right fit? Return within 45 days for a full refund — we cover return shipping and wipe your device data on arrival.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- REVIEWS SUMMARY — Dawn: product-reviews (app block) -->
+  <section class="blk reviews" id="reviews">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">What owners say</span><h2>Rated 4.9 by 1,120 verified buyers</h2></div>
+      <div class="rsum">
+        <div class="rscore">
+          <div class="big">4.9</div>
+          <div class="stars">★★★★★</div>
+          <div class="n">Based on 1,120 reviews</div>
+        </div>
+        <div class="bars">
+          <div class="bar"><span>5★</span><div class="track"><div class="fill" style="width:91%"></div></div><span>91%</span></div>
+          <div class="bar"><span>4★</span><div class="track"><div class="fill" style="width:6%"></div></div><span>6%</span></div>
+          <div class="bar"><span>3★</span><div class="track"><div class="fill" style="width:2%"></div></div><span>2%</span></div>
+          <div class="bar"><span>2★</span><div class="track"><div class="fill" style="width:1%"></div></div><span>1%</span></div>
+          <div class="bar"><span>1★</span><div class="track"><div class="fill" style="width:0%"></div></div><span>0%</span></div>
+        </div>
+      </div>
+      <div class="rquotes">
+        <div class="rq"><div class="stars">★★★★★</div><p>“The balanced output drives my planars effortlessly — cleaner and blacker background than my old phone-plus-dongle setup. 14 hours is no joke.”</p><div class="who"><b>Marcus T.</b> · Verified buyer · Midnight 128GB</div></div>
+        <div class="rq"><div class="stars">★★★★★</div><p>“Roon Ready worked out of the box and the AMOLED screen makes browsing my library genuinely nice. USB DAC mode into my desktop is a bonus.”</p><div class="who"><b>Priya S.</b> · Verified buyer · Silver 256GB</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED PRODUCTS — Dawn: related-products -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Pairs well with</span><h2>Complete your rig</h2></div>
+      <div class="products">
+        <div class="card"><div class="ph"></div><div class="body"><h3>Nova One</h3><div class="spec">Over-ear ANC · 40h</div><div class="price">$299</div><div class="rate"><span class="stars">★★★★★</span> 12,480</div></div></div>
+        <div class="card"><div class="ph g2"></div><div class="body"><h3>Nova Buds Pro</h3><div class="spec">ANC earbuds · aptX</div><div class="price">$129</div><div class="rate"><span class="stars">★★★★★</span> 5,120</div></div></div>
+        <div class="card"><div class="ph"></div><div class="body"><h3>Nova Link DAC</h3><div class="spec">USB-C DAC / amp</div><div class="price">$119</div><div class="rate"><span class="stars">★★★★☆</span> 940</div></div></div>
+        <div class="card"><div class="ph g3"></div><div class="body"><h3>Nova Boom</h3><div class="spec">Portable · IP67 · 24h</div><div class="price">$179</div><div class="rate"><span class="stars">★★★★★</span> 2,205</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="wrap fcols">
+      <div>
+        <div class="brand">NOVA<span>SONIC</span></div>
+        <p style="color:var(--text-muted);font-size:14px;max-width:34ch">High-fidelity audio, engineered to disappear.</p>
+      </div>
+      <div><h3>Shop</h3><a>Headphones</a><a>Earbuds</a><a>Players</a><a>Accessories</a></div>
+      <div><h3>Tech</h3><a>Adaptive ANC</a><a>LDAC &amp; codecs</a><a>Nova app</a><a>Firmware</a></div>
+      <div><h3>Support</h3><a>Contact</a><a>Warranty</a><a>Shipping</a><a>Returns</a></div>
+    </div>
+    <div class="wrap fbot">
+      <span>© 2026 NOVASONIC · Baseline template</span>
+      <span>Structure references Shopify Dawn 15.4.1</span>
+    </div>
+  </footer>
+
+  <!-- STICKY MOBILE ADD-TO-CART — Dawn: main-product (sticky buy buttons) -->
+  <div class="stickybar">
+    <div class="inner">
+      <div class="meta">
+        <div class="t">Nova Play</div>
+        <div class="p">128GB · $349</div>
+      </div>
+      <button class="btn btn-primary btn-add">Add to cart</button>
+    </div>
+  </div>
+</body>
+</html>

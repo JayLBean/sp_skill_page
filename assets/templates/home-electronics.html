@@ -1,0 +1,360 @@
+<!-- @dsCard group="Home" name="Home — Electronics (DTC)" subtitle="Hero · Spec highlights · Feature callouts · Comparison · Reviews · Warranty · Newsletter" viewport="1280x2400" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — DTC Home (Electronics)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  :root{
+    --primary:#2563eb; --on-primary:#ffffff;
+    --secondary:#22d3ee; --on-secondary:#06121a;
+    --bg:#ffffff; --surface:#f4f7fb; --surface-2:#e9eef5;
+    --text:#0b1220; --text-muted:#586274; --border:#e2e7ef;
+    --radius:14px; --maxw:1200px;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  /* Dark-first tech aesthetic, but light overrides stay fully intentional */
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0a0c10; --surface:#12151c; --surface-2:#1a1f29; --text:#eef2f8; --text-muted:#9aa6b6; --border:#232a35; }
+  }
+  :root[data-theme="dark"]{ --bg:#0a0c10; --surface:#12151c; --surface-2:#1a1f29; --text:#eef2f8; --text-muted:#9aa6b6; --border:#232a35; }
+  :root[data-theme="light"]{ --bg:#ffffff; --surface:#f4f7fb; --surface-2:#e9eef5; --text:#0b1220; --text-muted:#586274; --border:#e2e7ef; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--sans);font-weight:700;letter-spacing:-.02em;margin:0}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:11px;font-weight:600;font-size:15px;transition:transform .15s ease,box-shadow .15s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary);box-shadow:0 12px 30px -12px rgba(37,99,235,.7)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text)}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);font-weight:700;display:inline-flex;align-items:center;gap:8px}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--secondary);box-shadow:0 0 10px var(--secondary)}
+
+  /* announcement — Dawn: announcement-bar */
+  .announce{background:var(--primary);color:var(--on-primary);text-align:center;font-size:13px;letter-spacing:.04em;padding:9px 16px;font-weight:500}
+  .announce b{font-weight:700}
+
+  /* header — Dawn: header */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{font-size:20px;font-weight:800;letter-spacing:.12em}
+  .brand span{color:var(--primary)}
+  .nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0;font-size:14px;font-weight:500;color:var(--text-muted)}
+  .nav ul li:hover{color:var(--text)}
+  .nav .icons{display:flex;gap:18px;font-size:14px;color:var(--text-muted);align-items:center}
+  .nav .icons .cart{color:var(--text);font-weight:600}
+  @media(max-width:760px){.nav ul{display:none}}
+
+  /* hero — Dawn: image-banner (always dark, product-hero driven) */
+  .hero{position:relative;overflow:hidden;background:#08090d;color:#f4f7fb}
+  .hero::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(60% 55% at 78% 30%, rgba(37,99,235,.38), transparent 60%),
+    radial-gradient(45% 45% at 88% 78%, rgba(34,211,238,.22), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1px, transparent 1px 44px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 1px, transparent 1px 44px)}
+  .hero .grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:76px 0}
+  .hero h1{font-size:clamp(36px,5.4vw,62px);line-height:1.02}
+  .hero p{color:#aeb9c8;font-size:18px;max-width:44ch;margin:20px 0 26px}
+  .hero .chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px}
+  .hero .chip{font-size:12px;font-weight:600;letter-spacing:.04em;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#dfe6f0}
+  .hero .chip b{color:var(--secondary)}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero .btn-ghost{border-color:rgba(255,255,255,.22);color:#f4f7fb}
+  .hero .eyebrow{color:#c3ccd9}
+  /* CSS-rendered product: audio driver / ear-cup */
+  .art{position:relative;display:grid;place-items:center;aspect-ratio:1/1}
+  .art::before{content:"";position:absolute;width:78%;aspect-ratio:1/1;border-radius:50%;
+    background:radial-gradient(circle,rgba(34,211,238,.45),rgba(37,99,235,.25) 45%,transparent 70%);filter:blur(18px)}
+  .driver{position:relative;width:min(76%,380px);aspect-ratio:1/1;border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #2b3546 0%, #141922 46%, #0a0d13 100%);
+    box-shadow:inset 0 2px 22px rgba(255,255,255,.08), inset 0 -24px 46px rgba(0,0,0,.65), 0 44px 90px -34px rgba(0,0,0,.9)}
+  .driver::before{content:"";position:absolute;inset:15%;border-radius:50%;
+    background:radial-gradient(circle at 40% 34%, #1c2431, #0a0e14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+  .driver::after{content:"";position:absolute;inset:35%;border-radius:50%;
+    background:radial-gradient(circle at 42% 36%, #4d90ff, #0e1a34 72%);
+    box-shadow:0 0 46px rgba(59,130,246,.65), inset 0 0 22px rgba(34,211,238,.5)}
+  .art .tag{position:absolute;bottom:8%;left:6%;font-size:12px;font-weight:600;letter-spacing:.05em;
+    padding:8px 12px;border-radius:9px;background:rgba(10,13,19,.72);border:1px solid rgba(255,255,255,.14);color:#eaf0f8;backdrop-filter:blur(6px)}
+  .art .tag b{color:var(--secondary)}
+  @media(max-width:760px){
+    .hero .grid{grid-template-columns:1fr;text-align:center;padding:56px 0}
+    .hero .chips,.hero .cta{justify-content:center}.hero p{margin-left:auto;margin-right:auto}
+    .art{max-width:320px;margin:8px auto 0}.art .tag{left:0}
+  }
+
+  /* spec highlights strip — Dawn: multicolumn */
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .metric{background:var(--bg);padding:34px 24px;text-align:center}
+  .metric .big{font-size:clamp(30px,4vw,42px);font-weight:800;letter-spacing:-.02em;color:var(--primary);line-height:1}
+  .metric .lbl{margin-top:8px;font-size:13px;color:var(--text-muted);letter-spacing:.03em}
+  @media(max-width:760px){.metrics{grid-template-columns:repeat(2,1fr)}}
+
+  /* section shell */
+  section.blk{padding:76px 0}
+  .head{max-width:62ch;margin:0 auto 48px;text-align:center}
+  .head .eyebrow{justify-content:center}
+  .head h2{font-size:clamp(27px,3.6vw,42px);margin-top:12px}
+  .head p{color:var(--text-muted);margin-top:12px}
+
+  /* featured product w/ numbered callouts — Dawn: image-with-text (content blocks) */
+  .feature{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:28px 34px;align-items:center;
+    grid-template-areas:"c1 art c2" "c3 art c4"}
+  .fart{grid-area:art;position:relative;aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;
+    background:radial-gradient(120% 90% at 50% 0%, #1b2536 0%, #0c1016 60%);
+    display:grid;place-items:center;border:1px solid var(--border)}
+  .fart .driver{width:min(72%,300px)}
+  .fart::after{content:"Nova One";position:absolute;top:16px;left:16px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--secondary)}
+  .callout{display:flex;gap:14px;align-items:flex-start}
+  .callout .n{flex:none;width:36px;height:36px;border-radius:10px;background:var(--secondary);color:var(--on-secondary);display:grid;place-items:center;font-weight:800;font-size:14px;box-shadow:0 0 18px -4px var(--secondary)}
+  .callout h3{font-size:16px;font-weight:700}
+  .callout p{color:var(--text-muted);font-size:14px;margin:6px 0 0}
+  .c1{grid-area:c1}.c2{grid-area:c2}.c3{grid-area:c3}.c4{grid-area:c4}
+  @media(max-width:900px){
+    .feature{grid-template-columns:1fr 1fr;grid-template-areas:"art art" "c1 c2" "c3 c4"}
+    .fart{aspect-ratio:16/9;margin-bottom:8px}
+  }
+  @media(max-width:560px){
+    .feature{grid-template-columns:1fr;grid-template-areas:"art" "c1" "c2" "c3" "c4"}
+  }
+
+  /* comparison / spec grid — Dawn: custom compare section (no native equivalent; nearest multicolumn) */
+  .cmp-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)}
+  table.cmp{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+  table.cmp th,table.cmp td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--border)}
+  table.cmp thead th{background:var(--surface-2);font-weight:700;font-size:13px;letter-spacing:.02em;vertical-align:bottom}
+  table.cmp thead th .price{display:block;font-weight:800;font-size:18px;color:var(--text);margin-top:6px;letter-spacing:-.01em}
+  table.cmp tbody th{font-weight:600;color:var(--text-muted);white-space:nowrap}
+  table.cmp td{color:var(--text)}
+  table.cmp tr td:nth-child(3),table.cmp thead th:nth-child(3){background:color-mix(in srgb,var(--primary) 8%,var(--bg))}
+  table.cmp thead th:nth-child(3){border-top:2px solid var(--primary)}
+  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--on-primary);background:var(--primary);padding:3px 9px;border-radius:999px;margin-bottom:8px}
+  .cmp td:last-child,.cmp th:last-child{text-align:left}
+  table.cmp tbody tr:last-child td,table.cmp tbody tr:last-child th{border-bottom:0}
+
+  /* reviews / rating — Dawn: product-reviews app block (nearest: testimonials) */
+  .rate-top{display:flex;gap:36px;align-items:center;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+  .rate-score{font-size:64px;font-weight:800;line-height:1;letter-spacing:-.03em}
+  .rate-meta .stars{color:var(--secondary);font-size:18px;letter-spacing:2px}
+  .rate-meta .sub{color:var(--text-muted);font-size:14px;margin-top:4px}
+  .lead-quote{max-width:34ch;border-left:2px solid var(--primary);padding-left:20px}
+  .lead-quote blockquote{font-family:var(--serif);font-size:clamp(19px,2.4vw,25px);line-height:1.35;margin:0}
+  .lead-quote .who{color:var(--text-muted);font-size:14px;margin-top:12px}
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:760px){.reviews-grid{grid-template-columns:1fr}.rate-score{font-size:52px}}
+  .rcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+  .rcard .stars{color:var(--secondary);font-size:14px;letter-spacing:1px}
+  .rcard p{font-size:15px;margin:12px 0 16px}
+  .rcard .who{color:var(--text-muted);font-size:13px}
+  .rcard .who b{color:var(--text);font-weight:600}
+
+  /* warranty & support reassurance — Dawn: multicolumn */
+  .assure{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  @media(max-width:900px){.assure{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.assure{grid-template-columns:1fr}}
+  .assure .item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px}
+  .assure .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:14px;
+    background:color-mix(in srgb,var(--primary) 16%,var(--bg));color:var(--primary);border:1px solid color-mix(in srgb,var(--primary) 30%,var(--border))}
+  .assure .ic svg{width:22px;height:22px}
+  .assure h3{font-size:16px;font-weight:700}
+  .assure p{color:var(--text-muted);font-size:14px;margin-top:8px}
+
+  /* newsletter — Dawn: email-signup-banner */
+  .news{position:relative;overflow:hidden;background:#0a0e16;color:#f4f7fb;border-radius:var(--radius);padding:60px 32px;text-align:center}
+  .news::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(50% 70% at 50% -10%, rgba(37,99,235,.45), transparent 60%),
+    radial-gradient(40% 60% at 80% 120%, rgba(34,211,238,.28), transparent 60%)}
+  .news>*{position:relative}
+  .news h2{color:#f4f7fb;font-size:clamp(24px,3.2vw,36px)}
+  .news p{color:#aeb9c8;margin-top:12px}
+  .news form{display:flex;gap:10px;max-width:440px;margin:24px auto 0}
+  .news input{flex:1;padding:14px 16px;border-radius:11px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;font-size:15px}
+  .news input::placeholder{color:#9aa6b6}
+  .news .btn{background:var(--primary);color:var(--on-primary)}
+  .news .fine{font-size:12px;color:#8b96a6;margin-top:14px}
+  @media(max-width:520px){.news form{flex-direction:column}}
+
+  /* footer — Dawn: footer */
+  footer{border-top:1px solid var(--border);margin-top:8px}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px;padding:56px 0}
+  .fcols .brand{margin-bottom:12px;display:inline-block}
+  .fcols h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin:0 0 14px}
+  .fcols a{display:block;font-size:14px;color:var(--text-muted);padding:5px 0}
+  .fcols a:hover{color:var(--text)}
+  .fbot{border-top:1px solid var(--border);padding:20px 0;font-size:13px;color:var(--text-muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <!-- ANNOUNCEMENT — Dawn: announcement-bar -->
+  <div class="announce">Free <b>2-day shipping</b> on every order · <b>2-year warranty</b> on all Nova gear</div>
+
+  <!-- HEADER — Dawn: header -->
+  <header>
+    <nav class="nav wrap">
+      <div class="brand">NOVA<span>SONIC</span></div>
+      <ul><li>Shop</li><li>Tech</li><li>Support</li></ul>
+      <div class="icons"><span>Search</span><span class="cart">Cart (0)</span></div>
+    </nav>
+  </header>
+
+  <!-- HERO — Dawn: image-banner -->
+  <section class="hero">
+    <div class="grid wrap">
+      <div>
+        <span class="eyebrow">New · Nova One · Adaptive ANC</span>
+        <h1>Silence, engineered.<br>Sound, unleashed.</h1>
+        <p>Studio-grade drivers meet 8-mic adaptive noise cancellation in an all-day, 40-hour headphone. Hear everything — or nothing at all.</p>
+        <div class="chips">
+          <span class="chip"><b>40h</b> battery</span>
+          <span class="chip"><b>−42 dB</b> ANC</span>
+          <span class="chip"><b>Hi-Res</b> LDAC</span>
+        </div>
+        <div class="cta">
+          <a class="btn btn-primary" href="#">Shop Nova One — $299</a>
+          <a class="btn btn-ghost" href="#">Compare models</a>
+        </div>
+      </div>
+      <div class="art" role="img" aria-label="Nova One headphone driver">
+        <div class="driver"></div>
+        <span class="tag"><b>◎</b>&nbsp; 40mm beryllium driver</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPEC HIGHLIGHTS STRIP — Dawn: multicolumn -->
+  <div class="metrics">
+    <div class="metric"><div class="big">40h</div><div class="lbl">Battery life, ANC on</div></div>
+    <div class="metric"><div class="big">40mm</div><div class="lbl">Beryllium drivers</div></div>
+    <div class="metric"><div class="big">−42dB</div><div class="lbl">Adaptive noise cancel</div></div>
+    <div class="metric"><div class="big">5 min</div><div class="lbl">Charge → 6 hours</div></div>
+  </div>
+
+  <!-- FEATURED PRODUCT + NUMBERED CALLOUTS — Dawn: image-with-text (content blocks) -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Inside the Nova One</span>
+        <h2>Engineered down to the last decibel.</h2>
+        <p>Every component is built and tuned in-house — from the diaphragm to the DSP.</p>
+      </div>
+      <div class="feature">
+        <div class="callout c1"><div class="n">01</div><div><h3>8-mic adaptive ANC</h3><p>Feed-forward and feed-back mics sample your surroundings 48,000× a second and cancel it in real time.</p></div></div>
+        <div class="callout c2"><div class="n">02</div><div><h3>Beryllium-coated 40mm drivers</h3><p>Ultra-light, ultra-stiff diaphragms deliver tight bass and detail out to 40 kHz.</p></div></div>
+        <div class="fart" role="img" aria-label="Nova One product render"><div class="driver"></div></div>
+        <div class="callout c3"><div class="n">03</div><div><h3>All-day comfort</h3><p>Memory-foam cushions wrapped in vegan protein leather. 289 g with a balanced, feather-light clamp.</p></div></div>
+        <div class="callout c4"><div class="n">04</div><div><h3>Hi-Res, everywhere</h3><p>Bluetooth 5.4 with LDAC and multipoint — keep your laptop and phone paired at once.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON / SPEC GRID — Dawn: custom compare section (nearest: multicolumn) -->
+  <section class="blk" style="background:var(--surface)">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Find your fit</span>
+        <h2>Three ways to go quiet.</h2>
+        <p>From pocketable buds to reference-grade planars — every Nova shares the same DSP and app.</p>
+      </div>
+      <div class="cmp-wrap">
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col">Nova Air<span class="price">$149</span></th>
+              <th scope="col"><span class="pill">Most popular</span>Nova One<span class="price">$299</span></th>
+              <th scope="col">Nova Studio<span class="price">$399</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Form factor</th><td>In-ear buds</td><td>Over-ear</td><td>Over-ear pro</td></tr>
+            <tr><th scope="row">Battery (ANC on)</th><td>8h + 24h case</td><td>40 hours</td><td>32 hours</td></tr>
+            <tr><th scope="row">Noise cancellation</th><td>Hybrid −38 dB</td><td>Adaptive −42 dB</td><td>Adaptive −45 dB</td></tr>
+            <tr><th scope="row">Drivers</th><td>11mm dynamic</td><td>40mm beryllium</td><td>50mm planar</td></tr>
+            <tr><th scope="row">Codecs</th><td>SBC · AAC · aptX</td><td>SBC · AAC · LDAC</td><td>LDAC · USB-C lossless</td></tr>
+            <tr><th scope="row">Weight</th><td>5.1 g / bud</td><td>289 g</td><td>330 g</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS / RATING — Dawn: product-reviews app block (nearest: testimonials) -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Reviews</span><h2>Loved by 12,000+ listeners.</h2></div>
+      <div class="rate-top">
+        <div class="rate-score">4.8</div>
+        <div class="rate-meta">
+          <div class="stars">★★★★★</div>
+          <div class="sub">12,480 verified reviews · 94% would recommend</div>
+        </div>
+        <div class="lead-quote">
+          <blockquote>“Genuinely the best ANC I've used outside of a $600 pair — and the app EQ is the cherry on top.”</blockquote>
+          <div class="who">— Marcus T., Verified buyer · Nova One</div>
+        </div>
+      </div>
+      <div class="reviews-grid">
+        <div class="rcard"><div class="stars">★★★★★</div><p>40 hours isn't marketing — I charge these once a week. Bluetooth multipoint just works between my Mac and phone.</p><div class="who"><b>Dana R.</b> · Verified · Nova One</div></div>
+        <div class="rcard"><div class="stars">★★★★★</div><p>Switched from the big names and never looked back. Sound is neutral and detailed, and the fit disappears after an hour.</p><div class="who"><b>Priya S.</b> · Verified · Nova Studio</div></div>
+        <div class="rcard"><div class="stars">★★★★★</div><p>Firmware update added a new transparency mode overnight. Feels like the product keeps getting better after I bought it.</p><div class="who"><b>Leo K.</b> · Verified · Nova Air</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WARRANTY & SUPPORT REASSURANCE — Dawn: multicolumn -->
+  <section class="blk" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Peace of mind</span><h2>Backed for the long haul.</h2></div>
+      <div class="assure">
+        <div class="item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>2-year warranty</h3><p>Every Nova product is covered for two full years — parts, labor, and shipping both ways.</p>
+        </div>
+        <div class="item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>45-night trial</h3><p>Live with them for 45 nights. Not in love? Send them back, free — no questions asked.</p>
+        </div>
+        <div class="item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14-5"/><path d="M20 12a8 8 0 0 1-14 5"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg></div>
+          <h3>Lifetime updates</h3><p>New codecs, EQ presets, and ANC tuning delivered over the air. Forever, at no cost.</p>
+        </div>
+        <div class="item">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>Real human support</h3><p>Talk to an audio specialist 7 days a week. Average reply time is under two hours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER — Dawn: email-signup-banner -->
+  <section class="blk"><div class="wrap"><div class="news">
+    <h2>Get $30 off and first access to drops.</h2>
+    <p>Firmware news, new colorways, and the occasional deep-dive on how we tune sound.</p>
+    <form onsubmit="return false"><input type="email" placeholder="you@email.com" aria-label="Email"><button class="btn">Subscribe</button></form>
+    <div class="fine">No spam. Unsubscribe anytime.</div>
+  </div></div></section>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="wrap fcols">
+      <div>
+        <div class="brand">NOVA<span>SONIC</span></div>
+        <p style="color:var(--text-muted);font-size:14px;max-width:34ch">High-fidelity audio, engineered to disappear.</p>
+      </div>
+      <div><h3>Shop</h3><a>Nova Air</a><a>Nova One</a><a>Nova Studio</a><a>Accessories</a></div>
+      <div><h3>Tech</h3><a>Adaptive ANC</a><a>LDAC &amp; codecs</a><a>Nova app</a><a>Firmware</a></div>
+      <div><h3>Support</h3><a>Contact</a><a>Warranty</a><a>Shipping</a><a>Returns</a></div>
+    </div>
+    <div class="wrap fbot">
+      <span>© 2026 NOVASONIC · Baseline template</span>
+      <span>Structure references Shopify Dawn 15.4.1</span>
+    </div>
+  </footer>
+</body>
+</html>

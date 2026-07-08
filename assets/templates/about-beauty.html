@@ -1,0 +1,269 @@
+<!-- @dsCard group="About" name="About — Beauty (brand story)" subtitle="Announcement · Hero · Mission · Founders · Values · Timeline · Sustainability · Press · CTA" viewport="1280x3600" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — About (Beauty, brand story)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  :root{
+    --primary:#1f6f54; --on-primary:#ffffff;
+    --secondary:#e8b4b8; --on-secondary:#111111;
+    --bg:#ffffff; --surface:#f7f5f2; --surface-2:#efeae3;
+    --text:#1a1a1a; --text-muted:#5c5c5c; --border:#e2e2e2;
+    --radius:14px; --maxw:1200px;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#14110f; --surface:#1d1a17; --surface-2:#252019; --text:#f2ede7; --text-muted:#a9a199; --border:#332e29; --on-secondary:#111; }
+  }
+  :root[data-theme="dark"]{ --bg:#14110f; --surface:#1d1a17; --surface-2:#252019; --text:#f2ede7; --text-muted:#a9a199; --border:#332e29; }
+  :root[data-theme="light"]{ --bg:#ffffff; --surface:#f7f5f2; --surface-2:#efeae3; --text:#1a1a1a; --text-muted:#5c5c5c; --border:#e2e2e2; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0}
+  .btn{display:inline-block;padding:14px 28px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .15s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text)}
+  .btn-lg{padding:17px 40px;font-size:16px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+
+  /* announcement */
+  .announce{background:var(--primary);color:var(--on-primary);text-align:center;font-size:13px;letter-spacing:.04em;padding:9px 16px}
+
+  /* header */
+  header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.02em}
+  .nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--text-muted)}
+  .nav .icons{display:flex;gap:18px;font-size:14px}
+  @media(max-width:760px){.nav ul{display:none}}
+
+  /* hero */
+  .hero{position:relative;min-height:440px;display:flex;align-items:center;text-align:center;background:
+    radial-gradient(90% 120% at 50% -10%,color-mix(in srgb,var(--secondary) 40%,transparent) 0%,transparent 55%),
+    linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%)}
+  .hero .inner{padding:84px 0;max-width:56ch;margin:0 auto}
+  .hero h1{font-size:clamp(36px,5.4vw,64px);line-height:1.04}
+  .hero p{color:var(--text-muted);font-size:19px;margin:22px auto 0;max-width:46ch}
+
+  /* section shell */
+  section.blk{padding:78px 0}
+  .head{text-align:center;max-width:60ch;margin:0 auto 46px}
+  .head h2{font-size:clamp(26px,3.4vw,40px)}
+  .head p{color:var(--text-muted);margin-top:12px}
+
+  /* mission — rich text */
+  .mission{max-width:40ch;margin:0 auto;text-align:center}
+  .mission .eyebrow{display:block;margin-bottom:20px}
+  .mission blockquote{font-family:var(--serif);font-size:clamp(24px,3.4vw,38px);line-height:1.3;margin:0;letter-spacing:-.01em}
+  .mission .sig{color:var(--text-muted);font-size:14px;margin-top:26px}
+
+  /* founders — image with text */
+  .iwt{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .iwt .art{aspect-ratio:5/4;border-radius:var(--radius);background:
+    radial-gradient(110% 110% at 30% 25%,var(--secondary) 0%,transparent 52%),
+    linear-gradient(160deg,var(--primary),var(--surface-2));box-shadow:0 30px 60px -40px rgba(0,0,0,.4)}
+  .iwt p{color:var(--text-muted);font-size:16px;margin:16px 0 0}
+  .iwt .names{display:flex;gap:28px;flex-wrap:wrap;margin-top:26px}
+  .iwt .names .who b{display:block;font-family:var(--sans);font-size:15px;font-weight:600;color:var(--text)}
+  .iwt .names .who span{font-size:13px;color:var(--text-muted)}
+  @media(max-width:760px){.iwt{grid-template-columns:1fr}}
+
+  /* values — multicolumn 3up */
+  .vals{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:760px){.vals{grid-template-columns:1fr}}
+  .val{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:30px}
+  .val .ic{width:46px;height:46px;border-radius:12px;background:var(--secondary);color:var(--on-secondary);display:grid;place-items:center;margin-bottom:16px}
+  .val .ic svg{width:23px;height:23px}
+  .val h3{font-family:var(--sans);font-size:18px;font-weight:600}
+  .val p{color:var(--text-muted);font-size:14px;margin-top:8px}
+
+  /* timeline */
+  .timeline{max-width:760px;margin:0 auto;position:relative;padding-left:32px}
+  .timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--border)}
+  .tl{position:relative;padding:0 0 34px 22px}
+  .tl:last-child{padding-bottom:0}
+  .tl::before{content:"";position:absolute;left:-32px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--primary);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--border)}
+  .tl .yr{font-family:var(--serif);font-size:20px;color:var(--primary)}
+  .tl h3{font-family:var(--sans);font-size:16px;font-weight:600;margin-top:2px}
+  .tl p{color:var(--text-muted);font-size:14px;margin-top:6px}
+
+  /* sustainability / transparency */
+  .sus{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .sus .art{aspect-ratio:1/1;border-radius:var(--radius);background:
+    radial-gradient(120% 120% at 70% 30%,var(--secondary) 0%,transparent 55%),
+    linear-gradient(160deg,var(--surface-2),var(--primary))}
+  .sus ul{list-style:none;margin:20px 0 0;padding:0}
+  .sus li{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);font-size:15px}
+  .sus li:last-child{border-bottom:0}
+  .sus li svg{flex:0 0 22px;color:var(--primary);margin-top:1px}
+  .sus li b{font-weight:600}
+  .sus li span.d{display:block;color:var(--text-muted);font-size:14px;margin-top:2px}
+  @media(max-width:760px){.sus{grid-template-columns:1fr}}
+
+  /* press strip */
+  .press{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface)}
+  .press .row{display:flex;flex-wrap:wrap;gap:20px 48px;align-items:center;justify-content:center;padding:44px 0}
+  .press .logo{font-family:var(--serif);font-size:20px;letter-spacing:.02em;color:var(--text-muted);opacity:.85}
+  .press .lab{width:100%;text-align:center;margin-bottom:6px}
+
+  /* CTA to shop */
+  .cta{background:var(--primary);color:var(--on-primary);border-radius:var(--radius);padding:64px 32px;text-align:center}
+  .cta h2{color:var(--on-primary);font-size:clamp(28px,3.6vw,42px)}
+  .cta p{opacity:.9;margin:14px auto 28px;max-width:44ch}
+  .cta .btn{background:var(--bg);color:var(--text)}
+
+  /* footer */
+  footer{border-top:1px solid var(--border);margin-top:8px}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px;padding:56px 0}
+  .fcols h3{font-family:var(--sans);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:700;margin:0 0 14px}
+  .fcols a{display:block;font-size:14px;color:var(--text-muted);padding:5px 0}
+  .fbot{border-top:1px solid var(--border);padding:20px 0;font-size:13px;color:var(--text-muted);text-align:center}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <div class="announce">Free carbon-neutral shipping over $50 · 30-day happiness guarantee</div>
+
+  <header>
+    <nav class="nav wrap">
+      <ul><li>Shop</li><li>Bestsellers</li><li>Ingredients</li><li>About</li></ul>
+      <div class="brand">Lumina</div>
+      <div class="icons"><span>Search</span><span>Cart (0)</span></div>
+    </nav>
+  </header>
+
+  <!-- HERO — Dawn: image-banner -->
+  <section class="hero">
+    <div class="inner wrap">
+      <span class="eyebrow">Our story</span>
+      <h1 style="margin-top:16px">Skincare built in a lab, not a boardroom.</h1>
+      <p>We're Lumina — two chemists who got tired of marketing dressed up as science. This is why we exist, what we stand for, and who we're building for.</p>
+    </div>
+  </section>
+
+  <!-- MISSION — Dawn: rich-text -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="mission">
+        <span class="eyebrow">Our mission</span>
+        <blockquote>To make proof-backed skincare that's honest about what's inside — and generous about why it works.</blockquote>
+        <div class="sig">Written on our lab wall since day one.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDERS — Dawn: image-with-text -->
+  <section class="blk" style="background:var(--surface-2)">
+    <div class="wrap iwt">
+      <div class="art" role="img" aria-label="Lumina founders in the lab"></div>
+      <div>
+        <span class="eyebrow">The founders</span>
+        <h2>Two chemists, one shared frustration.</h2>
+        <p>We met over a lab bench, formulating actives for brands that spent more on packaging claims than on the formula inside. Every launch promised the moon; almost none printed a single dose you could verify.</p>
+        <p>So we built the brand we wished existed. Lumina started with a simple rule we still hold: if an ingredient can't earn its place at a level shown to work in peer-reviewed research, it doesn't go in the bottle — and whatever does goes right on the box.</p>
+        <div class="names">
+          <div class="who"><b>Dr. Nadia Vance</b><span>Co-founder · Cosmetic Chemist</span></div>
+          <div class="who"><b>Elias Moreau, M.Sc.</b><span>Co-founder · Formulation Science</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES — Dawn: multicolumn (3-up) -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">What we stand for</span><h2>Three promises we won't compromise</h2></div>
+      <div class="vals">
+        <div class="val">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h3>Radical transparency</h3>
+          <p>Every active, every function, every dose — printed on the carton. No "fragrance" black boxes, ever.</p>
+        </div>
+        <div class="val">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <h3>Proof over promises</h3>
+          <p>If the research doesn't back it, we don't claim it. Efficacious doses or nothing at all.</p>
+        </div>
+        <div class="val">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/></svg></div>
+          <h3>Kind to skin &amp; planet</h3>
+          <p>Vegan, cruelty-free, and formulated to respect your barrier — packaged to respect everything else.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MILESTONE TIMELINE — Dawn: rich-text / custom-liquid -->
+  <section class="blk" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">How we got here</span><h2>A short history of Lumina</h2></div>
+      <div class="timeline">
+        <div class="tl"><div class="yr">2019</div><h3>The first batch</h3><p>Nadia and Elias formulate the original Barrier Repair Serum on a shared lab bench — and print every dose on the label.</p></div>
+        <div class="tl"><div class="yr">2020</div><h3>Lumina launches</h3><p>We ship our first 500 bottles direct-to-door. They sell out in nine days, entirely by word of mouth.</p></div>
+        <div class="tl"><div class="yr">2022</div><h3>50,000 five-star reviews</h3><p>A community of sensitive-skin customers pushes us past 50K verified reviews and our first dermatologist partnerships.</p></div>
+        <div class="tl"><div class="yr">2024</div><h3>Carbon-neutral, end to end</h3><p>Every order ships carbon-neutral and our refill program keeps 40 tonnes of packaging out of landfill each year.</p></div>
+        <div class="tl"><div class="yr">2026</div><h3>Still printing every dose</h3><p>Twelve products, one unchanged rule. If it can't earn its place in the formula, it doesn't go in the bottle.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUSTAINABILITY / INGREDIENT TRANSPARENCY — Dawn: image-with-text -->
+  <section class="blk">
+    <div class="wrap sus">
+      <div>
+        <span class="eyebrow">Ingredients &amp; impact</span>
+        <h2>Transparency you can hold in your hand.</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Full-dose labeling</b><span class="d">Actives listed with exact percentages on every carton — no marketing math.</span></span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Refillable by design</b><span class="d">Aluminium + glass primary packaging with low-waste refill pouches.</span></span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Carbon-neutral shipping</b><span class="d">Every order offset, every route optimized — verified by a third party.</span></span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Vegan &amp; cruelty-free</b><span class="d">Never tested on animals, and made without animal-derived ingredients.</span></span></li>
+        </ul>
+      </div>
+      <div class="art" role="img" aria-label="Recyclable Lumina packaging"></div>
+    </div>
+  </section>
+
+  <!-- PRESS / LOGOS — Dawn: multicolumn (logo list) -->
+  <section class="press">
+    <div class="wrap">
+      <div class="row">
+        <span class="lab eyebrow">As featured in</span>
+        <span class="logo">VOGUE</span>
+        <span class="logo">Allure</span>
+        <span class="logo">The Cut</span>
+        <span class="logo">Byrdie</span>
+        <span class="logo">GOOP</span>
+        <span class="logo">Refinery29</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA TO SHOP — Dawn: image-banner / rich-text -->
+  <section class="blk"><div class="wrap"><div class="cta">
+    <h2>Meet the formulas behind the story.</h2>
+    <p>Clinically proven, radically transparent, and backed by a 30-day happiness guarantee.</p>
+    <a class="btn btn-lg" href="#">Shop bestsellers</a>
+  </div></div></section>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="wrap fcols">
+      <div><div class="brand" style="margin-bottom:12px">Lumina</div><p style="color:var(--text-muted);font-size:14px;max-width:34ch">Clinically proven skincare with nothing to hide.</p></div>
+      <div><h3>Shop</h3><a>Bestsellers</a><a>Serums</a><a>Moisturizers</a><a>Sets</a></div>
+      <div><h3>Learn</h3><a>Ingredients</a><a>Skin quiz</a><a>Journal</a><a>Reviews</a></div>
+      <div><h3>Support</h3><a>Contact</a><a>Shipping</a><a>Returns</a><a>FAQ</a></div>
+    </div>
+    <div class="fbot">© Lumina Beauty · Baseline template · Structure references Shopify Dawn 15.4.1</div>
+  </footer>
+</body>
+</html>

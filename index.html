@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Storefront Forge — 电商店面模板系统</title>
+<meta name="description" content="覆盖 7 个行业的 18 套生产级 Shopify 店面模板:品牌色驱动、明暗双主题、无障碍达标、真机 Lighthouse 99 分。附报价估算器。">
+<style>
+  :root{
+    --bg:#F4F6F8; --surface:#FFFFFF; --surface-2:#EAEEF2;
+    --ink:#151A20; --muted:#5A636F; --line:#DCE1E7;
+    --accent:#B4652F; --accent-ink:#8A4E24; --accent-soft:rgba(180,101,47,.10);
+    --steel:#3C5B78;
+    --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC","Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    --maxw:1180px;
+    --shadow:0 1px 2px rgba(16,22,30,.05),0 18px 40px -24px rgba(16,22,30,.28);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0D1116; --surface:#151B22; --surface-2:#1C242D; --ink:#E7ECF1; --muted:#94A1AF;
+      --line:#252E39; --accent:#D28A4F; --accent-ink:#E7A66E; --accent-soft:rgba(210,138,79,.14); --steel:#6E93B4;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 22px 46px -26px rgba(0,0,0,.7); }
+  }
+  :root[data-theme="dark"]{ --bg:#0D1116; --surface:#151B22; --surface-2:#1C242D; --ink:#E7ECF1; --muted:#94A1AF;
+    --line:#252E39; --accent:#D28A4F; --accent-ink:#E7A66E; --accent-soft:rgba(210,138,79,.14); --steel:#6E93B4;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 22px 46px -26px rgba(0,0,0,.7); }
+  :root[data-theme="light"]{ --bg:#F4F6F8; --surface:#FFFFFF; --surface-2:#EAEEF2; --ink:#151A20; --muted:#5A636F;
+    --line:#DCE1E7; --accent:#B4652F; --accent-ink:#8A4E24; --accent-soft:rgba(180,101,47,.10); --steel:#3C5B78;
+    --shadow:0 1px 2px rgba(16,22,30,.05),0 18px 40px -24px rgba(16,22,30,.28); }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .eyebrow{font-size:12.5px;letter-spacing:.22em;color:var(--accent-ink);font-weight:600}
+  h1,h2,h3{margin:0;letter-spacing:-.01em;text-wrap:balance;font-weight:800}
+  .mono{font-family:var(--mono)}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+  .masthead{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .masthead .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:16px}
+  .brand .mark{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--accent),#8a4e24);position:relative;flex:none}
+  .brand .mark::after{content:"";position:absolute;inset:6px 6px auto 6px;height:3px;border-radius:2px;background:rgba(255,255,255,.85)}
+  .masthead nav{display:flex;gap:24px;font-size:14px;color:var(--muted);font-weight:500}
+  .masthead nav a:hover{color:var(--ink)}
+  .tgl{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:8px;width:36px;height:34px;cursor:pointer;font-size:15px;flex:none}
+  .tgl:hover{color:var(--ink)}
+  @media(max-width:820px){.masthead nav{display:none}}
+
+  .hero{padding:74px 0 40px}
+  .hero .wrap{display:grid;grid-template-columns:1.02fr 1.15fr;gap:52px;align-items:center}
+  .hero h1{font-size:clamp(32px,4.4vw,52px);line-height:1.14;margin:16px 0 0}
+  .hero .lede{color:var(--muted);font-size:18px;max-width:42ch;margin:20px 0 26px;line-height:1.8}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px}
+  .pill{font-size:12.5px;color:var(--muted);border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px}
+  .pill b{color:var(--accent-ink);font-weight:700;font-family:var(--mono)}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .btn{display:inline-block;padding:12px 22px;border-radius:9px;font-weight:600;font-size:14.5px;cursor:pointer;border:1px solid transparent}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-ghost{border-color:var(--line);background:var(--surface);color:var(--ink)}
+  @media(max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:34px}.hero{padding:44px 0 20px}}
+
+  .frame{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+  .frame .bar{display:flex;align-items:center;gap:8px;padding:10px 13px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+  .frame .dots{display:flex;gap:6px}
+  .frame .dots i{width:10px;height:10px;border-radius:50%;background:var(--line);display:block}
+  .frame .url{font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:3px 10px;flex:1;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:340px}
+  .frame img{width:100%;height:auto}
+
+  .specbar{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface)}
+  .specbar .wrap{display:grid;grid-template-columns:repeat(6,1fr)}
+  .specbar .cell{padding:22px 18px;border-left:1px solid var(--line)}
+  .specbar .cell:first-child{border-left:0}
+  .specbar .n{font-family:var(--mono);font-size:22px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .specbar .k{font-size:12.5px;color:var(--muted);margin-top:3px}
+  @media(max-width:860px){.specbar .wrap{grid-template-columns:repeat(3,1fr)}.specbar .cell:nth-child(4){border-left:0}.specbar .cell:nth-child(n+4){border-top:1px solid var(--line)}}
+  @media(max-width:520px){.specbar .wrap{grid-template-columns:repeat(2,1fr)}.specbar .cell:nth-child(odd){border-left:0}.specbar .cell:nth-child(n+3){border-top:1px solid var(--line)}}
+
+  section.blk{padding:72px 0}
+  .head{max-width:62ch}
+  .head h2{font-size:clamp(24px,3vw,34px);line-height:1.25;margin-top:12px}
+  .head p{color:var(--muted);font-size:16.5px;margin:14px 0 0}
+  .rule{height:1px;background:var(--line);border:0;margin:0}
+
+  .points{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:38px}
+  @media(max-width:820px){.points{grid-template-columns:1fr}}
+  .point{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:24px}
+  .point .tag{font-size:11.5px;letter-spacing:.16em;color:var(--steel);font-weight:600}
+  .point h3{font-size:17.5px;margin:11px 0 8px;font-weight:700}
+  .point p{color:var(--muted);font-size:14.5px;margin:0;line-height:1.75}
+  .point b{color:var(--ink);font-weight:600}
+
+  .gwrap{margin-top:32px;display:grid;gap:24px}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .grid-4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:980px){.grid-3,.grid-4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.grid-3,.grid-4{grid-template-columns:1fr}}
+  .card{display:flex;flex-direction:column;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow);transition:transform .18s ease}
+  .card:hover{transform:translateY(-3px)}
+  .card .shot{aspect-ratio:1280/820;overflow:hidden;background:var(--surface-2);border-bottom:1px solid var(--line)}
+  .card .shot img{width:100%;height:100%;object-fit:cover;object-position:top center}
+  .card .meta{padding:13px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .card .meta .nm{font-weight:650;font-size:14.5px}
+  .card .meta .fn{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:2px}
+  .chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;color:var(--accent-ink);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 32%,transparent);border-radius:6px;padding:3px 7px;white-space:nowrap;flex:none}
+  .chip.b2b{color:var(--steel);background:color-mix(in srgb,var(--steel) 12%,transparent);border-color:color-mix(in srgb,var(--steel) 34%,transparent)}
+
+  /* pricing calculator */
+  .calc{display:grid;grid-template-columns:1.25fr .9fr;gap:32px;margin-top:38px;align-items:start}
+  @media(max-width:900px){.calc{grid-template-columns:1fr}}
+  .ctrls{display:grid;gap:26px}
+  .field > .lab{font-size:13px;font-weight:700;letter-spacing:.02em;margin-bottom:11px;display:flex;align-items:center;gap:8px}
+  .field .hint{font-weight:400;color:var(--muted);font-size:12px}
+  .seg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  @media(max-width:560px){.seg{grid-template-columns:repeat(2,1fr)}}
+  .opt{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:13px 12px;cursor:pointer;transition:border-color .15s,background .15s}
+  .opt:hover{border-color:var(--accent)}
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt .t{font-weight:650;font-size:14px}
+  .opt .s{font-size:11.5px;color:var(--muted);margin-top:3px;font-family:var(--mono)}
+  .opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+  .checks{display:grid;gap:9px}
+  .chk{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:12px 14px;cursor:pointer}
+  .chk:hover{border-color:var(--accent)}
+  .chk.sel{border-color:var(--accent);background:var(--accent-soft)}
+  .chk input{margin-top:3px;accent-color:var(--accent);width:16px;height:16px;flex:none}
+  .chk .ct{flex:1}
+  .chk .ct .t{font-weight:600;font-size:14px}
+  .chk .ct .d{font-size:12px;color:var(--muted);margin-top:2px}
+  .chk .price{font-family:var(--mono);font-size:12.5px;color:var(--accent-ink);white-space:nowrap}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:560px){.row2{grid-template-columns:1fr}}
+  select,.stepper input{font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:11px 12px;width:100%}
+  .langwrap{margin-top:10px;display:none;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+  .langwrap.on{display:flex}
+  .stepper{display:flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--surface)}
+  .stepper button{width:34px;height:36px;border:0;background:var(--surface-2);color:var(--ink);font-size:17px;cursor:pointer}
+  .stepper input{border:0;border-radius:0;width:52px;text-align:center;padding:8px 0;font-family:var(--mono)}
+
+  .result{position:sticky;top:80px;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+  .result .rhead{padding:18px 22px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+  .result .rhead .k{font-size:12.5px;color:var(--muted)}
+  .result .big{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:29px;font-weight:700;letter-spacing:-.02em;margin-top:4px;line-height:1.1}
+  .result .usd{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:5px}
+  .result .body{padding:16px 22px 20px}
+  .bd{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .bd:last-of-type{border-bottom:0}
+  .bd .v{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink)}
+  .bd .muted{color:var(--muted)}
+  .ops-line{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:14px;font-weight:600}
+  .ops-line .v{font-family:var(--mono)}
+  .sla{margin-top:14px;font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .sla b{color:var(--accent-ink);font-family:var(--mono)}
+  .fineprint{font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+
+  /* live built-store preview */
+  .preview{margin-top:30px;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+  .ptop{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--surface-2);flex-wrap:wrap}
+  .ptop .lbl{font-size:13.5px;font-weight:700}
+  .ptop .lbl .mono{color:var(--muted);font-weight:400;font-size:12px;margin-left:6px}
+  .ptabs{display:flex;gap:6px}
+  .ptab{border:1px solid var(--line);background:var(--bg);color:var(--muted);border-radius:8px;padding:6px 14px;font-size:13px;cursor:pointer;font-family:var(--sans)}
+  .ptab.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+  .pframe .urlbar{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--line)}
+  .pframe .urlbar .dots{display:flex;gap:6px}
+  .pframe .urlbar .dots i{width:9px;height:9px;border-radius:50%;background:var(--line);display:block}
+  .pframe .urlbar .u{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:3px 10px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pframe iframe{width:100%;height:580px;border:0;display:block;background:#fff}
+  .pnote{font-size:12px;color:var(--muted);padding:11px 16px;border-top:1px solid var(--line);background:var(--surface-2)}
+  @media(max-width:600px){.pframe iframe{height:430px}}
+
+  .flow{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;margin-top:38px;align-items:start}
+  @media(max-width:860px){.flow{grid-template-columns:1fr;gap:28px}}
+  .steps{display:grid}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:22px 0;border-top:1px solid var(--line);counter-increment:s}
+  .step:last-child{border-bottom:1px solid var(--line)}
+  .step .no{font-family:var(--mono);font-size:13px;color:var(--accent-ink);font-weight:600;padding-top:2px}
+  .step .no::before{content:counter(s,decimal-leading-zero)}
+  .step h3{font-size:16px;font-weight:700;margin:0 0 5px}
+  .step p{color:var(--muted);font-size:14px;margin:0;line-height:1.7}
+  .code{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  .code .bar{padding:9px 14px;border-bottom:1px solid var(--line);background:var(--surface-2);font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+  .code pre{margin:0;padding:16px 18px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.7}
+  .code .k{color:var(--steel)} .code .v{color:var(--accent-ink)} .code .c{color:var(--muted)}
+
+  footer{border-top:1px solid var(--line);background:var(--surface);margin-top:12px}
+  footer .wrap{padding:32px 28px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+  footer .fine{color:var(--muted);font-size:13px;max-width:52ch;line-height:1.7}
+  footer .mono{font-size:12px;color:var(--muted)}
+  .steps{counter-reset:s}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto}}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="brand"><span class="mark" aria-hidden="true"></span> Storefront Forge</div>
+    <nav>
+      <a href="#system">系统能力</a>
+      <a href="#home">首页</a>
+      <a href="#pdp">产品页</a>
+      <a href="#pricing">报价</a>
+      <a href="#flow">流程</a>
+    </nav>
+    <button class="tgl" id="themeToggle" type="button" aria-label="切换明暗主题">◐</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">基准店面模板系统</p>
+      <h1>七个行业,十八套店面,<br>一套设计系统锻造。</h1>
+      <p class="lede">生产级 Shopify 页面模板 —— 品牌色驱动一键换肤、明暗双主题、无障碍达标,真机移动端 Lighthouse 实测 99 分。</p>
+      <div class="pill-row">
+        <span class="pill"><b>7</b> 个行业</span>
+        <span class="pill">明暗双主题</span>
+        <span class="pill">Lighthouse <b>99</b></span>
+        <span class="pill"><b>0</b> 外部请求</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#pricing">算一算预算</a>
+        <a class="btn btn-ghost" href="#home">浏览模板</a>
+      </div>
+    </div>
+    <div>
+      <div class="frame">
+        <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">lumina.myshopify.com</span></div>
+        <img src="assets/img/home-dtc-beauty.jpg" alt="美妆 DTC 首页模板预览" width="1280" height="820">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="specbar">
+  <div class="wrap">
+    <div class="cell"><div class="n">18</div><div class="k">整页模板</div></div>
+    <div class="cell"><div class="n">7</div><div class="k">覆盖行业</div></div>
+    <div class="cell"><div class="n">99</div><div class="k">真机移动端 Lighthouse</div></div>
+    <div class="cell"><div class="n">AA</div><div class="k">WCAG 对比度 + 标题层级</div></div>
+    <div class="cell"><div class="n">15.4</div><div class="k">Shopify Dawn 结构</div></div>
+    <div class="cell"><div class="n">0</div><div class="k">外部请求</div></div>
+  </div>
+</section>
+
+<section class="blk" id="system">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">系统能力</p>
+      <h2>不是十八个一次性作品 —— 一套系统,换肤而成。</h2>
+      <p>每套模板共享同一套 CSS 令牌层、同一套板块语汇、同一条无障碍底线。改的是配色,不是结构。</p>
+    </div>
+    <div class="points">
+      <div class="point"><div class="tag">品牌色驱动</div><h3>一键换成任意品牌色</h3><p>一套 <b>:root</b> 令牌驱动全站配色。注入客户的品牌色板,整站即刻换肤 —— 无需逐处替换。</p></div>
+      <div class="point"><div class="tag">双主题</div><h3>明暗都用心设计</h3><p>响应系统 <b>深色偏好</b> 并支持手动切换;暗色主题是专门设计的,不是简单反色。</p></div>
+      <div class="point"><div class="tag">无障碍</div><h3>构建即达标</h3><p>标题层级顺序、可见文字即无障碍名 —— 18 套全部通过真机 Lighthouse 同款校验。</p></div>
+      <div class="point"><div class="tag">性能</div><h3>真机 99 分</h3><p>真实手机节流环境实测:<b>LCP 1.7s、CLS 0、TBT 0ms</b>。自包含标记,无阻塞渲染资源。</p></div>
+      <div class="point"><div class="tag">标准</div><h3>基于 Dawn 15.4.1</h3><p>板块结构对齐 Shopify 官方参考主题,每个模块都能落到平台已识别的结构上。</p></div>
+      <div class="point"><div class="tag">自包含</div><h3>零外部请求</h3><p>CSS 全内联、图形用 CSS 渲染、字体走系统栈。无 CDN、无外链字体、无第三方调用。</p></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="blk" id="home">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">首页 · 7 个行业</p><h2>为每个行业量身的首页气质。</h2>
+      <p>同一套系统,七种截然不同的视觉世界 —— 编辑风时尚、轻奢珠宝、参数导向电子、暖调食品饮料、批发型 B2B。</p></div>
+    <div class="gwrap grid-3">
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/home-dtc-beauty.jpg" alt="美妆首页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">美妆首页</div><div class="fn">home-dtc-beauty.html</div></div><span class="chip">美妆 · DTC</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/home-fashion.jpg" alt="时尚首页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">时尚首页</div><div class="fn">home-fashion.html</div></div><span class="chip">时尚 · DTC</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/home-jewelry.jpg" alt="珠宝首页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">珠宝首页</div><div class="fn">home-jewelry.html</div></div><span class="chip">珠宝 · 轻奢</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/home-electronics.jpg" alt="电子首页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">电子首页</div><div class="fn">home-electronics.html</div></div><span class="chip">电子 · DTC</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/home-food-bev.jpg" alt="食品饮料首页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">食品饮料首页</div><div class="fn">home-food-bev.html</div></div><span class="chip">食饮 · DTC</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/home-home-goods.jpg" alt="家居首页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">家居首页</div><div class="fn">home-home-goods.html</div></div><span class="chip">家居 · DTC</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/home-b2b-hardware.jpg" alt="工业五金 B2B 首页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">工业五金首页</div><div class="fn">home-b2b-hardware.html</div></div><span class="chip b2b">工业 · B2B</span></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">集合页 · PLP</p><h2>贴合品类的商品列表页。</h2>
+      <p>筛选、排序、响应式网格 —— 按行业重新编排,从色板导向的时尚到参数导向的电子。</p></div>
+    <div class="gwrap grid-3">
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/collection-beauty.jpg" alt="美妆集合页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">美妆集合页</div><div class="fn">collection-beauty.html</div></div><span class="chip">美妆</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/collection-fashion.jpg" alt="时尚集合页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">时尚集合页</div><div class="fn">collection-fashion.html</div></div><span class="chip">时尚</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/collection-electronics.jpg" alt="电子集合页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">电子集合页</div><div class="fn">collection-electronics.html</div></div><span class="chip">电子</span></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="pdp">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">产品页 · PDP</p><h2>按销售方式设计的详情页。</h2>
+      <p>DTC 的冲动购买框;电子的参数表与质保;批发的阶梯报价与「索取报价」。</p></div>
+    <div class="gwrap grid-4">
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/product-beauty.jpg" alt="美妆详情页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">美妆详情页</div><div class="fn">product-beauty.html</div></div><span class="chip">美妆</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/product-fashion.jpg" alt="时尚详情页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">时尚详情页</div><div class="fn">product-fashion.html</div></div><span class="chip">时尚</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/product-electronics.jpg" alt="电子详情页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">电子详情页</div><div class="fn">product-electronics.html</div></div><span class="chip">电子</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/b2b-product-hardware.jpg" alt="B2B 产品页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">B2B 产品页</div><div class="fn">b2b-product-hardware.html</div></div><span class="chip b2b">工业 · B2B</span></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">转化与支持页</p><h2>漏斗其余环节,一并覆盖。</h2>
+      <p>单品落地页、品牌故事、联系页,以及完整的 B2B 询盘 / 报价申请流程。</p></div>
+    <div class="gwrap grid-4">
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/landing-beauty.jpg" alt="单品落地页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">单品落地页</div><div class="fn">landing-beauty.html</div></div><span class="chip">落地页</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/about-beauty.jpg" alt="品牌故事页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">品牌故事</div><div class="fn">about-beauty.html</div></div><span class="chip">关于</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/contact-beauty.jpg" alt="联系页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">联系页</div><div class="fn">contact-beauty.html</div></div><span class="chip">联系</span></div></article>
+      <article class="card"><div class="shot"><img loading="lazy" src="assets/img/b2b-inquiry-hardware.jpg" alt="B2B 询盘页模板" width="1280" height="820"></div><div class="meta"><div><div class="nm">B2B 询盘 / RFQ</div><div class="fn">b2b-inquiry-hardware.html</div></div><span class="chip b2b">工业 · B2B</span></div></article>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="blk" id="pricing">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">报价估算</p><h2>算一算你的店面预算。</h2>
+      <p>选好档位与加价项,实时看到区间估价。最终价以合同为准。</p></div>
+    <div class="calc">
+      <div class="ctrls">
+        <div class="row2">
+          <div class="field">
+            <div class="lab">你的行业 <span class="hint">决定预览风格</span></div>
+            <select id="industry" aria-label="行业">
+              <option value="beauty">美妆 / 护肤</option>
+              <option value="fashion">时尚 / 服饰</option>
+              <option value="jewelry">珠宝 / 配饰</option>
+              <option value="electronics">消费电子</option>
+              <option value="food_bev">食品 / 饮料</option>
+              <option value="home_goods">家居 / 生活</option>
+              <option value="industrial">工业 / 五金</option>
+            </select>
+          </div>
+          <div class="field">
+            <div class="lab">商业模式</div>
+            <div class="seg" id="modelSeg" style="grid-template-columns:1fr 1fr">
+              <label class="opt sel"><input type="radio" name="model" value="dtc" checked><div class="t">DTC 零售</div><div class="s">面向消费者</div></label>
+              <label class="opt"><input type="radio" name="model" value="b2b"><div class="t">B2B 批发</div><div class="s">询盘 / 报价</div></label>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="lab">交付档位 <span class="hint">一次性建站</span></div>
+          <div class="seg" id="tierSeg">
+            <label class="opt"><input type="radio" name="tier" value="landing"><div class="t">落地页</div><div class="s">¥2,500–3,500</div></label>
+            <label class="opt sel"><input type="radio" name="tier" value="standard" checked><div class="t">标准站</div><div class="s">¥15k–25k</div></label>
+            <label class="opt"><input type="radio" name="tier" value="custom"><div class="t">定制站</div><div class="s">¥45k–80k</div></label>
+            <label class="opt"><input type="radio" name="tier" value="enterprise"><div class="t">企业站</div><div class="s">¥100k 起</div></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="lab">加价项 <span class="hint">可多选,叠加在交付基价上</span></div>
+          <div class="checks" id="addonChecks">
+            <label class="chk"><input type="checkbox" data-addon="compliance"><div class="ct"><div class="t">美国合规包</div><div class="d">销售税 + 隐私提示,无障碍阈值提升至 100</div></div><div class="price">+20%</div></label>
+            <label class="chk"><input type="checkbox" data-addon="multilingual"><div class="ct"><div class="t">多语言</div><div class="d">额外语种的翻译占位与切换
+              <div class="langwrap" id="langWrap"><span>语种数</span>
+                <div class="stepper"><button type="button" id="langMinus" aria-label="减少语种">−</button><input id="langCount" class="num" value="1" inputmode="numeric" aria-label="语种数"><button type="button" id="langPlus" aria-label="增加语种">+</button></div>
+              </div></div></div><div class="price">+¥2,000/语种</div></label>
+            <label class="chk"><input type="checkbox" data-addon="payment"><div class="ct"><div class="t">本地支付对接</div><div class="d">跨境网关 / 本地钱包接入</div></div><div class="price">+¥3,000–5,000</div></label>
+            <label class="chk"><input type="checkbox" data-addon="migration"><div class="ct"><div class="t">存量店迁移评估</div><div class="d">对现有店铺做迁移评估</div></div><div class="price">+¥2,000–4,000</div></label>
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <div class="lab">交付地区</div>
+            <select id="region" aria-label="交付地区">
+              <option value="mainland_hk">大陆 / 港（¥,×1.00）</option>
+              <option value="north_america">北美（US$,×1.15）</option>
+              <option value="europe">欧洲（US$,×1.15）</option>
+              <option value="southeast_asia">东南亚（US$,×0.85）</option>
+            </select>
+          </div>
+          <div class="field">
+            <div class="lab">运维订阅 <span class="hint">月费,可选</span></div>
+            <select id="ops" aria-label="运维订阅档位">
+              <option value="none">不需要</option>
+              <option value="basic">基础 ¥1,500–3,000/月</option>
+              <option value="growth">成长 ¥3,000–6,000/月</option>
+              <option value="enterprise">企业 ¥6,000–12,000/月</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <aside class="result" aria-live="polite">
+        <div class="rhead">
+          <div class="k">一次性交付估价</div>
+          <div class="big" id="deliverTotal">¥15,000 – ¥25,000</div>
+          <div class="usd" id="deliverUsd"></div>
+        </div>
+        <div class="body">
+          <div id="breakdown"></div>
+          <div class="ops-line" id="opsLine" style="display:none"><span>运维月费</span><span class="v" id="opsTotal"></span></div>
+          <div class="sla">交付周期 <b id="slaVal">7 天</b></div>
+          <p class="fineprint">估价为区间参考,含 50% 预付、验收后付尾款。区域系数仅影响价格,不影响交付范围。最终价格与汇率以合同为准。价格源:<span class="mono">pricing.yaml</span>。</p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="preview">
+      <div class="ptop">
+        <div class="lbl">建成后预览 · 真实可滚动<span class="mono" id="pvName">home-dtc-beauty.html</span></div>
+        <div class="ptabs" id="pvTabs">
+          <button class="ptab sel" type="button" data-pg="home">首页</button>
+          <button class="ptab" type="button" data-pg="collection">集合页</button>
+          <button class="ptab" type="button" data-pg="product">产品页</button>
+        </div>
+      </div>
+      <div class="pframe">
+        <div class="urlbar"><span class="dots"><i></i><i></i><i></i></span><span class="u" id="pvUrl">lumina.myshopify.com</span></div>
+        <iframe id="pvFrame" title="建成店面预览" loading="lazy" src="assets/templates/home-dtc-beauty.html"></iframe>
+      </div>
+      <div class="pnote">这是按你所选行业与模式匹配到的真实模板 —— 上线时会替换为你的品牌色、文案与商品图。可在框内滚动查看整页。</div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="blk" id="flow">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">forge 如何选用</p><h2>接单信息定蓝图,品牌色完成适配。</h2>
+      <p>模板不是一份让你复制的起始文件 —— 它由品牌接单信息自动选出,再按品牌色板换肤。</p></div>
+    <div class="flow">
+      <div class="steps">
+        <div class="step"><span class="no"></span><div><h3>接单信息自动定蓝图</h3><p>行业 × 商业模式 × 页面类型经注册表映射到模板 —— B2B 走批发版式,冷门行业回落到最接近的一套。</p></div></div>
+        <div class="step"><span class="no"></span><div><h3>页面计划带上选择</h3><p><span class="mono">page-plan.yaml</span> 每一页都会带上 <span class="mono">baseline_template</span> —— 构建方清楚该从哪套蓝图起步。</p></div></div>
+        <div class="step"><span class="no"></span><div><h3>品牌色完成适配</h3><p><span class="mono">select-template.js --adapt</span> 把品牌 <span class="mono">design-tokens.json</span> 注入模板配色。版式不变,换成客户的颜色。</p></div></div>
+      </div>
+      <div class="code">
+        <div class="bar">artifacts/lumina-beauty/page-plan.yaml</div>
+        <pre><span class="c"># 计划阶段自动解析</span>
+pages:
+  - <span class="k">type</span>: home
+    <span class="k">baseline_template</span>: <span class="v">home-dtc-beauty.html</span>
+  - <span class="k">type</span>: product
+    <span class="k">baseline_template</span>: <span class="v">product-beauty.html</span>
+  - <span class="k">type</span>: collection
+    <span class="k">baseline_template</span>: <span class="v">collection-beauty.html</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><span class="mark" aria-hidden="true"></span> Storefront Forge</div>
+    <p class="fine">18 套基准店面模板 —— 品牌色驱动、明暗双主题、无障碍达标,基于 Shopify Dawn 15.4.1。价格以 <span class="mono">pricing.yaml</span> 为唯一来源。</p>
+    <span class="mono">7 行业 · 18 模板 · v0.3</span>
+  </div>
+</footer>
+
+<script>
+  // ---- 主题切换 ----
+  (function(){
+    var root=document.documentElement, btn=document.getElementById('themeToggle');
+    try{ var s=localStorage.getItem('sf-theme'); if(s) root.setAttribute('data-theme',s); }catch(e){}
+    btn.addEventListener('click',function(){
+      var cur=root.getAttribute('data-theme');
+      var isDark = cur ? cur==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      var next = isDark ? 'light' : 'dark';
+      root.setAttribute('data-theme',next);
+      try{ localStorage.setItem('sf-theme',next); }catch(e){}
+    });
+  })();
+
+  // ---- 报价估算器(数值镜像自 pricing.yaml,唯一价格源仍是该文件)----
+  var PRICING = {
+    fx: 7.2,
+    tiers: {
+      landing:    {min:2500,  max:3500,  sla:'48 小时'},
+      standard:   {min:15000, max:25000, sla:'7 天'},
+      custom:     {min:45000, max:80000, sla:'3–4 周'},
+      enterprise: {min:100000,max:null,  sla:'按合同'}
+    },
+    ops: {
+      none:      {min:0,   max:0},
+      basic:     {min:1500,max:3000},
+      growth:    {min:3000,max:6000},
+      enterprise:{min:6000,max:12000}
+    },
+    regions: {
+      mainland_hk:   {mult:1.00, usd:false},
+      north_america: {mult:1.15, usd:true},
+      europe:        {mult:1.15, usd:true},
+      southeast_asia:{mult:0.85, usd:true}
+    }
+  };
+
+  var $ = function(s){ return document.querySelector(s); };
+  var rmb = function(n){ return '¥' + Math.round(n).toLocaleString('en-US'); };
+  var usd = function(n){ return 'US$' + Math.round(n/PRICING.fx).toLocaleString('en-US'); };
+
+  function selectedTier(){ return (document.querySelector('input[name=tier]:checked')||{}).value || 'standard'; }
+  function addonOn(a){ var el=document.querySelector('input[data-addon="'+a+'"]'); return el && el.checked; }
+
+  function compute(){
+    var tier = PRICING.tiers[selectedTier()];
+    var region = PRICING.regions[$('#region').value];
+    var mult = region.mult;
+    var bd = [];
+
+    var lo = tier.min, hi = tier.max; // hi 可能为 null(企业站起价)
+    bd.push({k:'交付基价', v: hi==null ? rmb(lo)+' 起' : rmb(lo)+' – '+rmb(hi)});
+
+    if(addonOn('compliance')){
+      var cl=lo*0.20, ch = hi==null?null:hi*0.20;
+      lo+=cl; if(hi!=null) hi+=ch;
+      bd.push({k:'美国合规包 +20%', v:'+'+rmb(cl)+(ch==null?'':' – '+rmb(ch))});
+    }
+    if(addonOn('multilingual')){
+      var langs = Math.max(1, parseInt($('#langCount').value,10)||1);
+      var m = langs*2000; lo+=m; if(hi!=null) hi+=m;
+      bd.push({k:'多语言 ×'+langs, v:'+'+rmb(m)});
+    }
+    if(addonOn('payment')){
+      lo+=3000; if(hi!=null) hi+=5000;
+      bd.push({k:'本地支付对接', v:'+¥3,000 – ¥5,000'});
+    }
+    if(addonOn('migration')){
+      lo+=2000; if(hi!=null) hi+=4000;
+      bd.push({k:'存量店迁移评估', v:'+¥2,000 – ¥4,000'});
+    }
+
+    // 区域系数
+    lo*=mult; if(hi!=null) hi*=mult;
+    if(mult!==1) bd.push({k:'区域系数 ×'+mult.toFixed(2), v: region.usd?'按 US$ 计价':'—'});
+
+    // 渲染主数
+    $('#deliverTotal').textContent = hi==null ? rmb(lo)+' 起' : rmb(lo)+' – '+rmb(hi);
+    $('#deliverUsd').textContent = region.usd ? '≈ ' + (hi==null ? usd(lo)+' 起' : usd(lo)+' – '+usd(hi)) : '';
+
+    // 明细
+    $('#breakdown').innerHTML = bd.map(function(r){
+      return '<div class="bd"><span class="muted">'+r.k+'</span><span class="v">'+r.v+'</span></div>';
+    }).join('');
+
+    // 运维
+    var opsKey=$('#ops').value, ops=PRICING.ops[opsKey], opsLine=$('#opsLine');
+    if(opsKey==='none'){ opsLine.style.display='none'; }
+    else{ opsLine.style.display='flex'; $('#opsTotal').textContent = rmb(ops.min*mult)+' – '+rmb(ops.max*mult)+' /月'; }
+
+    // SLA
+    $('#slaVal').textContent = tier.sla;
+
+    // 选中态样式
+    document.querySelectorAll('.opt').forEach(function(o){ o.classList.toggle('sel', o.querySelector('input').checked); });
+    document.querySelectorAll('.chk').forEach(function(c){ c.classList.toggle('sel', c.querySelector('input').checked); });
+    $('#langWrap').classList.toggle('on', addonOn('multilingual'));
+  }
+
+  // ---- 建成站预览:模板选择镜像 registry.yaml ----
+  var TPL = {
+    home:       {beauty:'home-dtc-beauty', fashion:'home-fashion', jewelry:'home-jewelry', electronics:'home-electronics', food_bev:'home-food-bev', home_goods:'home-home-goods', industrial:'home-electronics'},
+    collection: {beauty:'collection-beauty', fashion:'collection-fashion', electronics:'collection-electronics'},
+    product:    {beauty:'product-beauty', fashion:'product-fashion', electronics:'product-electronics'}
+  };
+  var B2B = {home:'home-b2b-hardware', collection:'collection-electronics', product:'b2b-product-hardware'};
+  var DOMAINS = {beauty:'lumina', fashion:'marche', jewelry:'aurelle', electronics:'novasonic', food_bev:'ashgrove', home_goods:'hearthloom', industrial:'meridian-ind'};
+  var curPage='home';
+
+  function curModel(){ return (document.querySelector('input[name=model]:checked')||{}).value || 'dtc'; }
+  function pickTemplate(industry, model, page){
+    if(model==='b2b' && B2B[page]) return B2B[page];
+    return TPL[page][industry] || TPL[page].beauty; // 无专属变体则回落默认
+  }
+  function updatePreview(){
+    var industry=$('#industry').value, model=curModel();
+    var file=pickTemplate(industry, model, curPage);
+    var src='assets/templates/'+file+'.html', frame=$('#pvFrame');
+    if(frame.getAttribute('src')!==src) frame.setAttribute('src',src);
+    $('#pvName').textContent=file+'.html';
+    var dom = model==='b2b' ? 'meridian-ind' : (DOMAINS[industry]||'shop');
+    var path = curPage==='home' ? '' : (curPage==='collection' ? '/collections/all' : '/products/demo');
+    $('#pvUrl').textContent = dom+'.myshopify.com'+path;
+  }
+
+  // 事件
+  document.addEventListener('change', function(e){
+    if(e.target.matches('input[name=tier], input[data-addon], #region, #ops, input[name=model]')) compute();
+    if(e.target.matches('#industry, input[name=model]')) updatePreview();
+  });
+  $('#pvTabs').addEventListener('click', function(e){
+    var b=e.target.closest('.ptab'); if(!b) return;
+    curPage=b.getAttribute('data-pg');
+    document.querySelectorAll('#pvTabs .ptab').forEach(function(t){ t.classList.toggle('sel', t===b); });
+    updatePreview();
+  });
+  $('#langMinus').addEventListener('click', function(){ var i=$('#langCount'); i.value=Math.max(1,(parseInt(i.value,10)||1)-1); compute(); });
+  $('#langPlus').addEventListener('click', function(){ var i=$('#langCount'); i.value=(parseInt(i.value,10)||1)+1; compute(); });
+  $('#langCount').addEventListener('input', compute);
+  compute(); updatePreview();
+</script>
+</body>
+</html>

@@ -1,0 +1,568 @@
+<!-- @dsCard group="Product" name="B2B Product — Industrial hardware" subtitle="Breadcrumb · Spec drawing + buy/quote box · Key specs · Volume pricing table · Downloads · Compatible parts · Trade-account CTA" viewport="1280x2680" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — B2B Product (Industrial Hardware)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  /* Same variable NAMES as the DTC baseline; industrial steel + safety-amber palette. */
+  :root{
+    --primary:#1f3a5f; --on-primary:#ffffff;
+    --secondary:#d98a2b; --on-secondary:#141414;
+    --bg:#ffffff; --surface:#f2f5f8; --surface-2:#e5eaf0;
+    --text:#14202b; --text-muted:#55606b; --border:#d4dbe3;
+    --radius:8px; --maxw:1200px;
+    --serif:"Rockwell","Roboto Slab","Bitstream Vera Serif",Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"SFMono-Regular",ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0f1620; --surface:#161f2b; --surface-2:#1e2938; --text:#e7edf3; --text-muted:#95a2af; --border:#2a3644; --on-secondary:#141414; }
+  }
+  :root[data-theme="dark"]{ --bg:#0f1620; --surface:#161f2b; --surface-2:#1e2938; --text:#e7edf3; --text-muted:#95a2af; --border:#2a3644; --on-secondary:#141414; }
+  :root[data-theme="light"]{ --bg:#ffffff; --surface:#f2f5f8; --surface-2:#e5eaf0; --text:#14202b; --text-muted:#55606b; --border:#d4dbe3; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-.005em;margin:0}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 24px;border-radius:6px;font-weight:700;font-size:14px;letter-spacing:.01em;transition:transform .15s ease,box-shadow .15s ease;cursor:pointer;border:0}
+  .btn:hover{transform:translateY(-1px)}
+  .btn svg{width:17px;height:17px;flex:0 0 auto}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-secondary{background:var(--secondary);color:var(--on-secondary)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text);background:transparent}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:700;display:inline-flex;align-items:center;gap:9px}
+  .eyebrow::before{content:"";width:14px;height:3px;background:var(--secondary);border-radius:2px}
+  .accent{color:var(--secondary)}
+  @media (prefers-color-scheme: light){.accent{color:#b06d16}}
+  :root[data-theme="light"] .accent{color:#b06d16}
+  :root[data-theme="dark"] .accent{color:var(--secondary)}
+
+  /* announcement — Dawn: announcement-bar */
+  .announce{background:var(--primary);color:var(--on-primary);font-size:13px;letter-spacing:.02em;padding:9px 16px}
+  .announce .wrap{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;text-align:center}
+  .announce .sep{opacity:.4}
+  .announce a{color:var(--on-primary);font-weight:700;text-decoration:underline;text-underline-offset:2px}
+  @media(max-width:640px){.announce .hide-sm{display:none}}
+
+  /* header — Dawn: header (sticky) */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  header::before{content:"";display:block;height:3px;background:var(--secondary)}
+  .nav{display:flex;align-items:center;gap:28px;height:70px}
+  .brand{font-family:var(--serif);font-size:21px;font-weight:700;letter-spacing:.01em;display:flex;align-items:center;gap:10px;white-space:nowrap}
+  .brand .mark{width:22px;height:22px;border-radius:4px;background:linear-gradient(135deg,var(--primary),var(--secondary))}
+  .nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-size:14px;font-weight:600;color:var(--text-muted)}
+  .nav ul li:hover{color:var(--text)}
+  .nav .spacer{flex:1}
+  .nav .acts{display:flex;align-items:center;gap:16px;font-size:14px}
+  .nav .acts .login{font-weight:600;color:var(--text-muted);white-space:nowrap}
+  .nav .acts .login:hover{color:var(--text)}
+  @media(max-width:900px){.nav ul{display:none}}
+  @media(max-width:520px){.nav .acts .login{display:none}}
+
+  /* breadcrumb — Dawn: main-product (breadcrumb) */
+  .crumbs{font-size:13px;color:var(--text-muted);padding:20px 0 6px;font-weight:600}
+  .crumbs a:hover{color:var(--text)}
+  .crumbs .sep{margin:0 8px;opacity:.5}
+  .crumbs .cur{color:var(--text);font-family:var(--mono);font-weight:600}
+
+  /* main product — two columns — Dawn: main-product */
+  .pdp{display:grid;grid-template-columns:1.02fr .98fr;gap:44px;padding:12px 0 8px;align-items:start}
+  @media(max-width:900px){.pdp{grid-template-columns:1fr;gap:28px}}
+
+  /* gallery / spec drawing */
+  .gallery{position:sticky;top:96px}
+  @media(max-width:900px){.gallery{position:static}}
+  .main-img{position:relative;aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:
+    repeating-linear-gradient(0deg,transparent 0 25px,color-mix(in srgb,var(--primary) 7%,transparent) 25px 26px),
+    repeating-linear-gradient(90deg,transparent 0 25px,color-mix(in srgb,var(--primary) 7%,transparent) 25px 26px),
+    linear-gradient(160deg,var(--surface),var(--surface-2))}
+  .main-img .drw{position:absolute;inset:0;width:100%;height:100%;color:var(--primary);opacity:.72}
+  @media (prefers-color-scheme: dark){.main-img .drw{color:#7fa7d4;opacity:.85}}
+  :root[data-theme="dark"] .main-img .drw{color:#7fa7d4;opacity:.85}
+  :root[data-theme="light"] .main-img .drw{color:var(--primary);opacity:.72}
+  .main-img .plate{position:absolute;left:16px;bottom:16px;background:color-mix(in srgb,var(--bg) 82%,transparent);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--text)}
+  .main-img .rev{position:absolute;right:16px;top:16px;font-family:var(--mono);font-size:11px;color:var(--text-muted);border:1px solid var(--border);border-radius:4px;padding:3px 8px;background:color-mix(in srgb,var(--bg) 70%,transparent)}
+  .thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+  .thumb{position:relative;aspect-ratio:1/1;border-radius:6px;border:1px solid var(--border);cursor:pointer;overflow:hidden;background:linear-gradient(150deg,var(--surface),var(--surface-2))}
+  .thumb span{position:absolute;left:6px;bottom:5px;font-family:var(--mono);font-size:9px;color:var(--text-muted)}
+  .thumb[aria-current="true"]{border-color:var(--secondary);outline:2px solid var(--secondary);outline-offset:-2px}
+
+  /* buy / quote box — Dawn: main-product (product information) */
+  .buybox .cat{margin-bottom:12px}
+  .buybox h1{font-size:clamp(25px,3.2vw,34px);line-height:1.12}
+  .partmeta{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 16px}
+  .partmeta .m{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:6px 10px;display:inline-flex;gap:7px;align-items:center}
+  .partmeta .m b{color:var(--text-muted);font-weight:600}
+  .blurb{color:var(--text-muted);font-size:15px;max-width:52ch;margin:0 0 22px}
+
+  /* key specs table */
+  .specblk{margin:0 0 22px}
+  .specblk .cap{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+  .spectable{width:100%;border-collapse:collapse;font-size:14px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .spectable th,.spectable td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border)}
+  .spectable tr:last-child th,.spectable tr:last-child td{border-bottom:0}
+  .spectable th{color:var(--text-muted);font-weight:600;width:40%;white-space:nowrap;background:var(--surface)}
+  .spectable td{font-family:var(--mono);color:var(--text);font-weight:600}
+
+  /* price + stock */
+  .pricerow{display:flex;align-items:baseline;gap:10px;margin:4px 0 4px}
+  .pricerow .lab{font-size:13px;color:var(--text-muted);font-weight:600}
+  .pricerow .now{font-family:var(--serif);font-size:30px;font-weight:700}
+  .pricerow .unit{font-size:14px;color:var(--text-muted)}
+  .pricenote{font-size:13px;color:var(--text-muted);margin:2px 0 16px}
+  .stock{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:600;margin:0 0 4px}
+  .stock .dot{width:9px;height:9px;border-radius:50%;background:#2f9e5f;box-shadow:0 0 0 3px color-mix(in srgb,#2f9e5f 22%,transparent)}
+  .leadnote{font-size:13px;color:var(--text-muted);margin:6px 0 20px;padding-left:18px;border-left:2px solid var(--border)}
+
+  /* quantity + quote actions */
+  .qtyrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 8px}
+  .qtyfield{display:flex;flex-direction:column;gap:6px}
+  .qtyfield .qlbl{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted)}
+  .stepper{display:inline-flex;align-items:center;border:1px solid var(--border);border-radius:6px;overflow:hidden;background:var(--bg)}
+  .stepper button{border:0;background:transparent;color:var(--text);width:42px;height:46px;font-size:20px;cursor:pointer}
+  .stepper button:hover{background:var(--surface)}
+  .stepper input{width:74px;height:46px;text-align:center;border:0;border-left:1px solid var(--border);border-right:1px solid var(--border);background:transparent;color:var(--text);font-family:var(--mono);font-size:15px;font-weight:700}
+  .moq{font-size:12px;color:var(--text-muted);align-self:flex-end;padding-bottom:2px}
+  .quoteacts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 10px}
+  .quoteacts .btn{width:100%;padding:15px}
+  .quoteacts .span2{grid-column:1 / -1}
+  @media(max-width:520px){.quoteacts{grid-template-columns:1fr}}
+  .subacts{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;font-weight:600;margin-top:4px}
+  .subacts a{color:var(--text-muted);display:inline-flex;align-items:center;gap:7px}
+  .subacts a:hover{color:var(--text)}
+  .subacts svg{width:15px;height:15px}
+
+  /* section shell */
+  section.blk{padding:56px 0}
+  .head{max-width:64ch;margin:0 0 28px}
+  .head h2{font-size:clamp(22px,3vw,30px);margin-top:10px}
+  .head p{color:var(--text-muted);margin-top:10px;font-size:15px}
+  .divide{border:0;border-top:1px solid var(--border);margin:0}
+
+  /* wide volume-pricing table — lives in its own overflow-x:auto container */
+  .tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);-webkit-overflow-scrolling:touch}
+  .pricetable{width:100%;border-collapse:collapse;font-size:14px;min-width:680px}
+  .pricetable th,.pricetable td{text-align:left;padding:13px 18px;border-bottom:1px solid var(--border);white-space:nowrap}
+  .pricetable thead th{background:var(--surface);color:var(--text-muted);font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+  .pricetable tbody tr:last-child td{border-bottom:0}
+  .pricetable tbody tr:hover{background:var(--surface)}
+  .pricetable td.u{font-family:var(--mono);font-weight:700;color:var(--text)}
+  .pricetable td.q{font-family:var(--mono);font-weight:600}
+  .pricetable .save{font-family:var(--mono);font-weight:700}
+  .pricetable tr.hi{background:color-mix(in srgb,var(--secondary) 12%,transparent)}
+  .pricetable tr.hi:hover{background:color-mix(in srgb,var(--secondary) 18%,transparent)}
+  .pricetable tr.hi td:first-child{box-shadow:inset 3px 0 0 var(--secondary)}
+  .tablenote{font-size:12px;color:var(--text-muted);margin:12px 0 0;line-height:1.6}
+
+  /* downloads list — Dawn: rich-text (technical resources) */
+  .downloads{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media(max-width:760px){.downloads{grid-template-columns:1fr}}
+  .dl{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;transition:border-color .15s ease,transform .15s ease}
+  .dl:hover{border-color:var(--secondary);transform:translateY(-2px)}
+  .dl .ic{flex:0 0 40px;height:40px;border-radius:8px;background:var(--surface-2);color:var(--text);display:grid;place-items:center;border:1px solid var(--border)}
+  .dl .ic svg{width:20px;height:20px}
+  .dl .t{font-family:var(--sans);font-size:15px;font-weight:700;color:var(--text)}
+  .dl .s{font-family:var(--mono);font-size:12px;color:var(--text-muted);margin-top:2px}
+  .dl .fmt{margin-left:auto;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--text-muted);border:1px solid var(--border);border-radius:4px;padding:4px 8px;white-space:nowrap}
+
+  /* compatible parts — Dawn: related-products / collection-list */
+  .products{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media(max-width:900px){.products{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.products{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .15s ease,transform .15s ease}
+  .card:hover{border-color:var(--secondary);transform:translateY(-2px)}
+  .card .ph{position:relative;aspect-ratio:4/3;background:linear-gradient(150deg,var(--surface-2),color-mix(in srgb,var(--primary) 88%,#000))}
+  .card .ph .pn{position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:#fff;background:color-mix(in srgb,#000 30%,transparent);border:1px solid color-mix(in srgb,#fff 20%,transparent);border-radius:4px;padding:3px 7px}
+  .card .body{padding:16px}
+  .card h3{font-family:var(--sans);font-size:15px;font-weight:700}
+  .card .spec{color:var(--text-muted);font-size:13px;margin-top:6px;line-height:1.45}
+  .card .meta{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{font-size:11px;font-weight:700;letter-spacing:.03em;color:var(--text);border:1px solid var(--border);border-radius:4px;padding:3px 8px}
+  .lead{font-size:12px;font-weight:700;color:var(--secondary);margin-left:auto}
+  @media (prefers-color-scheme: light){.lead{color:#b06d16}}
+  :root[data-theme="light"] .lead{color:#b06d16}
+  :root[data-theme="dark"] .lead{color:var(--secondary)}
+
+  /* trade-account CTA — Dawn: rich-text on primary */
+  .trade{background:var(--primary);color:var(--on-primary);border-radius:var(--radius);padding:44px 40px;display:grid;grid-template-columns:1.2fr .8fr;gap:36px;align-items:center;
+    background-image:radial-gradient(140% 100% at 100% 0%,color-mix(in srgb,var(--secondary) 24%,transparent) 0%,transparent 55%)}
+  .trade .eyebrow{color:color-mix(in srgb,var(--on-primary) 78%,transparent)}
+  .trade .eyebrow::before{background:var(--secondary)}
+  .trade h2{color:var(--on-primary);font-size:clamp(22px,2.8vw,32px)}
+  .trade p{color:color-mix(in srgb,var(--on-primary) 82%,transparent);margin:12px 0 0;max-width:48ch}
+  .trade .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+  .trade .btn-ghost{border-color:color-mix(in srgb,var(--on-primary) 45%,transparent);color:var(--on-primary)}
+  @media(max-width:760px){.trade{grid-template-columns:1fr;padding:34px 24px}.trade .cta{justify-content:flex-start}}
+
+  /* sticky mobile quote bar — Dawn: main-product (sticky buy buttons) */
+  .stickybar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:none;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+  .stickybar .inner{display:flex;align-items:center;gap:14px;max-width:var(--maxw);margin:0 auto}
+  .stickybar .meta{flex:0 0 auto;min-width:0}
+  .stickybar .meta .t{font-size:13px;font-weight:700;white-space:nowrap;max-width:42vw;overflow:hidden;text-overflow:ellipsis}
+  .stickybar .meta .p{font-family:var(--mono);font-size:12px;color:var(--text-muted)}
+  .stickybar .btn{flex:1;padding:14px 18px;font-size:15px}
+  @media(max-width:760px){.stickybar{display:block}body{padding-bottom:80px}}
+
+  /* footer — Dawn: footer */
+  footer{border-top:1px solid var(--border);background:var(--surface)}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1.2fr;gap:28px;padding:56px 0}
+  .fcols .brand{margin-bottom:12px}
+  .fcols p{color:var(--text-muted);font-size:14px;max-width:34ch}
+  .fcols h3{font-family:var(--sans);font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-muted);margin:0 0 14px}
+  .fcols a{display:block;font-size:14px;color:var(--text-muted);padding:5px 0}
+  .fcols a:hover{color:var(--text)}
+  .fmeta{font-family:var(--mono);font-size:12px;color:var(--text-muted);margin-top:14px;line-height:1.7}
+  .fbot{border-top:1px solid var(--border);padding:20px 0;font-size:13px;color:var(--text-muted);display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap}
+  @media(max-width:900px){.fcols{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.fcols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+  <!-- ANNOUNCEMENT — Dawn: announcement-bar (net terms · volume pricing · trade login) -->
+  <div class="announce">
+    <div class="wrap">
+      <span><strong>Net-30 terms</strong> for approved accounts</span>
+      <span class="sep hide-sm">•</span>
+      <span class="hide-sm">Firm, itemized quotes in one business day</span>
+      <span class="sep">•</span>
+      <span><a href="#account">Trade account login →</a></span>
+    </div>
+  </div>
+
+  <!-- HEADER — Dawn: header (sticky, B2B nav + Request a quote) -->
+  <header>
+    <nav class="nav wrap">
+      <div class="brand"><span class="mark" aria-hidden="true"></span>Meridian Industrial</div>
+      <ul>
+        <li>Products</li>
+        <li>Industries</li>
+        <li>Capabilities</li>
+        <li>Resources</li>
+      </ul>
+      <span class="spacer"></span>
+      <div class="acts">
+        <a class="login" href="#account">Log in</a>
+        <a class="btn btn-primary" href="#quote">Request a quote</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- BREADCRUMB — Dawn: main-product (breadcrumb) -->
+  <nav class="crumbs wrap" aria-label="Breadcrumb">
+    <a href="#">Home</a><span class="sep">/</span><a href="#">Fasteners &amp; Hardware</a><span class="sep">/</span><a href="#">Socket Head Cap Screws</a><span class="sep">/</span><span class="cur">MI-SHCS-M10040-A4</span>
+  </nav>
+
+  <!-- MAIN PRODUCT — Dawn: main-product -->
+  <section class="wrap">
+    <div class="pdp">
+
+      <!-- GALLERY / SPEC DRAWING — Dawn: main-product (media gallery) -->
+      <div class="gallery">
+        <div class="main-img" role="img" aria-label="Dimensioned spec drawing: M10 x 40 mm socket head cap screw, side elevation with thread callout">
+          <span class="rev">REV C · 2024-11</span>
+          <svg class="drw" viewBox="0 0 460 340" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <!-- cap head (cylindrical, side elevation) -->
+            <rect x="70" y="118" width="66" height="104" rx="4"/>
+            <!-- hex socket recess indicated on head -->
+            <path d="M89 148 l14 -8 14 8 v18 l-14 8 -14 -8 z"/>
+            <!-- shank / thread body -->
+            <rect x="136" y="140" width="230" height="60"/>
+            <!-- thread crest hatching -->
+            <path d="M152 140 l-12 12 M176 140 l-14 14 M200 140 l-14 14 M224 140 l-14 14 M248 140 l-14 14 M272 140 l-14 14 M296 140 l-14 14 M320 140 l-14 14 M344 140 l-14 14"/>
+            <!-- chamfered tip -->
+            <path d="M366 140 l16 14 v12 l-16 14"/>
+            <!-- overall length dimension line -->
+            <path d="M70 258 h312 M70 250 v16 M382 250 v16"/>
+            <path d="M78 254 l-8 4 8 4 M374 254 l8 4 -8 4"/>
+            <!-- diameter dimension -->
+            <path d="M410 140 v60 M402 140 h16 M402 200 h16"/>
+            <!-- head-height dimension -->
+            <path d="M46 118 v104 M38 118 h16 M38 222 h16"/>
+          </svg>
+          <span class="plate">L&nbsp;40.0&nbsp;·&nbsp;Ø10&nbsp;·&nbsp;HEX&nbsp;8mm<br>DIN&nbsp;912&nbsp;/&nbsp;ISO&nbsp;4762</span>
+        </div>
+        <div class="thumbs">
+          <div class="thumb" aria-current="true" role="button" aria-label="View spec drawing"><span>DRAWING</span></div>
+          <div class="thumb" role="button" aria-label="View isometric render"><span>ISO 3D</span></div>
+          <div class="thumb" role="button" aria-label="View thread detail"><span>THREAD</span></div>
+          <div class="thumb" role="button" aria-label="View head / socket detail"><span>HEAD</span></div>
+        </div>
+      </div>
+
+      <!-- BUY / QUOTE BOX — Dawn: main-product (product information) -->
+      <div class="buybox">
+        <span class="eyebrow cat">Fasteners · Socket head cap screws</span>
+        <h1>Socket Head Cap Screw — M10 × 40 mm</h1>
+
+        <div class="partmeta">
+          <span class="m"><b>Part&nbsp;#</b> MI-SHCS-M10040-A4</span>
+          <span class="m"><b>Material</b> 316 SS · A4-80</span>
+          <span class="m"><b>Std</b> DIN 912 / ISO 4762</span>
+        </div>
+
+        <p class="blurb">Hex-socket (Allen) cap screw, fully threaded, cold-formed and rolled in A4-80 (316) stainless for marine and washdown environments. Property class 80, passivated per ASTM A967. Stocked to print and sold by the box or pallet.</p>
+
+        <!-- KEY-SPECS TABLE — Dawn: main-product (metafield spec block) -->
+        <div class="specblk">
+          <div class="cap">Key specifications</div>
+          <table class="spectable">
+            <tbody>
+              <tr><th scope="row">Material</th><td>316 stainless steel (A4-80)</td></tr>
+              <tr><th scope="row">Finish</th><td>Passivated · ASTM A967</td></tr>
+              <tr><th scope="row">Thread</th><td>M10 × 1.5 · Class 6g</td></tr>
+              <tr><th scope="row">Tolerance</th><td>Length ±0.10 mm · Head ±0.15 mm</td></tr>
+              <tr><th scope="row">Standard</th><td>DIN 912 / ISO 4762 · A4-80</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- price + volume note -->
+        <div class="pricerow">
+          <span class="lab">From</span>
+          <span class="now">$0.55</span>
+          <span class="unit">/ ea · ex works</span>
+        </div>
+        <p class="pricenote">List $0.86/ea · volume breaks below · freight and applicable tax quoted separately.</p>
+
+        <!-- stock / lead-time note -->
+        <div class="stock"><span class="dot" aria-hidden="true"></span> In stock — 84,000 pcs at Cleveland, OH hub</div>
+        <p class="leadnote">Ships same day when ordered by 3:00 pm ET. Standard lead time 1 business day; quantities over 10,000 pcs run 3–5 business days.</p>
+
+        <!-- QUANTITY + QUOTE ACTIONS (quote-driven, not retail add-to-cart) -->
+        <div class="qtyrow">
+          <div class="qtyfield">
+            <span class="qlbl">Quantity (pcs)</span>
+            <div class="stepper">
+              <button type="button" aria-label="Decrease quantity">−</button>
+              <input type="number" value="500" min="25" step="25" inputmode="numeric" aria-label="Quantity in pieces">
+              <button type="button" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+          <span class="moq">MOQ 25 · sold in boxes of 100</span>
+        </div>
+
+        <div class="quoteacts">
+          <button class="btn btn-primary" type="button">Add to quote</button>
+          <button class="btn btn-secondary" type="button">Request a quote</button>
+          <a class="btn btn-ghost span2" href="#downloads" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download spec sheet (PDF)
+          </a>
+        </div>
+        <div class="subacts">
+          <a href="#account">Log in for account pricing →</a>
+          <a href="#">Check bulk availability</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VOLUME PRICING — Dawn: main-product (quantity-break pricing) · wide table in overflow-x:auto -->
+  <section class="blk" id="pricing">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Tiered volume pricing</span>
+        <h2>Price breaks by quantity</h2>
+        <p>Unit price drops automatically at each quantity break. Programs above 10,000 pcs or blanket orders move to contract pricing — send an RFQ for a firm, freight-inclusive quote.</p>
+      </div>
+      <div class="tablewrap" role="region" aria-label="Volume pricing table" tabindex="0">
+        <table class="pricetable">
+          <caption class="tablenote" style="text-align:left;caption-side:top;margin:0 0 10px">Part MI-SHCS-M10040-A4 · A4-80 · prices USD, ex works Cleveland</caption>
+          <thead>
+            <tr>
+              <th scope="col">Quantity break</th>
+              <th scope="col">Unit price</th>
+              <th scope="col">Price / 100</th>
+              <th scope="col">Ext. price (min qty)</th>
+              <th scope="col">You save</th>
+              <th scope="col">Lead time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="q">1 – 99</td><td class="u">$0.86</td><td class="u">$86.00</td><td class="u">$0.86</td><td class="save">List</td><td>Ships 24 h</td></tr>
+            <tr><td class="q">100 – 499</td><td class="u">$0.74</td><td class="u">$74.00</td><td class="u">$74.00</td><td class="save accent">−14%</td><td>Ships 24 h</td></tr>
+            <tr><td class="q">500 – 2,499</td><td class="u">$0.63</td><td class="u">$63.00</td><td class="u">$315.00</td><td class="save accent">−27%</td><td>Ships 24 h</td></tr>
+            <tr class="hi"><td class="q">2,500 – 9,999</td><td class="u">$0.55</td><td class="u">$55.00</td><td class="u">$1,375.00</td><td class="save accent">−36%</td><td>3–5 days</td></tr>
+            <tr><td class="q">10,000+ / blanket</td><td class="u">Contract</td><td class="u">—</td><td class="u">Quoted</td><td class="save accent">Best</td><td>Scheduled</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tablenote">Prices exclude freight and applicable tax. Account and contract pricing may differ — <a href="#account" class="accent" style="font-weight:700">log in</a> or <a href="#quote" class="accent" style="font-weight:700">request a quote</a> to confirm your net price.</p>
+    </div>
+  </section>
+
+  <hr class="divide">
+
+  <!-- TECHNICAL DOWNLOADS — Dawn: rich-text (CAD / documentation) -->
+  <section class="blk" id="downloads">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Technical downloads</span>
+        <h2>CAD models, drawings &amp; certificates</h2>
+        <p>Native CAD, dimensioned prints, and compliance documentation for this part number. Material certificates are lot-specific and issued with each shipment.</p>
+      </div>
+      <div class="downloads">
+        <a class="dl" href="#" download aria-label="Download 2D dimensioned drawing, PDF, 240 KB">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span>
+          <div><div class="t">2D dimensioned drawing</div><div class="s">MI-SHCS-M10040-A4 · Rev C</div></div>
+          <span class="fmt">PDF · 240 KB</span>
+        </a>
+        <a class="dl" href="#" download aria-label="Download 3D CAD model, STEP file, 1.1 MB">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8l-9-5-9 5v8l9 5z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
+          <div><div class="t">3D CAD model — STEP</div><div class="s">AP214 · .stp</div></div>
+          <span class="fmt">STEP · 1.1 MB</span>
+        </a>
+        <a class="dl" href="#" download aria-label="Download 3D CAD model, Parasolid file, 980 KB">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8l-9-5-9 5v8l9 5z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
+          <div><div class="t">3D CAD model — Parasolid</div><div class="s">.x_t · neutral solid</div></div>
+          <span class="fmt">X_T · 980 KB</span>
+        </a>
+        <a class="dl" href="#" download aria-label="Download material certificate, EN 10204 3.1, PDF">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M9 14.5 7.5 22l4.5-2.5L16.5 22 15 14.5"/></svg></span>
+          <div><div class="t">Material certificate — 3.1</div><div class="s">EN 10204 · issued per lot</div></div>
+          <span class="fmt">PDF · lot</span>
+        </a>
+        <a class="dl" href="#" download aria-label="Download RoHS and REACH declaration of conformity, PDF">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 7.5 8 9 4.5-1.5 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <div><div class="t">RoHS / REACH declaration</div><div class="s">Declaration of conformity</div></div>
+          <span class="fmt">PDF · 180 KB</span>
+        </a>
+        <a class="dl" href="#" download aria-label="Download torque and installation guide, PDF">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-2.4z"/></svg></span>
+          <div><div class="t">Torque &amp; installation guide</div><div class="s">Recommended seating torque</div></div>
+          <span class="fmt">PDF · 320 KB</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divide">
+
+  <!-- COMPATIBLE / RELATED PARTS — Dawn: related-products -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Frequently ordered together</span>
+        <h2>Compatible &amp; mating parts</h2>
+        <p>Matched A4-80 stainless hardware for a complete M10 joint — same material, same corrosion class.</p>
+      </div>
+      <div class="products">
+        <div class="card">
+          <div class="ph"><span class="pn">DIN 934</span></div>
+          <div class="body">
+            <h3>Hex Nut — M10 A4-80</h3>
+            <p class="spec">Full nut · 316 SS · M10 × 1.5 · width A/F 17 mm</p>
+            <div class="meta"><span class="tag">A4-80</span><span class="lead">Ships 24h</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ph"><span class="pn">DIN 125</span></div>
+          <div class="body">
+            <h3>Flat Washer — M10 A4</h3>
+            <p class="spec">Form A · 316 SS · Ø10.5 ID × Ø20 OD × 2 mm</p>
+            <div class="meta"><span class="tag">A4</span><span class="lead">Ships 24h</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ph"><span class="pn">DIN 127</span></div>
+          <div class="body">
+            <h3>Split Lock Washer — M10 A4</h3>
+            <p class="spec">Form B · 316 SS · spring lock · Ø10.2 ID</p>
+            <div class="meta"><span class="tag">A4</span><span class="lead">Ships 24h</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ph"><span class="pn">DIN 912</span></div>
+          <div class="body">
+            <h3>Cap Screw — M10 × 50 A4-80</h3>
+            <p class="spec">Longer grip · 316 SS · hex socket 8 mm · Class 80</p>
+            <div class="meta"><span class="tag">A4-80</span><span class="lead">Ships 24h</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRADE-ACCOUNT CTA — Dawn: rich-text (on primary) -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="trade">
+        <div>
+          <span class="eyebrow">Trade &amp; procurement accounts</span>
+          <h2>Open a net-30 account for account pricing and terms</h2>
+          <p>Approved accounts unlock contract pricing, saved part lists, blanket orders with scheduled releases, and consolidated invoicing on net-30 terms. Set it up once and reorder in seconds.</p>
+        </div>
+        <div class="cta">
+          <a class="btn btn-secondary" href="#account">Apply for an account</a>
+          <a class="btn btn-ghost" href="#quote">Talk to sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — Dawn: footer (B2B links) -->
+  <footer>
+    <div class="wrap fcols">
+      <div>
+        <div class="brand"><span class="mark" aria-hidden="true"></span>Meridian Industrial</div>
+        <p>Industrial distribution and precision components for OEMs, MRO teams, and contract manufacturers since 1961.</p>
+        <div class="fmeta">4200 Foundry Rd, Cleveland, OH 44115<br>1-800-555-4471 · sales@meridian-ind.com</div>
+      </div>
+      <div>
+        <h3>Products</h3>
+        <a href="#">Fasteners &amp; Hardware</a>
+        <a href="#">Precision CNC Parts</a>
+        <a href="#">Hydraulic Fittings</a>
+        <a href="#">Bearings &amp; Seals</a>
+        <a href="#">Raw Material Stock</a>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <a href="#">Industries served</a>
+        <a href="#">Capabilities</a>
+        <a href="#">Quality &amp; certifications</a>
+        <a href="#quote">Contact sales</a>
+      </div>
+      <div>
+        <h3>Resources</h3>
+        <a href="#downloads">Line card (PDF)</a>
+        <a href="#">Product catalog</a>
+        <a href="#">Material cert lookup</a>
+        <a href="#downloads">CAD &amp; spec library</a>
+      </div>
+      <div>
+        <h3>Account &amp; terms</h3>
+        <a href="#account">Trade account login</a>
+        <a href="#account">Credit application</a>
+        <a href="#">Terms &amp; conditions</a>
+        <a href="#">W-9 &amp; tax exemption</a>
+        <a href="#">Order status &amp; reorder</a>
+      </div>
+    </div>
+    <div class="wrap fbot">
+      <span>© 1961–2026 Meridian Industrial Supply Co. · Prices exclude freight &amp; applicable tax.</span>
+      <span>Baseline template · Structure references Shopify Dawn 15.4.1</span>
+    </div>
+  </footer>
+
+  <!-- STICKY MOBILE QUOTE BAR — Dawn: main-product (sticky buy buttons) -->
+  <div class="stickybar">
+    <div class="inner">
+      <div class="meta">
+        <div class="t">SHCS M10 × 40 · A4-80</div>
+        <div class="p">MI-SHCS-M10040-A4 · from $0.55</div>
+      </div>
+      <button class="btn btn-primary" type="button">Add to quote</button>
+    </div>
+  </div>
+
+</body>
+</html>

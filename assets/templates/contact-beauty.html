@@ -1,0 +1,279 @@
+<!-- @dsCard group="Contact" name="Contact — Beauty" subtitle="Announcement · Header · Contact form · Contact details + map · Help links / FAQ" viewport="1280x2000" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — Contact (Beauty)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  :root{
+    --primary:#1f6f54; --on-primary:#ffffff;
+    --secondary:#e8b4b8; --on-secondary:#111111;
+    --bg:#ffffff; --surface:#f7f5f2; --surface-2:#efeae3;
+    --text:#1a1a1a; --text-muted:#5c5c5c; --border:#e2e2e2;
+    --radius:14px; --maxw:1200px;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#14110f; --surface:#1d1a17; --surface-2:#252019; --text:#f2ede7; --text-muted:#a9a199; --border:#332e29; --on-secondary:#111; }
+  }
+  :root[data-theme="dark"]{ --bg:#14110f; --surface:#1d1a17; --surface-2:#252019; --text:#f2ede7; --text-muted:#a9a199; --border:#332e29; }
+  :root[data-theme="light"]{ --bg:#ffffff; --surface:#f7f5f2; --surface-2:#efeae3; --text:#1a1a1a; --text-muted:#5c5c5c; --border:#e2e2e2; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0}
+  .btn{display:inline-block;padding:14px 28px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .15s ease;cursor:pointer;border:0}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text);background:transparent}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+
+  /* announcement */
+  .announce{background:var(--primary);color:var(--on-primary);text-align:center;font-size:13px;letter-spacing:.04em;padding:9px 16px}
+
+  /* header */
+  header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.02em}
+  .nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--text-muted)}
+  .nav .icons{display:flex;gap:18px;font-size:14px}
+  @media(max-width:760px){.nav ul{display:none}}
+
+  /* page header */
+  .phead{text-align:center;background:
+    radial-gradient(90% 130% at 50% -20%,color-mix(in srgb,var(--secondary) 34%,transparent) 0%,transparent 55%),
+    linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%);padding:72px 0 64px}
+  .phead h1{font-size:clamp(34px,5vw,56px);line-height:1.05}
+  .phead p{color:var(--text-muted);font-size:18px;margin:18px auto 0;max-width:48ch}
+
+  /* section shell */
+  section.blk{padding:64px 0}
+
+  /* contact layout */
+  .contact{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start}
+  @media(max-width:900px){.contact{grid-template-columns:1fr}}
+
+  /* form (contact-form) */
+  .formcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:34px}
+  .formcard h2{font-size:24px;margin-bottom:6px}
+  .formcard .sub{color:var(--text-muted);font-size:15px;margin-bottom:24px}
+  .field{margin-bottom:18px}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px}
+  .field .req{color:var(--primary)}
+  .field input,.field select,.field textarea{width:100%;font-family:inherit;font-size:15px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 14px;transition:border-color .15s ease,box-shadow .15s ease}
+  .field textarea{min-height:140px;resize:vertical}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 22%,transparent)}
+  .field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--text-muted) 50%),linear-gradient(135deg,var(--text-muted) 50%,transparent 50%);background-position:calc(100% - 20px) 20px,calc(100% - 14px) 20px;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:520px){.row2{grid-template-columns:1fr}}
+  .formcard button{width:100%;margin-top:6px}
+  .formcard .fineprint{color:var(--text-muted);font-size:12px;margin-top:14px;text-align:center}
+
+  /* details column */
+  .details{display:flex;flex-direction:column;gap:18px}
+  .detail{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;gap:16px;align-items:flex-start}
+  .detail .ic{flex:0 0 44px;height:44px;border-radius:12px;background:var(--secondary);color:var(--on-secondary);display:grid;place-items:center}
+  .detail .ic svg{width:22px;height:22px}
+  .detail h3{font-family:var(--sans);font-size:15px;font-weight:600}
+  .detail p{color:var(--text-muted);font-size:14px;margin:4px 0 0}
+  .detail a{color:var(--primary);font-weight:600}
+  .socials{display:flex;gap:10px;margin-top:10px}
+  .socials a{width:36px;height:36px;border-radius:10px;border:1px solid var(--border);display:grid;place-items:center;color:var(--text);transition:background .15s ease,border-color .15s ease}
+  .socials a:hover{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+  .socials svg{width:18px;height:18px}
+
+  /* map placeholder */
+  .map{position:relative;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;aspect-ratio:16/10;background:
+    linear-gradient(0deg,color-mix(in srgb,var(--primary) 8%,transparent),color-mix(in srgb,var(--primary) 8%,transparent)),
+    repeating-linear-gradient(0deg,var(--surface-2),var(--surface-2) 1px,transparent 1px,transparent 46px),
+    repeating-linear-gradient(90deg,var(--surface-2),var(--surface-2) 1px,transparent 1px,transparent 46px),
+    var(--surface)}
+  .map .road{position:absolute;background:var(--border)}
+  .map .r1{top:38%;left:0;right:0;height:10px}
+  .map .r2{top:0;bottom:0;left:58%;width:10px}
+  .map .r3{top:0;bottom:0;left:22%;width:6px;background:color-mix(in srgb,var(--border) 70%,transparent)}
+  .map .pin{position:absolute;top:38%;left:58%;transform:translate(-50%,-100%);color:var(--primary);z-index:2}
+  .map .pin svg{width:34px;height:34px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.3))}
+  .map .tag{position:absolute;left:16px;bottom:16px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;z-index:2}
+  .map .tag b{display:block;font-family:var(--sans);font-weight:600}
+  .map .tag span{color:var(--text-muted)}
+
+  /* help links / FAQ row */
+  .help{background:var(--surface-2)}
+  .help .head{text-align:center;max-width:60ch;margin:0 auto 40px}
+  .help .head h2{font-size:clamp(24px,3vw,34px)}
+  .help .head p{color:var(--text-muted);margin-top:10px}
+  .links{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:760px){.links{grid-template-columns:1fr}}
+  .link{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:26px;display:block;transition:transform .15s ease,border-color .15s ease}
+  .link:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--primary) 40%,var(--border))}
+  .link h3{font-family:var(--sans);font-size:16px;font-weight:600}
+  .link p{color:var(--text-muted);font-size:14px;margin:8px 0 12px}
+  .link .go{color:var(--primary);font-weight:600;font-size:14px}
+
+  /* footer */
+  footer{border-top:1px solid var(--border);margin-top:8px}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px;padding:56px 0}
+  .fcols h4{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 14px}
+  .fcols a{display:block;font-size:14px;color:var(--text-muted);padding:5px 0}
+  .fbot{border-top:1px solid var(--border);padding:20px 0;font-size:13px;color:var(--text-muted);text-align:center}
+  @media(max-width:760px){.fcols{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <div class="announce">Free carbon-neutral shipping over $50 · 30-day happiness guarantee</div>
+
+  <header>
+    <nav class="nav wrap">
+      <ul><li>Shop</li><li>Bestsellers</li><li>Ingredients</li><li>About</li></ul>
+      <div class="brand">Lumina</div>
+      <div class="icons"><span>Search</span><span>Cart (0)</span></div>
+    </nav>
+  </header>
+
+  <!-- PAGE HEADER — Dawn: rich-text -->
+  <div class="phead">
+    <div class="wrap">
+      <span class="eyebrow">We're here to help</span>
+      <h1 style="margin-top:16px">Get in touch</h1>
+      <p>Questions about your skin, an order, or an ingredient dose? Our Toronto-based care team replies within one business day.</p>
+    </div>
+  </div>
+
+  <!-- CONTACT — Dawn: contact-form (left) + rich-text/details (right) -->
+  <section class="blk">
+    <div class="wrap contact">
+
+      <!-- FORM -->
+      <form class="formcard" onsubmit="return false" novalidate>
+        <h2>Send us a message</h2>
+        <div class="sub">Fill out the form and we'll get back to you within 24 hours.</div>
+
+        <div class="row2">
+          <div class="field">
+            <label for="name">Name <span class="req">*</span></label>
+            <input id="name" name="name" type="text" placeholder="Priya M." autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="email">Email <span class="req">*</span></label>
+            <input id="email" name="email" type="email" placeholder="you@email.com" autocomplete="email" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="subject">Subject <span class="req">*</span></label>
+          <select id="subject" name="subject" required>
+            <option value="" selected disabled>Choose a topic…</option>
+            <option>Order status or shipping</option>
+            <option>Returns &amp; refunds</option>
+            <option>Product &amp; ingredient questions</option>
+            <option>Skin advice / routine help</option>
+            <option>Wholesale &amp; partnerships</option>
+            <option>Something else</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="message">Message <span class="req">*</span></label>
+          <textarea id="message" name="message" placeholder="Tell us how we can help…" required></textarea>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Send message</button>
+        <div class="fineprint">By submitting, you agree to our Privacy Policy. We never share your details.</div>
+      </form>
+
+      <!-- DETAILS + MAP -->
+      <div class="details">
+        <div class="detail">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></div>
+          <div>
+            <h3>Email support</h3>
+            <p><a href="mailto:support@lumina.example">support@lumina.example</a><br>Replies within 1 business day</p>
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></div>
+          <div>
+            <h3>Call or text</h3>
+            <p><a href="tel:+18005865462">+1 (800) 586-5462</a><br>Toll-free within North America</p>
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div>
+            <h3>Support hours</h3>
+            <p>Mon–Fri · 9am – 6pm ET<br>Sat · 10am – 4pm ET · Sun closed</p>
+          </div>
+        </div>
+
+        <div class="detail">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <div>
+            <h3>Follow along</h3>
+            <p>Skin science, restocks, and quiet launches.</p>
+            <div class="socials">
+              <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+              <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v12.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M9 3c.7 3 2.7 4.7 6 5"/></svg></a>
+              <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20c1.5-3 2-6 2-6"/><path d="M9.5 12a3.5 3.5 0 1 0 5-4"/><circle cx="12" cy="12" r="9"/></svg></a>
+              <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAP PLACEHOLDER (pure CSS) -->
+        <div class="map" role="img" aria-label="Map showing the Lumina studio in Toronto">
+          <span class="road r3"></span>
+          <span class="road r1"></span>
+          <span class="road r2"></span>
+          <span class="pin"><svg viewBox="0 0 24 24" fill="currentColor" stroke="var(--on-primary)" stroke-width="1.5"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5" fill="var(--on-primary)" stroke="none"/></svg></span>
+          <span class="tag"><b>Lumina Studio</b><span>210 King St W, Toronto, ON</span></span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HELP LINKS / FAQ ROW — Dawn: multicolumn -->
+  <section class="blk help">
+    <div class="wrap">
+      <div class="head"><span class="eyebrow">Before you write</span><h2>You might find it faster here</h2><p>Most questions are answered in these guides — no waiting on a reply.</p></div>
+      <div class="links">
+        <a class="link" href="#">
+          <h3>Track your order</h3>
+          <p>Check status, shipping times, and delivery updates for any recent order.</p>
+          <span class="go">Track an order →</span>
+        </a>
+        <a class="link" href="#">
+          <h3>Returns &amp; guarantee</h3>
+          <p>Not glowing? Start a return under our 30-day happiness guarantee.</p>
+          <span class="go">Start a return →</span>
+        </a>
+        <a class="link" href="#">
+          <h3>Ingredients &amp; routines</h3>
+          <p>Full-dose labels, how to layer, and building a routine for your skin.</p>
+          <span class="go">Read the guides →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — Dawn: footer -->
+  <footer>
+    <div class="wrap fcols">
+      <div><div class="brand" style="margin-bottom:12px">Lumina</div><p style="color:var(--text-muted);font-size:14px;max-width:34ch">Clinically proven skincare with nothing to hide.</p></div>
+      <div><h4>Shop</h4><a>Bestsellers</a><a>Serums</a><a>Moisturizers</a><a>Sets</a></div>
+      <div><h4>Learn</h4><a>Ingredients</a><a>Skin quiz</a><a>Journal</a><a>Reviews</a></div>
+      <div><h4>Support</h4><a>Contact</a><a>Shipping</a><a>Returns</a><a>FAQ</a></div>
+    </div>
+    <div class="fbot">© Lumina Beauty · Baseline template · Structure references Shopify Dawn 15.4.1</div>
+  </footer>
+</body>
+</html>

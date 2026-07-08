@@ -1,0 +1,505 @@
+<!-- @dsCard group="Home" name="B2B Home — Industrial hardware" subtitle="Net-terms bar · Hero · Certifications · Categories · RFQ · Case studies · Inquiry" viewport="1280x2400" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline — B2B Home (Industrial Hardware)</title>
+<style>
+  /* ---- Design tokens (forge maps these to design-tokens.json / Dawn settings) ---- */
+  /* Same variable NAMES as the DTC baseline; industrial steel + safety-amber palette. */
+  :root{
+    --primary:#1f3a5f; --on-primary:#ffffff;
+    --secondary:#d98a2b; --on-secondary:#141414;
+    --bg:#ffffff; --surface:#f2f5f8; --surface-2:#e5eaf0;
+    --text:#14202b; --text-muted:#55606b; --border:#d4dbe3;
+    --radius:8px; --maxw:1200px;
+    --serif:"Rockwell","Roboto Slab","Bitstream Vera Serif",Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"SFMono-Regular",ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0f1620; --surface:#161f2b; --surface-2:#1e2938; --text:#e7edf3; --text-muted:#95a2af; --border:#2a3644; --on-secondary:#141414; }
+  }
+  :root[data-theme="dark"]{ --bg:#0f1620; --surface:#161f2b; --surface-2:#1e2938; --text:#e7edf3; --text-muted:#95a2af; --border:#2a3644; --on-secondary:#141414; }
+  :root[data-theme="light"]{ --bg:#ffffff; --surface:#f2f5f8; --surface-2:#e5eaf0; --text:#14202b; --text-muted:#55606b; --border:#d4dbe3; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-.005em;margin:0}
+  .btn{display:inline-block;padding:13px 24px;border-radius:6px;font-weight:700;font-size:14px;letter-spacing:.01em;transition:transform .15s ease,box-shadow .15s ease;cursor:pointer;border:0}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
+  .btn-secondary{background:var(--secondary);color:var(--on-secondary)}
+  .btn-ghost{border:1px solid var(--border);color:var(--text);background:transparent}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:700;display:inline-flex;align-items:center;gap:9px}
+  .eyebrow::before{content:"";width:14px;height:3px;background:var(--secondary);border-radius:2px}
+
+  /* announcement — Dawn: announcement-bar */
+  .announce{background:var(--primary);color:var(--on-primary);font-size:13px;letter-spacing:.02em;padding:9px 16px}
+  .announce .wrap{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;text-align:center}
+  .announce .sep{opacity:.4}
+  .announce a{color:var(--on-primary);font-weight:700;text-decoration:underline;text-underline-offset:2px}
+  @media(max-width:640px){.announce .hide-sm{display:none}}
+
+  /* header — Dawn: header (sticky) */
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  header::before{content:"";display:block;height:3px;background:var(--secondary)}
+  .nav{display:flex;align-items:center;gap:28px;height:70px}
+  .brand{font-family:var(--serif);font-size:21px;font-weight:700;letter-spacing:.01em;display:flex;align-items:center;gap:10px;white-space:nowrap}
+  .brand .mark{width:22px;height:22px;border-radius:4px;background:linear-gradient(135deg,var(--primary),var(--secondary))}
+  .nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-size:14px;font-weight:600;color:var(--text-muted)}
+  .nav ul li:hover{color:var(--text)}
+  .nav .spacer{flex:1}
+  .nav .acts{display:flex;align-items:center;gap:16px;font-size:14px}
+  .nav .acts .login{font-weight:600;color:var(--text-muted);white-space:nowrap}
+  .nav .acts .login:hover{color:var(--text)}
+  @media(max-width:900px){.nav ul{display:none}}
+  @media(max-width:520px){.nav .acts .login{display:none}}
+
+  /* hero — Dawn: image-banner */
+  .hero{position:relative;display:flex;align-items:center;border-bottom:1px solid var(--border);background:linear-gradient(105deg,var(--surface) 0%,var(--surface-2) 100%)}
+  .hero .grid{display:grid;grid-template-columns:1.08fr .92fr;gap:44px;align-items:center;width:100%;padding:68px 0}
+  .hero h1{font-size:clamp(32px,4.8vw,54px);line-height:1.06;margin-top:16px}
+  .hero p{color:var(--text-muted);font-size:18px;max-width:46ch;margin:20px 0 30px}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero .stats{display:flex;gap:34px;flex-wrap:wrap;margin-top:36px;padding-top:26px;border-top:1px solid var(--border)}
+  .hero .stats .n{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--text)}
+  .hero .stats .l{font-size:12px;color:var(--text-muted);letter-spacing:.05em;text-transform:uppercase;margin-top:2px}
+  .hero .art{position:relative;aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.45);background:
+    radial-gradient(120% 120% at 78% 12%,color-mix(in srgb,var(--secondary) 60%,transparent) 0%,transparent 48%),
+    repeating-linear-gradient(0deg,transparent 0 26px,color-mix(in srgb,#fff 7%,transparent) 26px 27px),
+    repeating-linear-gradient(90deg,transparent 0 26px,color-mix(in srgb,#fff 7%,transparent) 26px 27px),
+    linear-gradient(160deg,var(--surface-2),var(--primary))}
+  .hero .art .plate{position:absolute;left:18px;bottom:18px;background:color-mix(in srgb,#000 34%,transparent);color:#fff;border:1px solid color-mix(in srgb,#fff 22%,transparent);border-radius:6px;padding:10px 14px;font-family:var(--mono);font-size:12px;line-height:1.6;backdrop-filter:blur(4px)}
+  @media(max-width:760px){.hero .grid{grid-template-columns:1fr}.hero .art{max-width:380px;margin:8px auto 0}.hero .stats{gap:24px}}
+
+  /* certification / trust bar — Dawn: multicolumn (chips) */
+  .trust{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center;padding:22px 0}
+  .trust .lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);font-weight:700;margin-right:6px}
+  .chip{font-size:12px;font-weight:700;letter-spacing:.05em;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+  .chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--secondary)}
+
+  /* section shell */
+  section.blk{padding:76px 0}
+  .head{max-width:64ch;margin:0 auto 44px}
+  .head.center{text-align:center}
+  .head h2{font-size:clamp(26px,3.4vw,38px);margin-top:12px}
+  .head p{color:var(--text-muted);margin-top:12px;font-size:16px}
+  .toprow{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:36px;flex-wrap:wrap}
+  .toprow h2{font-size:clamp(26px,3.4vw,38px);margin-top:12px}
+  .link-more{font-weight:700;font-size:14px;color:var(--primary)}
+  @media (prefers-color-scheme: dark){.link-more{color:var(--secondary)}}
+  :root[data-theme="dark"] .link-more{color:var(--secondary)}
+  :root[data-theme="light"] .link-more{color:var(--primary)}
+
+  /* category grid — Dawn: collection-list */
+  .products{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media(max-width:900px){.products{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.products{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .15s ease,transform .15s ease}
+  .card:hover{border-color:var(--secondary);transform:translateY(-2px)}
+  .card .ph{position:relative;aspect-ratio:4/3;background:
+    linear-gradient(150deg,var(--surface-2),color-mix(in srgb,var(--primary) 88%,#000))}
+  .card .ph .pn{position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:#fff;background:color-mix(in srgb,#000 30%,transparent);border:1px solid color-mix(in srgb,#fff 20%,transparent);border-radius:4px;padding:3px 7px}
+  .card .body{padding:16px}
+  .card h3{font-family:var(--sans);font-size:16px;font-weight:700}
+  .card .spec{color:var(--text-muted);font-size:13px;margin-top:6px;line-height:1.45}
+  .card .meta{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tag{font-size:11px;font-weight:700;letter-spacing:.03em;color:var(--text);border:1px solid var(--border);border-radius:4px;padding:3px 8px}
+  .lead{font-size:12px;font-weight:700;color:var(--secondary);margin-left:auto}
+  @media (prefers-color-scheme: light){.lead{color:#b06d16}}
+  :root[data-theme="light"] .lead{color:#b06d16}
+  :root[data-theme="dark"] .lead{color:var(--secondary)}
+
+  /* RFQ / volume-pricing block — Dawn: rich-text on primary */
+  .rfq{background:var(--primary);color:var(--on-primary);border-radius:var(--radius);padding:48px 40px;display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center;
+    background-image:radial-gradient(140% 100% at 100% 0%,color-mix(in srgb,var(--secondary) 24%,transparent) 0%,transparent 55%)}
+  .rfq .eyebrow{color:color-mix(in srgb,var(--on-primary) 78%,transparent)}
+  .rfq .eyebrow::before{background:var(--secondary)}
+  .rfq h2{color:var(--on-primary);font-size:clamp(24px,3vw,34px)}
+  .rfq p{color:color-mix(in srgb,var(--on-primary) 82%,transparent);margin:14px 0 26px;max-width:44ch}
+  .rfq .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .rfq .btn-ghost{border-color:color-mix(in srgb,var(--on-primary) 45%,transparent);color:var(--on-primary)}
+  .tiers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .tier{background:color-mix(in srgb,var(--on-primary) 8%,transparent);border:1px solid color-mix(in srgb,var(--on-primary) 20%,transparent);border-radius:6px;padding:16px}
+  .tier .qty{font-family:var(--mono);font-size:13px;color:color-mix(in srgb,var(--on-primary) 80%,transparent)}
+  .tier .off{font-family:var(--serif);font-size:24px;font-weight:700;margin-top:6px}
+  .tier.hi{background:var(--secondary);border-color:var(--secondary);color:var(--on-secondary)}
+  .tier.hi .qty{color:color-mix(in srgb,var(--on-secondary) 72%,transparent)}
+  @media(max-width:760px){.rfq{grid-template-columns:1fr;padding:36px 24px}}
+
+  /* capabilities / why-us — Dawn: multicolumn */
+  .vals{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:760px){.vals{grid-template-columns:1fr}}
+  .val{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:30px;border-top:3px solid var(--secondary)}
+  .val .dot{width:44px;height:44px;border-radius:8px;background:var(--surface-2);color:var(--text);display:grid;place-items:center;font-weight:800;font-family:var(--mono);margin-bottom:16px}
+  .val h3{font-family:var(--sans);font-size:18px;font-weight:700}
+  .val p{color:var(--text-muted);font-size:14px;margin-top:8px}
+  .val ul{margin:12px 0 0;padding-left:18px;color:var(--text-muted);font-size:13px}
+  .val li{margin:4px 0}
+
+  /* case studies + logos — Dawn: multicolumn / logo-list */
+  .logos{display:flex;gap:14px 36px;justify-content:center;flex-wrap:wrap;align-items:center;padding:6px 0 40px}
+  .logos span{font-family:var(--serif);font-weight:700;font-size:15px;letter-spacing:.08em;color:var(--text-muted);opacity:.85}
+  .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:760px){.cases{grid-template-columns:1fr}}
+  .case{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+  .case .stat{font-family:var(--serif);font-size:40px;font-weight:700;color:var(--text);line-height:1}
+  .case .metric{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--secondary);font-weight:700;margin-top:8px}
+  @media (prefers-color-scheme: light){.case .metric{color:#b06d16}}
+  :root[data-theme="light"] .case .metric{color:#b06d16}
+  :root[data-theme="dark"] .case .metric{color:var(--secondary)}
+  .case p{color:var(--text-muted);font-size:14px;margin:14px 0 0}
+  .case .who{display:block;margin-top:16px;font-size:13px;color:var(--text);font-weight:600}
+
+  /* inquiry / RFQ form — Dawn: contact-form */
+  .inquiry{display:grid;grid-template-columns:1fr 1.05fr;gap:44px;align-items:start}
+  @media(max-width:760px){.inquiry{grid-template-columns:1fr}}
+  .inquiry h2{font-size:clamp(24px,3vw,34px);margin-top:12px}
+  .inquiry .inq-copy p{color:var(--text-muted);margin:16px 0 22px;max-width:42ch}
+  .inq-points{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+  .inq-points li{position:relative;padding-left:26px;font-size:14px;color:var(--text)}
+  .inq-points li::before{content:"";position:absolute;left:0;top:6px;width:12px;height:12px;border-radius:3px;background:var(--secondary)}
+  .inq-form{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+  .inq-form .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:520px){.inq-form .row2{grid-template-columns:1fr}}
+  .field{display:block;margin-bottom:14px}
+  .field span{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+  .field input,.field select,.field textarea{width:100%;padding:12px 13px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:15px;font-family:var(--sans)}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--secondary);outline-offset:1px;border-color:var(--secondary)}
+  .field textarea{min-height:104px;resize:vertical}
+  .inq-form .btn-primary{width:100%;padding:15px}
+  .fineprint{font-size:12px;color:var(--text-muted);margin:12px 0 0;text-align:center}
+
+  /* footer — Dawn: footer */
+  footer{border-top:1px solid var(--border);background:var(--surface)}
+  .fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1.2fr;gap:28px;padding:56px 0}
+  .fcols .brand{margin-bottom:12px}
+  .fcols p{color:var(--text-muted);font-size:14px;max-width:34ch}
+  .fcols h3{font-family:var(--sans);font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-muted);margin:0 0 14px}
+  .fcols a{display:block;font-size:14px;color:var(--text-muted);padding:5px 0}
+  .fcols a:hover{color:var(--text)}
+  .fmeta{font-family:var(--mono);font-size:12px;color:var(--text-muted);margin-top:14px;line-height:1.7}
+  .fbot{border-top:1px solid var(--border);padding:20px 0;font-size:13px;color:var(--text-muted);display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap}
+  @media(max-width:900px){.fcols{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.fcols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+  <!-- ANNOUNCEMENT — Dawn: announcement-bar (net terms · volume pricing · trade login) -->
+  <div class="announce">
+    <div class="wrap">
+      <span><strong>Net-30 terms</strong> for approved accounts</span>
+      <span class="sep hide-sm">•</span>
+      <span class="hide-sm">Volume pricing at every quantity break</span>
+      <span class="sep">•</span>
+      <span><a href="#account">Trade account login →</a></span>
+    </div>
+  </div>
+
+  <!-- HEADER — Dawn: header (sticky, B2B nav + Request a quote) -->
+  <header>
+    <nav class="nav wrap">
+      <div class="brand"><span class="mark" aria-hidden="true"></span>Meridian Industrial</div>
+      <ul>
+        <li>Products</li>
+        <li>Industries</li>
+        <li>Capabilities</li>
+        <li>Resources</li>
+      </ul>
+      <span class="spacer"></span>
+      <div class="acts">
+        <a class="login" href="#account">Log in</a>
+        <a class="btn btn-primary" href="#inquiry">Request a quote</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO — Dawn: image-banner (credibility-first, dual CTA) -->
+  <section class="hero">
+    <div class="grid wrap">
+      <div>
+        <span class="eyebrow">Industrial supply since 1961 · ISO 9001:2015</span>
+        <h1>Mission-critical parts, shipped on spec and on time.</h1>
+        <p>Meridian Industrial stocks over 240,000 fasteners, fittings, and precision components — backed by material certs, engineering support, and firm quotes in one business day.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#inquiry">Request a quote</a>
+          <a class="btn btn-ghost" href="#resources">Download line card (PDF)</a>
+        </div>
+        <div class="stats">
+          <div><div class="n">240k+</div><div class="l">SKUs in stock</div></div>
+          <div><div class="n">99.6%</div><div class="l">On-time delivery</div></div>
+          <div><div class="n">24 hr</div><div class="l">Quote turnaround</div></div>
+        </div>
+      </div>
+      <div class="art" role="img" aria-label="Precision hardware components on a technical grid">
+        <div class="plate">LOT&nbsp;#MI-4471&nbsp;·&nbsp;A2-70 SS<br>DFARS&nbsp;compliant&nbsp;·&nbsp;Cert&nbsp;on&nbsp;file</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATION / TRUST BAR — Dawn: multicolumn (text chips) -->
+  <div class="trust wrap">
+    <span class="lbl">Certified &amp; compliant</span>
+    <span class="chip">ISO 9001:2015</span>
+    <span class="chip">IATF 16949</span>
+    <span class="chip">AS9100D</span>
+    <span class="chip">RoHS / REACH</span>
+    <span class="chip">ITAR Registered</span>
+    <span class="chip">NIST SP 800-171</span>
+  </div>
+
+  <!-- CATEGORY GRID — Dawn: collection-list (spec-forward cards) -->
+  <section class="blk" style="border-top:1px solid var(--border)">
+    <div class="wrap">
+      <div class="toprow">
+        <div>
+          <span class="eyebrow">Shop by category</span>
+          <h2>Stocked to the print, sold by the box or pallet</h2>
+        </div>
+        <a class="link-more" href="#products">Browse full catalog →</a>
+      </div>
+      <div class="products">
+        <div class="card">
+          <div class="ph"><span class="pn">A2-70 · A4-80</span></div>
+          <div class="body">
+            <h3>Fasteners &amp; Hardware</h3>
+            <p class="spec">Socket caps, hex bolts, studs, washers · M2–M36 / #0–1½"</p>
+            <div class="meta"><span class="tag">Stainless / Alloy</span><span class="lead">Ships 24h</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ph"><span class="pn">±0.0005"</span></div>
+          <div class="body">
+            <h3>Precision CNC Parts</h3>
+            <p class="spec">Turned &amp; milled to print · aluminum, brass, 303/316 SS, Delrin</p>
+            <div class="meta"><span class="tag">Made to order</span><span class="lead">2–3 wk</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ph"><span class="pn">SAE / JIC 37°</span></div>
+          <div class="body">
+            <h3>Hydraulic Fittings</h3>
+            <p class="spec">JIC, NPT, ORB, BSPP · 3,000–6,000 PSI · carbon &amp; stainless</p>
+            <div class="meta"><span class="tag">Pressure rated</span><span class="lead">Ships 24h</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ph"><span class="pn">ABEC-5</span></div>
+          <div class="body">
+            <h3>Bearings &amp; Bushings</h3>
+            <p class="spec">Ball, roller, sleeve &amp; flanged · sealed / shielded · metric &amp; inch</p>
+            <div class="meta"><span class="tag">OEM equivalent</span><span class="lead">Ships 24h</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ph"><span class="pn">14–7 ga</span></div>
+          <div class="body">
+            <h3>Sheet Metal &amp; Stampings</h3>
+            <p class="spec">Laser-cut, formed &amp; stamped brackets · CRS, 5052, galvanized</p>
+            <div class="meta"><span class="tag">Custom runs</span><span class="lead">1–2 wk</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ph"><span class="pn">-40 to 400°F</span></div>
+          <div class="body">
+            <h3>Seals &amp; Gaskets</h3>
+            <p class="spec">O-rings, quad rings, die-cut gaskets · Buna, Viton, EPDM, PTFE</p>
+            <div class="meta"><span class="tag">AS568 sizes</span><span class="lead">Ships 24h</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ph"><span class="pn">UL / CSA</span></div>
+          <div class="body">
+            <h3>Electrical &amp; Connectors</h3>
+            <p class="spec">Terminals, cable glands, conduit, DIN rail · panel-shop staples</p>
+            <div class="meta"><span class="tag">UL listed</span><span class="lead">Ships 24h</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ph"><span class="pn">6061 · 1018</span></div>
+          <div class="body">
+            <h3>Raw Material Stock</h3>
+            <p class="spec">Bar, plate, tube &amp; sheet · aluminum, steel, stainless · cut to length</p>
+            <div class="meta"><span class="tag">Mill cert</span><span class="lead">2–5 day</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RFQ / VOLUME PRICING — Dawn: rich-text (bulk-order call to action) -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="rfq">
+        <div>
+          <span class="eyebrow">Volume pricing</span>
+          <h2>Buy by the box, the pallet, or the truckload.</h2>
+          <p>Quantity breaks apply automatically at checkout, and larger programs move to contract pricing. Send a part list or BOM and our team returns a firm, itemized quote — freight included — within one business day.</p>
+          <div class="cta">
+            <a class="btn btn-secondary" href="#inquiry">Get tiered pricing</a>
+            <a class="btn btn-ghost" href="#inquiry">Upload a BOM / RFQ</a>
+          </div>
+        </div>
+        <div class="tiers" role="table" aria-label="Volume pricing tiers">
+          <div class="tier"><div class="qty">1 – 99 units</div><div class="off">List</div></div>
+          <div class="tier"><div class="qty">100 – 999</div><div class="off">−8%</div></div>
+          <div class="tier"><div class="qty">1,000 – 9,999</div><div class="off">−15%</div></div>
+          <div class="tier hi"><div class="qty">10,000+ / blanket</div><div class="off">Contract</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES / WHY-US — Dawn: multicolumn (3-up) -->
+  <section class="blk" style="background:var(--surface)">
+    <div class="wrap">
+      <div class="head center"><span class="eyebrow">Why buyers standardize on Meridian</span><h2>Built for procurement, not the checkout cart</h2></div>
+      <div class="vals">
+        <div class="val">
+          <div class="dot">LT</div>
+          <h3>Lead times you can plan around</h3>
+          <p>Stock SKUs ship the same day when ordered by 3pm ET. Custom and made-to-print work runs on committed dates — not "estimates."</p>
+          <ul><li>Same-day dispatch from 4 regional hubs</li><li>Custom runs in 2–3 weeks, quoted firm</li><li>Expedite &amp; AOG service available</li></ul>
+        </div>
+        <div class="val">
+          <div class="dot">MOQ</div>
+          <h3>Flexible minimums &amp; kanban</h3>
+          <p>Order one to prototype or ten thousand for production. Scale up without re-sourcing, and set reorder points we manage for you.</p>
+          <ul><li>Low MOQs on stocked hardware</li><li>Blanket orders with scheduled releases</li><li>VMI, kitting &amp; bin-stocking programs</li></ul>
+        </div>
+        <div class="val">
+          <div class="dot">ENG</div>
+          <h3>Engineering &amp; quality support</h3>
+          <p>Talk to staff engineers, not a call center. We handle DFM feedback, material substitutions, and full documentation on request.</p>
+          <ul><li>DFM reviews &amp; CAD/print support</li><li>Material certs, RoHS &amp; PPAP docs</li><li>Lot traceability &amp; first-article reports</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDIES + LOGOS — Dawn: multicolumn / logo-list -->
+  <section class="blk">
+    <div class="wrap">
+      <div class="head center"><span class="eyebrow">Proof on the floor</span><h2>Specified by teams that can't afford downtime</h2></div>
+      <div class="logos">
+        <span>ATLAS ROBOTICS</span>
+        <span>NORTHFIELD OEM</span>
+        <span>CASCADE POWER</span>
+        <span>REDLINE MOTORSPORT</span>
+        <span>VERTEX AEROSYSTEMS</span>
+        <span>GREATLAKES FAB</span>
+      </div>
+      <div class="cases">
+        <div class="case">
+          <div class="stat">99.6%</div>
+          <div class="metric">On-time delivery</div>
+          <p>Managed 14,000+ line items on a kanban program for a Tier-1 automotive supplier, cutting expedite freight by 63%.</p>
+          <span class="who">— Powertrain OEM, Michigan</span>
+        </div>
+        <div class="case">
+          <div class="stat">18 days</div>
+          <div class="metric">Prototype to production</div>
+          <p>DFM review flagged a thread callout before tooling. First articles shipped with full PPAP documentation.</p>
+          <span class="who">— Vertex Aerosystems</span>
+        </div>
+        <div class="case">
+          <div class="stat">$310k</div>
+          <div class="metric">Annual carrying cost saved</div>
+          <p>Consolidated 9 suppliers into one VMI bin-stock account with monthly usage reporting and net-45 terms.</p>
+          <span class="who">— Cascade Power Systems</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INQUIRY / RFQ FORM — Dawn: contact-form -->
+  <section class="blk" id="inquiry" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="inquiry">
+        <div class="inq-copy">
+          <span class="eyebrow">Start a request</span>
+          <h2>Send us your part list.</h2>
+          <p>Share a part number, drawing, or BOM and a named account manager gets back to you within one business day with pricing, lead time, and availability.</p>
+          <ul class="inq-points">
+            <li>Firm, itemized quotes — no auto-generated placeholders</li>
+            <li>Net-30 terms available on approved credit</li>
+            <li>Prefer to talk? Call <strong>1-800-555-4471</strong>, Mon–Fri 7a–7p ET</li>
+          </ul>
+        </div>
+        <form class="inq-form" onsubmit="return false" aria-label="Request a quote">
+          <div class="row2">
+            <label class="field"><span>Company</span><input type="text" name="company" placeholder="Acme Manufacturing" autocomplete="organization"></label>
+            <label class="field"><span>Work email</span><input type="email" name="email" placeholder="buyer@company.com" autocomplete="email"></label>
+          </div>
+          <div class="row2">
+            <label class="field"><span>Part number or category</span><input type="text" name="part" placeholder="e.g. DIN 912 M8×30 A2-70"></label>
+            <label class="field"><span>Estimated annual volume</span>
+              <select name="volume">
+                <option>Under 500 units</option>
+                <option>500 – 5,000 units</option>
+                <option>5,000 – 50,000 units</option>
+                <option>50,000+ / blanket order</option>
+              </select>
+            </label>
+          </div>
+          <label class="field"><span>Message / BOM details</span><textarea name="message" placeholder="Quantities, target dates, material specs, or paste your line items here."></textarea></label>
+          <button class="btn btn-primary" type="submit">Submit RFQ</button>
+          <p class="fineprint">We reply within 1 business day · Your info is used only to quote your request.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — Dawn: footer (B2B links) -->
+  <footer>
+    <div class="wrap fcols">
+      <div>
+        <div class="brand"><span class="mark" aria-hidden="true"></span>Meridian Industrial</div>
+        <p>Industrial distribution and precision components for OEMs, MRO teams, and contract manufacturers since 1961.</p>
+        <div class="fmeta">4200 Foundry Rd, Cleveland, OH 44115<br>1-800-555-4471 · sales@meridian-ind.com</div>
+      </div>
+      <div>
+        <h3>Products</h3>
+        <a href="#products">Fasteners &amp; Hardware</a>
+        <a href="#products">Precision CNC Parts</a>
+        <a href="#products">Hydraulic Fittings</a>
+        <a href="#products">Bearings &amp; Seals</a>
+        <a href="#products">Raw Material Stock</a>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <a href="#industries">Industries served</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#quality">Quality &amp; certifications</a>
+        <a href="#contact">Contact sales</a>
+      </div>
+      <div>
+        <h3>Resources</h3>
+        <a href="#resources">Line card (PDF)</a>
+        <a href="#resources">Product catalog</a>
+        <a href="#resources">Material cert lookup</a>
+        <a href="#resources">CAD &amp; spec library</a>
+      </div>
+      <div>
+        <h3>Account &amp; terms</h3>
+        <a href="#account">Trade account login</a>
+        <a href="#credit">Credit application</a>
+        <a href="#terms">Terms &amp; conditions</a>
+        <a href="#w9">W-9 &amp; tax exemption</a>
+        <a href="#orders">Order status &amp; reorder</a>
+      </div>
+    </div>
+    <div class="wrap fbot">
+      <span>© 1961–2026 Meridian Industrial Supply Co. · Prices exclude freight &amp; applicable tax.</span>
+      <span>Baseline template · Structure references Shopify Dawn 15.4.1</span>
+    </div>
+  </footer>
+
+</body>
+</html>
