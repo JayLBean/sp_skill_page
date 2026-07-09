@@ -124,6 +124,15 @@
   .opt .t{font-weight:650;font-size:14px}
   .opt .s{font-size:11.5px;color:var(--muted);margin-top:3px;font-family:var(--mono)}
   .opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+  .tierinfo{margin-top:12px;border:1px solid var(--line);border-radius:11px;background:var(--surface-2);padding:14px 15px}
+  .ti-head{font-size:12.5px;font-weight:700;color:var(--ink);display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:9px}
+  .ti-chips{display:flex;flex-wrap:wrap;gap:6px}
+  .tchip{font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;color:var(--accent-ink);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 32%,transparent);border-radius:6px;padding:2px 7px;font-weight:400}
+  .ti-list{margin:0;padding-left:18px;display:grid;gap:5px}
+  .ti-list li{font-size:12.5px;line-height:1.55;color:var(--ink)}
+  .ti-fit{margin-top:9px;font-size:12px;color:var(--muted);font-weight:600}
+  .bespoke-note{margin-top:12px;font-size:12.5px;color:var(--muted);line-height:1.65}
+  .bespoke-note b{color:var(--ink)}
   .checks{display:grid;gap:9px}
   .chk{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:12px 14px;cursor:pointer}
   .chk:hover{border-color:var(--accent)}
@@ -374,7 +383,8 @@
 <section class="blk" id="pricing">
   <div class="wrap">
     <div class="head"><p class="eyebrow">报价估算</p><h2>算一算你的店面预算。</h2>
-      <p>选好档位与加价项,实时看到区间估价。最终价以合同为准。</p></div>
+      <p>选好档位与加价项,实时看到区间估价。最终价以合同为准。</p>
+      <p class="bespoke-note"><b>所有档位都是按你的品牌从零适配</b> —— 配色、字体、文案、商品、信息架构均为你专属,绝非套模板改 logo。档位差异只在<b>定制的深度与广度</b>(页数 / 语言 / 是否现场设计新板块)。</p></div>
     <div class="calc">
       <div class="ctrls">
         <div class="row2">
@@ -399,13 +409,14 @@
           </div>
         </div>
         <div class="field">
-          <div class="lab">交付档位 <span class="hint">一次性建站</span></div>
+          <div class="lab">交付档位 <span class="hint">一次性建站 · 均按品牌定制</span></div>
           <div class="seg" id="tierSeg">
             <label class="opt"><input type="radio" name="tier" value="landing"><div class="t">落地页</div><div class="s">¥2,200–3,200</div></label>
             <label class="opt sel"><input type="radio" name="tier" value="standard" checked><div class="t">标准站</div><div class="s">¥13.8k–21.8k</div></label>
             <label class="opt"><input type="radio" name="tier" value="custom"><div class="t">定制站</div><div class="s">¥40k–68k</div></label>
             <label class="opt"><input type="radio" name="tier" value="enterprise"><div class="t">企业站</div><div class="s">¥88k 起</div></label>
           </div>
+          <div class="tierinfo" id="tierInfo"></div>
         </div>
 
         <div class="field">
@@ -586,6 +597,41 @@ pages:
   function selectedTier(){ return (document.querySelector('input[name=tier]:checked')||{}).value || 'standard'; }
   function addonOn(a){ var el=document.querySelector('input[data-addon="'+a+'"]'); return el && el.checked; }
 
+  // 每档位包含的服务范围(全部为按品牌定制,差异在深度/广度)
+  var TIER_INFO = {
+    landing: { scope:['1 个单页','单语言','品牌换肤','1 轮修改'], items:[
+      '单页测品落地页(≤8 个板块),按你的品牌配色 / 字体 / 文案 / 商品定制',
+      '复用成熟高转化板块库,快速上线(不现场设计新板块)',
+      '移动端 Lighthouse ≥ 90,六门质检(关键视口抽查)',
+      '交付:后台管理指南 · 运维边界 · 交付清单' ],
+      fit:'适合:广告投放选品验证、单 SKU 快速上线' },
+    standard: { scope:['5–8 页','双语','参数化定制','2 轮修改'], items:[
+      '5–8 页完整独立站(≤28 板块),整站按品牌体系定制',
+      '在你的品牌 token 内参数化改造板块结构与布局',
+      '全六门质检全开,含 Lighthouse 性能基线',
+      '交付:后台指南 · 运维边界 · 月报模板 · 交付清单 等全套' ],
+      fit:'适合:跨境 DTC / B2B 的主力独立站' },
+    custom: { scope:['≤15 页','多语言 ≤4','现场原创板块','3 轮修改'], items:[
+      '页数按需(≤15 页,≤45 板块),信息架构按品牌规划',
+      '现场设计库中没有的全新板块(按你需求原创,过质检后沉淀入库)',
+      '多语言(≤4 种),全六门质检全开',
+      '交付:全套文档 + Lighthouse 基线' ],
+      fit:'适合:多页 / 内容营销 / 需要独家板块与交互' },
+    enterprise: { scope:['页数不限','语言不限','全瀑布定制','里程碑制'], items:[
+      '不设页数 / 语言 / 板块上限,多站点与多品牌矩阵',
+      '深度系统集成(ERP / CRM / SSO)、私有数据管道',
+      '专属 SLA、多站点聚合视图、员工后台培训手册',
+      '按里程碑交付,修改与保障级别按合同约定' ],
+      fit:'适合:规模化 / 深度系统集成 / 治理级交付' }
+  };
+  function renderTierInfo(){
+    var t=TIER_INFO[selectedTier()], el=$('#tierInfo'); if(!t||!el) return;
+    var chips=t.scope.map(function(s){return '<span class="tchip">'+s+'</span>';}).join('');
+    var lis=t.items.map(function(s){return '<li>'+s+'</li>';}).join('');
+    el.innerHTML='<div class="ti-head">本档位包含<span class="ti-chips">'+chips+'</span></div>'+
+      '<ul class="ti-list">'+lis+'</ul><div class="ti-fit">'+t.fit+'</div>';
+  }
+
   function compute(){
     var tier = PRICING.tiers[selectedTier()];
     var region = PRICING.regions[$('#region').value];
@@ -635,6 +681,9 @@ pages:
 
     // SLA
     $('#slaVal').textContent = tier.sla;
+
+    // 本档位服务范围
+    renderTierInfo();
 
     // 选中态样式
     document.querySelectorAll('.opt').forEach(function(o){ o.classList.toggle('sel', o.querySelector('input').checked); });

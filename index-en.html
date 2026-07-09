@@ -124,6 +124,15 @@
   .opt .t{font-weight:650;font-size:14px}
   .opt .s{font-size:11.5px;color:var(--muted);margin-top:3px;font-family:var(--mono)}
   .opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+  .tierinfo{margin-top:12px;border:1px solid var(--line);border-radius:11px;background:var(--surface-2);padding:14px 15px}
+  .ti-head{font-size:12.5px;font-weight:700;color:var(--ink);display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:9px}
+  .ti-chips{display:flex;flex-wrap:wrap;gap:6px}
+  .tchip{font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;color:var(--accent-ink);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 32%,transparent);border-radius:6px;padding:2px 7px;font-weight:400}
+  .ti-list{margin:0;padding-left:18px;display:grid;gap:5px}
+  .ti-list li{font-size:12.5px;line-height:1.55;color:var(--ink)}
+  .ti-fit{margin-top:9px;font-size:12px;color:var(--muted);font-weight:600}
+  .bespoke-note{margin-top:12px;font-size:12.5px;color:var(--muted);line-height:1.65}
+  .bespoke-note b{color:var(--ink)}
   .checks{display:grid;gap:9px}
   .chk{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:12px 14px;cursor:pointer}
   .chk:hover{border-color:var(--accent)}
@@ -374,7 +383,8 @@
 <section class="blk" id="pricing">
   <div class="wrap">
     <div class="head"><p class="eyebrow">Quote Estimate</p><h2>Estimate your storefront budget.</h2>
-      <p>Pick a tier and add-ons to see a real-time price range. Final pricing is set by contract.</p></div>
+      <p>Pick a tier and add-ons to see a real-time price range. Final pricing is set by contract.</p>
+      <p class="bespoke-note"><b>Every tier is built to your brand from scratch</b> — colors, type, copy, products, and information architecture are all yours, never a template with a swapped logo. Tiers differ only in the <b>depth and breadth of customization</b> (pages / languages / whether net-new sections are designed).</p></div>
     <div class="calc">
       <div class="ctrls">
         <div class="row2">
@@ -399,13 +409,14 @@
           </div>
         </div>
         <div class="field">
-          <div class="lab">Delivery tier <span class="hint">one-time build</span></div>
+          <div class="lab">Delivery tier <span class="hint">one-time build · all brand-tailored</span></div>
           <div class="seg" id="tierSeg">
             <label class="opt"><input type="radio" name="tier" value="landing"><div class="t">Landing Page</div><div class="s">¥2,200–3,200</div></label>
             <label class="opt sel"><input type="radio" name="tier" value="standard" checked><div class="t">Standard Site</div><div class="s">¥13.8k–21.8k</div></label>
             <label class="opt"><input type="radio" name="tier" value="custom"><div class="t">Custom Site</div><div class="s">¥40k–68k</div></label>
             <label class="opt"><input type="radio" name="tier" value="enterprise"><div class="t">Enterprise Site</div><div class="s">from ¥88k</div></label>
           </div>
+          <div class="tierinfo" id="tierInfo"></div>
         </div>
 
         <div class="field">
@@ -587,6 +598,41 @@ pages:
   function selectedTier(){ return (document.querySelector('input[name=tier]:checked')||{}).value || 'standard'; }
   function addonOn(a){ var el=document.querySelector('input[data-addon="'+a+'"]'); return el && el.checked; }
 
+  // What each tier includes (all brand-tailored; tiers differ by depth/breadth)
+  var TIER_INFO = {
+    landing: { scope:['1 page','1 language','brand reskin','1 revision'], items:[
+      'Single-page product-test landing (≤8 sections), tailored to your brand colors / type / copy / products',
+      'Assembled from a proven high-conversion section library — fast launch (no net-new sections)',
+      'Mobile Lighthouse ≥ 90; six-gate QA (key-viewport spot check)',
+      'Delivered: admin guide · ops boundary · delivery checklist' ],
+      fit:'Best for: ad selection tests, single-SKU quick launch' },
+    standard: { scope:['5–8 pages','bilingual','parameterized','2 revisions'], items:[
+      '5–8 page full storefront (≤28 sections), styled end-to-end to your brand system',
+      'Parameterized section structure & layout within your brand tokens',
+      'All six gates on, with a Lighthouse performance baseline',
+      'Delivered: admin guide · ops boundary · monthly-report template · checklist (full set)' ],
+      fit:'Best for: cross-border DTC / B2B primary storefront' },
+    custom: { scope:['≤15 pages','≤4 languages','net-new sections','3 revisions'], items:[
+      'Page count on demand (≤15 pages, ≤45 sections), IA planned around your brand',
+      'Net-new sections designed on the spot (original to your needs, folded into the library after QA)',
+      'Multilingual (≤4), all six gates on',
+      'Delivered: full document set + Lighthouse baseline' ],
+      fit:'Best for: multi-page / content marketing / bespoke sections & interactions' },
+    enterprise: { scope:['unlimited pages','unlimited languages','full waterfall','milestone-based'], items:[
+      'No caps on pages / languages / sections; multi-store & multi-brand matrix',
+      'Deep integrations (ERP / CRM / SSO), private data pipelines',
+      'Dedicated SLA, multi-site overview, staff back-office training manual',
+      'Delivered on milestones; revisions & assurance per contract' ],
+      fit:'Best for: scale / deep integration / governance-grade delivery' }
+  };
+  function renderTierInfo(){
+    var t=TIER_INFO[selectedTier()], el=$('#tierInfo'); if(!t||!el) return;
+    var chips=t.scope.map(function(s){return '<span class="tchip">'+s+'</span>';}).join('');
+    var lis=t.items.map(function(s){return '<li>'+s+'</li>';}).join('');
+    el.innerHTML='<div class="ti-head">This tier includes<span class="ti-chips">'+chips+'</span></div>'+
+      '<ul class="ti-list">'+lis+'</ul><div class="ti-fit">'+t.fit+'</div>';
+  }
+
   function compute(){
     var tier = PRICING.tiers[selectedTier()];
     var region = PRICING.regions[$('#region').value];
@@ -636,6 +682,7 @@ pages:
 
     // SLA
     $('#slaVal').textContent = SLA_EN[selectedTier()];
+    renderTierInfo();
 
     // 选中态样式
     document.querySelectorAll('.opt').forEach(function(o){ o.classList.toggle('sel', o.querySelector('input').checked); });
