@@ -3,22 +3,22 @@ window.PRICING = {
   "fx": 7.2,
   "tiers": {
     "landing": {
-      "min": 2500,
-      "max": 3500,
+      "min": 2200,
+      "max": 3200,
       "sla": "48 小时"
     },
     "standard": {
-      "min": 15000,
-      "max": 25000,
+      "min": 13800,
+      "max": 21800,
       "sla": "7 天"
     },
     "custom": {
-      "min": 45000,
-      "max": 80000,
+      "min": 40000,
+      "max": 68000,
       "sla": "3–4 周"
     },
     "enterprise": {
-      "min": 100000,
+      "min": 88000,
       "max": null,
       "sla": "按合同"
     }

@@ -401,10 +401,10 @@
         <div class="field">
           <div class="lab">交付档位 <span class="hint">一次性建站</span></div>
           <div class="seg" id="tierSeg">
-            <label class="opt"><input type="radio" name="tier" value="landing"><div class="t">落地页</div><div class="s">¥2,500–3,500</div></label>
-            <label class="opt sel"><input type="radio" name="tier" value="standard" checked><div class="t">标准站</div><div class="s">¥15k–25k</div></label>
-            <label class="opt"><input type="radio" name="tier" value="custom"><div class="t">定制站</div><div class="s">¥45k–80k</div></label>
-            <label class="opt"><input type="radio" name="tier" value="enterprise"><div class="t">企业站</div><div class="s">¥100k 起</div></label>
+            <label class="opt"><input type="radio" name="tier" value="landing"><div class="t">落地页</div><div class="s">¥2,200–3,200</div></label>
+            <label class="opt sel"><input type="radio" name="tier" value="standard" checked><div class="t">标准站</div><div class="s">¥13.8k–21.8k</div></label>
+            <label class="opt"><input type="radio" name="tier" value="custom"><div class="t">定制站</div><div class="s">¥40k–68k</div></label>
+            <label class="opt"><input type="radio" name="tier" value="enterprise"><div class="t">企业站</div><div class="s">¥88k 起</div></label>
           </div>
         </div>
 
@@ -446,7 +446,7 @@
       <aside class="result" aria-live="polite">
         <div class="rhead">
           <div class="k">一次性交付估价</div>
-          <div class="big" id="deliverTotal">¥15,000 – ¥25,000</div>
+          <div class="big" id="deliverTotal">¥13,800 – ¥21,800</div>
           <div class="usd" id="deliverUsd"></div>
         </div>
         <div class="body">
@@ -517,7 +517,7 @@
           <li>确认后签约,支付 50% 预付款启动。</li>
           <li>按档位 SLA 交付,验收通过后付尾款。</li>
         </ol>
-        <p class="qfine">报价单为区间估算,最终以合同为准。表单当前为静态演示 —— 接入正式收件(邮件 / 表单服务)只需配置一次(把 <span class="mono">SALES_EMAIL</span> / 表单端点填上)。</p>
+        <p class="qfine">报价单为区间估算,最终以合同为准。点击「邮件发给我们」会用你的邮件客户端把所选配置发送至 <span class="mono">lyusheng0606@gmail.com</span>;如需网页直接提交(免邮件客户端),可另接入表单服务。</p>
       </aside>
     </div>
   </div>
@@ -726,7 +726,7 @@ pages:
   $('#brandReset').addEventListener('click', function(){ brandColor=null; $('#brandColor').value='#1F6F54'; applyBrand(); });
 
   // ---- 留资 / 报价单 ----
-  var SALES_EMAIL = 'sales@storefront-forge.example'; // TODO: 换成真实收件邮箱
+  var SALES_EMAIL = 'lyusheng0606@gmail.com';
   function validLead(){
     if(!$('#qName').value.trim()) return '请填写姓名';
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($('#qEmail').value.trim())) return '请填写有效邮箱';

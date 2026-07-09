@@ -401,10 +401,10 @@
         <div class="field">
           <div class="lab">Delivery tier <span class="hint">one-time build</span></div>
           <div class="seg" id="tierSeg">
-            <label class="opt"><input type="radio" name="tier" value="landing"><div class="t">Landing Page</div><div class="s">¥2,500–3,500</div></label>
-            <label class="opt sel"><input type="radio" name="tier" value="standard" checked><div class="t">Standard Site</div><div class="s">¥15k–25k</div></label>
-            <label class="opt"><input type="radio" name="tier" value="custom"><div class="t">Custom Site</div><div class="s">¥45k–80k</div></label>
-            <label class="opt"><input type="radio" name="tier" value="enterprise"><div class="t">Enterprise Site</div><div class="s">from ¥100k</div></label>
+            <label class="opt"><input type="radio" name="tier" value="landing"><div class="t">Landing Page</div><div class="s">¥2,200–3,200</div></label>
+            <label class="opt sel"><input type="radio" name="tier" value="standard" checked><div class="t">Standard Site</div><div class="s">¥13.8k–21.8k</div></label>
+            <label class="opt"><input type="radio" name="tier" value="custom"><div class="t">Custom Site</div><div class="s">¥40k–68k</div></label>
+            <label class="opt"><input type="radio" name="tier" value="enterprise"><div class="t">Enterprise Site</div><div class="s">from ¥88k</div></label>
           </div>
         </div>
 
@@ -446,7 +446,7 @@
       <aside class="result" aria-live="polite">
         <div class="rhead">
           <div class="k">One-time build estimate</div>
-          <div class="big" id="deliverTotal">¥15,000 – ¥25,000</div>
+          <div class="big" id="deliverTotal">¥13,800 – ¥21,800</div>
           <div class="usd" id="deliverUsd"></div>
         </div>
         <div class="body">
@@ -517,7 +517,7 @@
           <li>After confirmation, we sign the contract and start with a 50% upfront payment.</li>
           <li>We deliver per the tier SLA, with the balance due after acceptance.</li>
         </ol>
-        <p class="qfine">The quote is a range estimate; the contract is final. This form is currently a static demo — connecting live delivery (email / form service) only takes a one-time setup (fill in <span class="mono">SALES_EMAIL</span> / your form endpoint).</p>
+        <p class="qfine">The quote is a range estimate; the contract is final. Clicking “Email it to us” opens your mail client with the selected configuration addressed to <span class="mono">lyusheng0606@gmail.com</span>; a web-native form service can be wired in if you prefer no mail client.</p>
       </aside>
     </div>
   </div>
@@ -727,7 +727,7 @@ pages:
   $('#brandReset').addEventListener('click', function(){ brandColor=null; $('#brandColor').value='#1F6F54'; applyBrand(); });
 
   // ---- 留资 / 报价单 ----
-  var SALES_EMAIL = 'sales@storefront-forge.example'; // TODO: 换成真实收件邮箱
+  var SALES_EMAIL = 'lyusheng0606@gmail.com';
   function validLead(){
     if(!$('#qName').value.trim()) return 'Please enter your name';
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($('#qEmail').value.trim())) return 'Please enter a valid email';
