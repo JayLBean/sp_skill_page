@@ -1,6 +1,6 @@
 # Storefront Forge — 产品展示页
 
-面向客户的中文静态展示页(GitHub Pages):Storefront Forge 的 18 套基准电商店面模板 + 报价估算器 + 建成站实时预览。
+面向客户的中文静态展示页(GitHub Pages):Storefront Forge 的 30 套基准电商店面模板 + 报价估算器 + 建成站实时预览。
 
 ## 内容
 - **模板画廊**:7 个行业首页、集合页(PLP)、产品页(PDP)、落地/关于/联系、B2B 询盘 —— 用真实渲染截图。
@@ -10,8 +10,8 @@
 ## 结构
 ```
 index.html            # 单页,内联 CSS/JS
-assets/img/*.jpg       # 18 张模板截图(arm64 Chrome 渲染)
-assets/templates/*.html# 18 套自包含模板(供预览 iframe 加载)
+assets/img/*.jpg       # 60 张模板截图(30 套 × 明暗双主题,arm64 Chrome 渲染)
+assets/templates/*.html# 30 套自包含模板(供预览 iframe 加载)
 .nojekyll              # 关闭 Jekyll 处理
 ```
 
